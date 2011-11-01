@@ -1,0 +1,118 @@
+(add-to-list 'load-path "~/.emacs.d/site-elisp/")
+(add-to-list 'load-path "~/.emacs.d")
+(require 'auto-complete)
+(require 'auto-complete-config)    ; 必須ではないですが一応
+(global-auto-complete-mode t)
+;; 行番号表示
+(require 'linum)
+(global-linum-mode t)
+;;change default directory
+(cd "/media/Data/Document")
+;;Haskell-mode
+(load "haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+;;golang-mode
+(require 'go-mode-load)
+;;org-mode
+(require 'org)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; C# support
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(setq auto-mode-alist (cons '("\\.cs$" . csharp-mode) auto-mode-alist))
+
+;; Patterns for finding Microsoft C# compiler error messages:
+(require 'compile)
+(push '("^\\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)): error" 1 2 3 2) compilation-error-regexp-alist)
+(push '("^\\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)): warning" 1 2 3 1) compilation-error-regexp-alist)
+
+;; Patterns for defining blocks to hide/show:
+(push '(csharp-mode
+	"\\(^\\s *#\\s *region\\b\\)\\|{"
+	"\\(^\\s *#\\s *endregion\\b\\)\\|}"
+	"/[*/]"
+	nil
+	hs-c-like-adjust-block-beginning)
+      hs-special-modes-alist)
+;;for magit
+(require 'magit)
+;; まず、install-elisp のコマンドを使える様にします。
+(require 'install-elisp)
+;; 次に、Elisp ファイルをインストールする場所を指定します。
+(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
+;;cuda-mode
+(load "cuda-mode.el")
+;;tuareg-mode forb OCaml
+(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
+(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+;;for D Lang
+(autoload 'd-mode "d-mode" "Major mode for editing D code." t)
+(add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
+;;;Hide message
+(setq inhibit-startup-message t)
+(load "elscreen" "ElScreen" t)
+;; 起動時のサイズ,表示位置,フォントを指定
+(setq initial-frame-alist
+      (append (list
+	       '(width . 85)
+	       '(height . 45)
+	      )
+	      initial-frame-alist))
+(setq default-frame-alist initial-frame-alist)
+(setq-default tab-width 4)
+(setq default-tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
+                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 日本語入力の設定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(set-language-environment "Japanese")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ibus-mode
+(require 'ibus)
+;; Turn on ibus-mode automatically after loading .emacs
+(add-hook 'after-init-hook 'ibus-mode-on)
+;; Use C-SPC for Set Mark command
+(ibus-define-common-key ?\C-\s nil)
+;; Use C-/ for Undo command
+(ibus-define-common-key ?\C-/ nil)
+;; Change cursor color depending on IBus status
+(setq ibus-cursor-color '("limegreen" "white" "yellow"))
+(global-set-key "\C-\\" 'ibus-toggle)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+; UTF-8 and Japanese Setting
+
+;                      'unicode)
+(set-coding-system-priority 'utf-8
+                            'euc-jp
+                            'iso-2022-jp
+                            'cp932)
+(set-language-environment 'Japanese)
+(set-terminal-coding-system 'utf-8)
+(setq file-name-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8-unix)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック")))))

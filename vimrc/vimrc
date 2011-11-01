@@ -1,0 +1,163 @@
+" 文字コード関連
+"
+if &encoding !=# 'utf-8'
+	set encoding=japan
+	set fileencoding=japan
+endif
+if has('iconv')
+	let s:enc_euc = 'euc-jp'
+	let s:enc_jis = 'iso-2022-jp'
+	" iconvがeucJP-msに対応しているかをチェック
+	if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+		let s:enc_euc = 'eucjp-ms'
+		let s:enc_jis = 'iso-2022-jp-3'
+	" iconvがJISX0213に対応しているかをチェック
+	elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+		let s:enc_euc = 'euc-jisx0213'
+		let s:enc_jis = 'iso-2022-jp-3'
+	endif
+	" fileencodingsを構築
+	if &encoding ==# 'utf-8'
+		let s:fileencodings_default = &fileencodings
+		let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+		let &fileencodings = &fileencodings .','. s:fileencodings_default
+		unlet s:fileencodings_default
+	else
+		let &fileencodings = &fileencodings .','. s:enc_jis
+		set fileencodings+=utf-8,ucs-2le,ucs-2
+		if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+			set fileencodings+=cp932
+			set fileencodings-=euc-jp
+			set fileencodings-=euc-jisx0213
+			set fileencodings-=eucjp-ms
+			let &encoding = s:enc_euc
+			let &fileencoding = s:enc_euc
+		else
+			let &fileencodings = &fileencodings .','. s:enc_euc
+		endif
+	endif
+	" 定数を処分
+	unlet s:enc_euc
+	unlet s:enc_jis
+endif
+" 日本語を含まない場合は fileencoding に encoding を使うようにする
+if has('autocmd')
+	function! AU_ReCheck_FENC()
+		if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+			let &fileencoding=&encoding
+		endif
+	endfunction
+"	autocmd BufReadPost * call AU_ReCheck_FENC()
+	autocmd BufReadPost *
+    	\ if line("'\"") > 1 && line("'\"") <= line("$") |
+    	\   exe "normal! g`\"" |
+    	\ endif
+endif
+"----------------------------------------------------
+" インデント・タブ
+"----------------------------------------------------
+" オートインデントを有効にする
+set autoindent
+"タブの空白の数
+set tabstop=4
+"強調表示(色付け)のON/OFF設定
+if has("syntax")
+syntax on
+endif
+filetype on 
+" ウィンドウの幅より長い行は折り返して、次の行に続けて表示する
+set wrap
+"-----------------------------------------------
+"エンコーディング・改行設定
+"-----------------------------------------------
+"よく使っている開発環境や、
+"Ubuntu上で文字化けを起こさせない事を重視した設定
+"-----------------------------------------------
+"起動時に文字エンコーディングを自動選択
+set fileencodings=euc-jisx0213,cp932,iso-2022-jp-3,utf-8
+"改行コードの自動認識
+set fileformats=unix,dos,mac
+"文字コードを指定
+set fileencoding=utf-8
+set encoding=utf-8
+set termencoding=utf-8
+"改行コード指定
+setl ff=unix 
+"------------------------------------------------
+"エディタの動作
+"------------------------------------------------
+" 行番号を表示する
+set number
+" 括弧入力時の対応する括弧を表示
+set showmatch
+"新しい行を作ったときに高度な自動インデントを行う
+set smartindent
+"検索時に大文字を含んでいたら大/小を区別
+set smartcase
+" 検索がファイル末尾まで進んだら、ファイル先頭から再び検索する。（有効:wrapscan/無効:nowrapscan）
+set wrapscan
+" カーソルが何行目の何列目に置かれているかを表示する。（有効:ruler/無効:noruler）
+set ruler
+
+"----------------------------------------------------
+" オートコマンド
+"----------------------------------------------------
+if has("autocmd")
+    " ファイルタイプ別インデント、プラグインを有効にする
+    filetype plugin indent on
+    " カーソル位置を記憶する
+    autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+endif
+"---------------------------------------------------
+" Default GUI Size
+"---------------------------------------------------
+if has("gui_running")
+  set lines=24 columns=80
+endif
+" コマンドラインの高さ(GUI使用時)
+set cmdheight=2
+"---------------------------------------------------------------------------
+" マウスに関する設定:
+" 解説:
+" mousefocusは幾つか問題(一例:ウィンドウを分割しているラインにカーソルがあっ
+" ている時の挙動)があるのでデフォルトでは設定しない。Windowsではmousehide
+" が、マウスカーソルをVimのタイトルバーに置き日本語を入力するとチラチラする
+" という問題を引き起す。
+"
+" どのモードでもマウスを使えるようにする
+set mouse=a
+" マウスの移動でフォーカスを自動的に切替えない (mousefocus:切替る)
+set nomousefocus
+" 入力時にマウスポインタを隠す (nomousehide:隠さない)
+set mousehide
+"インデント幅を4に
+set shiftwidth=4
+" ビジュアル選択(D&D他)を自動的にクリップボードへ (:help guioptions_a)
+"set guioptions+=a
+"--------------------------------------------------
+"Default Font Size
+"--------------------------------------------------
+set guifont=VL\ ゴシック\ 8
+
+"-----------------------------------------------------------------------
+"Fortran設定
+filetype plugin indent on
+let s:extfname = expand("%:e")
+if s:extfname ==? "f" || s:extfname ==? "F"
+    let fortran_fixed_source=1
+    unlet! fortran_free_source
+else
+    let fortran_free_source=1
+    unlet! fortran_fixed_source
+endif
+let fortran_fold=1
+au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
+
+" use ghc functionality for haskell files
+"au Bufenter *.hs compiler ghc
+
+" configure browser for haskell_doc.vim
+let g:haddock_browser = "firefox %u"

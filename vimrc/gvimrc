@@ -1,0 +1,34 @@
+"------------------------------------------------
+"Remenber Window Position
+"------------------------------------------------
+let g:save_window_file = expand('~/.vimwinpos')
+augroup SaveWindow
+  autocmd!
+  autocmd VimLeavePre * call s:save_window()
+  function! s:save_window()
+    let options = [
+		'set columns=' . &columns,
+      \ 'set lines=' . &lines,
+      \ 'winpos ' . getwinposx() . ' ' . getwinposy(),
+      \ ]
+    call writefile(options, g:save_window_file)
+  endfunction
+augroup END
+"---------------------------------------------------
+if filereadable(g:save_window_file)
+  execute 'source' g:save_window_file
+endif
+"---------------------------------------------------
+" Default GUI Size
+"---------------------------------------------------
+if has("gui_running")
+  set lines=45 columns=85
+endif
+" コマンドラインの高さ(GUI使用時)
+set cmdheight=2
+"--------------------------------------------------
+"スクリプトの登録
+"--------------------------------------------------
+"------cd.vim------
+au   BufEnter *   execute ":lcd " . expand("%:p:h") 
+"------------------
