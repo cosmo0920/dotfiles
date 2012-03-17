@@ -162,14 +162,14 @@
 (defcustom ac-modes
   '(emacs-lisp-mode
     lisp-interaction-mode
-    c-mode cc-mode c++-mode csharp-mode d-mode
-    java-mode malabar-mode clojure-mode scala-mode
+    c-mode cc-mode c++-mode csharp-mode
+    java-mode clojure-mode scala-mode
     scheme-mode haskell-mode go-mode rust-mode
-    ocaml-mode tuareg-mode coq-mode
+    ocaml-mode tuareg-mode
     perl-mode cperl-mode python-mode ruby-mode
     ecmascript-mode javascript-mode js-mode js2-mode php-mode css-mode
     makefile-mode sh-mode fortran-mode f90-mode ada-mode
-    xml-mode sgml-mode ts-mode)
+    xml-mode sgml-mode)
   "Major modes `auto-complete-mode' can run on."
   :type '(repeat symbol)
   :group 'auto-complete)
