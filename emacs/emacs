@@ -1,5 +1,9 @@
-(add-to-list 'load-path "~/.emacs.d/site-elisp/")
-(add-to-list 'load-path "~/.emacs.d")
+(let ((default-directory "~/.emacs.d/"))
+  (normal-top-level-add-to-load-path '("site-lisp" "site-elisp")))
+;;(add-to-list 'load-path "~/.emacs.d")
+;;for Ubuntu setting
+(let ((default-directory "/usr/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
 (global-auto-complete-mode t)
@@ -22,6 +26,11 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
+;;org-modefor tex
+(setq org-export-latex-coding-system 'utf-8)
+(setq org-export-latex-date-format "%Y-%m-%d")
+;;rust-mode
+(require 'rust-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C# support
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
