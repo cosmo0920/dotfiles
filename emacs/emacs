@@ -1,15 +1,43 @@
 (let ((default-directory "~/.emacs.d/"))
   (normal-top-level-add-to-load-path '("site-lisp" "site-elisp")))
-;;(add-to-list 'load-path "~/.emacs.d")
 ;;for Ubuntu setting
 (let ((default-directory "/usr/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+(let ((default-directory "/usr/share/emacs/23.3/lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
 (global-auto-complete-mode t)
+;;twmode
+(require 'twittering-mode)
+(setq twittering-icon-mode t)
+(setq twittering-use-master-password t)
+(setq twittering-update-status-function 'twittering-update-status-from-pop-up-buffer)
+(setq twittering-convert-fix-size 48)
+(setq twittering-timer-interval 90)
+(setq twittering-initial-timeline-spec-string
+      '(":favorites"
+        ":direct_messages"
+        ":replies"
+        ":home"))
+ (add-hook 'twittering-mode-hook
+           (lambda ()
+             (mapc (lambda (pair)
+                     (let ((key (car pair))
+                           (func (cdr pair)))
+                       (define-key twittering-mode-map
+                         (read-kbd-macro key) func)))
+                   '(("T" . twittering-friends-timeline)
+                     ("R" . twittering-replies-timeline)
+                     ("U" . twittering-user-timeline)
+                     ("W" . twittering-update-status-interactive)
+					 ("F". twittering-favorite )))))
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode t)
+; twmode でも無効にする
+(defadvice linum-on(around my-linum-twmode-on() activate)
+  (unless (eq major-mode 'twittering-mode) ad-do-it))
 ;;change default directory
 (cd "/media/Data/Document")
 ;;Haskell-mode
@@ -26,9 +54,23 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
+(setq auto-mode-alist
+(append '(("\\.h$" . objc-mode)
+("\\.m$" . objc-mode))))
 ;;org-modefor tex
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
+;;for c
+(setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
+;;for c++
+(setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cxx$". c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
+;;for ruby
+(setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
+;;for golang
+(setq auto-mode-alist (cons '("\\.go$". go-mode) auto-mode-alist))
 ;;rust-mode
 (require 'rust-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -59,6 +101,7 @@
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;cuda-mode
 (load "cuda-mode.el")
+;;(setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode forb OCaml
 (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
