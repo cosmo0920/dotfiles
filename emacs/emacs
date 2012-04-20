@@ -1,14 +1,44 @@
-(let ((default-directory "~/.emacs.d/"))
-  (normal-top-level-add-to-load-path '("site-lisp" "site-elisp")))
+;; OSを判別、UNIX系？
+(defvar run-unix
+  (or (equal system-type 'gnu/linux)
+      (or (equal system-type 'usg-unix-v)
+          (or  (equal system-type 'berkeley-unix)
+               (equal system-type 'cygwin)))))
+
+
+; OSを判別、個別判別
+(defvar run-linux
+  (equal system-type 'gnu/linux))
+(defvar run-system-v
+  (equal system-type 'usg-unix-v)); OpenSolaris2090.06
+(defvar run-bsd
+  (equal system-type 'berkeley-unix))
+(defvar run-cygwin ;; cygwinもunixグループにしておく
+  (equal system-type 'cygwin))
+
+(defvar run-w32
+  (and (null run-unix)
+       (or (equal system-type 'windows-nt)
+           (equal system-type 'ms-dos))))
+(defvar run-darwin (equal system-type 'darwin))
 ;;for Ubuntu setting
-(let ((default-directory "/usr/share/emacs/site-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
-(let ((default-directory "/usr/share/emacs/23.3/lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
+(when run-linux
+  (let ((default-directory "~/.emacs.d/"))
+    (normal-top-level-add-to-load-path '("site-lisp" "site-elisp")))
+  (let ((default-directory "/usr/share/emacs/site-lisp/"))
+    (normal-top-level-add-subdirs-to-load-path))
+  (let ((default-directory "/usr/share/emacs/23.3/lisp/"))
+    (normal-top-level-add-subdirs-to-load-path)))
+;;for OSX setting
+(when run-darwin
+  (add-to-list 'load-path "~/.emacs.d/site-elisp/")
+  (add-to-list 'load-path "~/.emacs.d"))
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
 (global-auto-complete-mode t)
 ;;twmode
+(when run-darwin
+  (add-to-list 'exec-path "/opt/local/bin"))
 (require 'twittering-mode)
 (setq twittering-icon-mode t)
 (setq twittering-use-master-password t)
@@ -128,17 +158,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-language-environment "Japanese")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ibus-mode
-(require 'ibus)
-;; Turn on ibus-mode automatically after loading .emacs
-(add-hook 'after-init-hook 'ibus-mode-on)
-;; Use C-SPC for Set Mark command
-(ibus-define-common-key ?\C-\s nil)
-;; Use C-/ for Undo command
-(ibus-define-common-key ?\C-/ nil)
-;; Change cursor color depending on IBus status
-(setq ibus-cursor-color '("limegreen" "white" "yellow"))
-(global-set-key "\C-\\" 'ibus-toggle)
+;;for Ubuntu setting
+(when run-linux
+  ;; ibus-mode
+  (require 'ibus)
+  ;; Turn on ibus-mode automatically after loading .emacs
+  (add-hook 'after-init-hook 'ibus-mode-on)
+  ;; Use C-SPC for Set Mark command
+  (ibus-define-common-key ?\C-\s nil)
+  ;; Use C-/ for Undo command
+  (ibus-define-common-key ?\C-/ nil)
+  ;; Change cursor color depending on IBus status
+  (setq ibus-cursor-color '("limegreen" "white" "yellow"))
+  (global-set-key "\C-\\" 'ibus-toggle))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ; UTF-8 and Japanese Setting
 
@@ -162,9 +194,10 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック")))))
+(when run-linux
+  (custom-set-faces
+    ;; custom-set-faces was added by Custom.
+    ;; If you edit it by hand, you could mess it up, so be careful.
+    ;; Your init file should contain only one such instance.
+    ;; If there is more than one, they won't work right.
+   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック"))))))
