@@ -40,7 +40,7 @@
 ;;twmode
 (when run-darwin
   (add-to-list 'exec-path "/opt/local/bin"))
-(autoload 'twittering-mode "twmode" "Emacs twitter client." t)
+(autoload 'twittering-mode "twittering-mode" "Emacs twitter client." t)
 (setq twittering-icon-mode t)
 (setq twittering-use-master-password t)
 (setq twittering-update-status-function 'twittering-update-status-from-pop-up-buffer)
@@ -131,7 +131,7 @@
 (setq auto-mode-alist (cons '("\\f$" . fortran-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.f90$" . fortran-mode) auto-mode-alist))
 ;;for lua
-(autoload 'lua-mode "Lua-mode" "LightweightLang." t)
+(autoload 'lua-mode "lua-mode" "LightweightLang." t)
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 ;;for go mode
 (autoload 'go-mode "go-mode" "GoLang" t)
@@ -161,11 +161,11 @@
 	hs-c-like-adjust-block-beginning)
       hs-special-modes-alist)
 ;;cuda-mode
-(autoload 'cuda-mode "CUDA" "NVIDIA GPGPU Computing Lang." t)
+(autoload 'cuda-mode "cuda-mode" "NVIDIA GPGPU Computing Lang." t)
 (setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode forb OCaml
 (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
-(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+(autoload 'tuareg-mode "tuareg-mode" "Major mode for editing Caml code" t)
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
@@ -175,7 +175,7 @@
 ;;for magit
 (autoload 'magit "magit" "Emacs git client." t)
 ;; まず、install-elisp のコマンドを使える様にします。
-(autoload 'install-elisp "install emacs lisp" t)
+(autoload 'install-elisp "install-elisp" "install emacs lisp" t)
 ;; 次に、Elisp ファイルをインストールする場所を指定します。
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;;Hide message
