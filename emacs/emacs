@@ -21,9 +21,9 @@
 (defvar run-darwin (equal system-type 'darwin))
 ;;for Ubuntu setting
 (when run-linux
-  (setq load-path (append '("~/.emacs.d/elisp/"
-							"~/.emacs.d/site-lisp/"
-							"~/.emacs.d/site-elisp/"
+  (setq load-path (append '("~/.emacs.d/site-lisp/"
+                            "~/.emacs.d/site-elisp/"
+							"~/.emacs.d/elisp/"
                             )
                             load-path))
   ;;Ubuntuだとapt-getしたElispはここに置かれる
@@ -33,14 +33,14 @@
 ;;for OSX setting
 (when run-darwin
   (add-to-list 'load-path "~/.emacs.d/site-elisp/")
-  (add-to-list 'load-path "~/.emacs.d"))
+  (add-to-list 'load-path "~/.emacs.d/"))
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
 (global-auto-complete-mode t)
 ;;twmode
 (when run-darwin
   (add-to-list 'exec-path "/opt/local/bin"))
-(require 'twittering-mode)
+(autoload 'twittering-mode "twmode" "Emacs twitter client." t)
 (setq twittering-icon-mode t)
 (setq twittering-use-master-password t)
 (setq twittering-update-status-function 'twittering-update-status-from-pop-up-buffer)
@@ -78,24 +78,29 @@
 ;;--------------------------------------------------------------------------
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;org-mode
-(require 'org)
+(autoload 'org "org-mode" "md lang" t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 ;;Haskell-mode
-(when run-linux
-  (load "~/.emacs.d/elisp/init.el"))
-;(require 'mmm-mode)
-(require 'haskell-mode)
-;(require 'haskell-cabal)
+(setq auto-mode-alist
+  (append auto-mode-alist
+    '(("\\.[hg]s$"  . haskell-mode)    
+      ("\\.hi$"     . haskell-mode)
+      ("\\.l[hg]s$" . literate-haskell-mode))))
+
+(autoload 'haskell-mode "haskell-mode"
+          "Major mode for editing Haskell scripts." t)
+(autoload 'literate-haskell-mode "haskell-mode"
+          "Major mode for editing literate Haskell scripts." t)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-(setq auto-mode-alist (cons '("\\.hs\\". haskell-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.lhs\\". iterate-haskell-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.cabal\\". haskell-cabal-mode) auto-mode-alist))
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; Hugs用
+(add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)  
 ;#!/usr/bin/env runghc 用
 (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
 ;#!/usr/bin/env runhaskell 用
@@ -126,15 +131,15 @@
 (setq auto-mode-alist (cons '("\\f$" . fortran-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.f90$" . fortran-mode) auto-mode-alist))
 ;;for lua
-(require 'lua-mode)
+(autoload 'lua-mode "Lua-mode" "LightweightLang." t)
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 ;;for go mode
-(require 'go-mode)
+(autoload 'go-mode "go-mode" "GoLang" t)
 (setq auto-mode-alist (cons '("\\.go$". go-mode) auto-mode-alist))
 ;;for perl mode
 (setq auto-mode-alist (cons '("\\.pl$". perl-mode) auto-mode-alist))
 ;;rust-mode
-(require 'rust-mode)
+(autoload 'rust-mode "rust-mode" "a mozilla's language." t)
 (setq auto-mode-alist (cons '("\\.rs$". rust-mode) auto-mode-alist))
 ;; for C# mode
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
@@ -156,7 +161,7 @@
 	hs-c-like-adjust-block-beginning)
       hs-special-modes-alist)
 ;;cuda-mode
-(load "cuda-mode.el")
+(autoload 'cuda-mode "CUDA" "NVIDIA GPGPU Computing Lang." t)
 (setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode forb OCaml
 (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
@@ -168,9 +173,9 @@
 ;;verify mode section end.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;for magit
-(require 'magit)
+(autoload 'magit "magit" "Emacs git client." t)
 ;; まず、install-elisp のコマンドを使える様にします。
-(require 'install-elisp)
+(autoload 'install-elisp "install emacs lisp" t)
 ;; 次に、Elisp ファイルをインストールする場所を指定します。
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;;Hide message
@@ -236,5 +241,17 @@
     ;; Your init file should contain only one such instance.
     ;; If there is more than one, they won't work right.
    '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック"))))))
+;;chmod +x
+(defun make-file-executable ()
+  "Make the file of this buffer executable, when it is a script source."
+  (save-restriction
+    (widen)
+    (if (string= "#!" (buffer-substring-no-properties 1 (min 3 (point-max))))
+        (let ((name (buffer-file-name)))
+          (or (equal ?. (string-to-char (file-name-nondirectory name)))
+              (let ((mode (file-modes name)))
+                (set-file-modes name (logior mode (logand (/ mode 4) 73)))
+                (message (concat "Wrote " name " (+x)"))))))))
+(add-hook 'after-save-hook 'make-file-executable)
 ;;change default directory
 (cd "/media/Data/Document")
