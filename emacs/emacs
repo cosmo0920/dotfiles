@@ -21,12 +21,15 @@
 (defvar run-darwin (equal system-type 'darwin))
 ;;for Ubuntu setting
 (when run-linux
-  (let ((default-directory "~/.emacs.d/"))
-    (normal-top-level-add-to-load-path '("site-lisp" "site-elisp" "elisp")))
+  (setq load-path (append '("~/.emacs.d/elisp/"
+							"~/.emacs.d/site-lisp/"
+							"~/.emacs.d/site-elisp/"
+                            )
+                            load-path))
+  ;;Ubuntuだとapt-getしたElispはここに置かれる
   (let ((default-directory "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
-  (let ((default-directory "/usr/share/emacs/23.3/lisp/"))
-    (normal-top-level-add-subdirs-to-load-path)))
+)
 ;;for OSX setting
 (when run-darwin
   (add-to-list 'load-path "~/.emacs.d/site-elisp/")
@@ -83,8 +86,9 @@
 ;;Haskell-mode
 (when run-linux
   (load "~/.emacs.d/elisp/init.el"))
+;(require 'mmm-mode)
 (require 'haskell-mode)
-(require 'haskell-cabal)
+;(require 'haskell-cabal)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
@@ -122,6 +126,7 @@
 (setq auto-mode-alist (cons '("\\f$" . fortran-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.f90$" . fortran-mode) auto-mode-alist))
 ;;for lua
+(require 'lua-mode)
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 ;;for go mode
 (require 'go-mode)
