@@ -4,8 +4,6 @@
       (or (equal system-type 'usg-unix-v)
           (or  (equal system-type 'berkeley-unix)
                (equal system-type 'cygwin)))))
-
-
 ; OSを判別、個別判別
 (defvar run-linux
   (equal system-type 'gnu/linux))
@@ -24,7 +22,7 @@
 ;;for Ubuntu setting
 (when run-linux
   (let ((default-directory "~/.emacs.d/"))
-    (normal-top-level-add-to-load-path '("site-lisp" "site-elisp")))
+    (normal-top-level-add-to-load-path '("site-lisp" "site-elisp" "elisp")))
   (let ((default-directory "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
   (let ((default-directory "/usr/share/emacs/23.3/lisp/"))
@@ -65,33 +63,52 @@
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode t)
-; twmode でも無効にする
+; twmode で無効にする
 (defadvice linum-on(around my-linum-twmode-on() activate)
   (unless (eq major-mode 'twittering-mode) ad-do-it))
-;;change default directory
-(cd "/media/Data/Document")
-;;Haskell-mode
-(load "haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-;;golang-mode
-(require 'go-mode-load)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;verify file mode section
+;;--------------------------------------------------------------------------
+;;such as ... 
+;;C,C++,C#,Ruby,Obj-C,Haskell,CUDA,Python,Fortran,org-mode,lua,go,rust,perl,D
+;;and so on.
+;;--------------------------------------------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;org-mode
 (require 'org)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
+;;Haskell-mode
+(when run-linux
+  (load "~/.emacs.d/elisp/init.el"))
+(require 'haskell-mode)
+(require 'haskell-cabal)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'font-lock-mode)
+(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+(setq auto-mode-alist (cons '("\\.hs\\". haskell-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.lhs\\". iterate-haskell-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cabal\\". haskell-cabal-mode) auto-mode-alist))
+;#!/usr/bin/env runghc 用
+(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
+;#!/usr/bin/env runhaskell 用
+(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
+;;for obj-c
 (setq auto-mode-alist
 (append '(("\\.h$" . objc-mode)
 ("\\.m$" . objc-mode))))
-;;org-modefor tex
+;;org-mode for tex
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
 ;;for c
 (setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
+;;for asm
+(setq auto-mode-alist (cons '("\\.S$" . asm-mode) auto-mode-alist))
+;;for java
+(setq auto-mode-alist (cons '("\\.java$" . java-mode) auto-mode-alist))
 ;;for c++
 (setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
@@ -99,17 +116,27 @@
 (setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
 ;;for ruby
 (setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
-;;for golang
+;;for python
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; for fortran
+(setq auto-mode-alist (cons '("\\f$" . fortran-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.f90$" . fortran-mode) auto-mode-alist))
+;;for lua
+(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
+;;for go mode
+(require 'go-mode)
 (setq auto-mode-alist (cons '("\\.go$". go-mode) auto-mode-alist))
+;;for perl mode
+(setq auto-mode-alist (cons '("\\.pl$". perl-mode) auto-mode-alist))
 ;;rust-mode
 (require 'rust-mode)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; C# support
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(setq auto-mode-alist (cons '("\\.rs$". rust-mode) auto-mode-alist))
+;; for C# mode
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist (cons '("\\.cs$" . csharp-mode) auto-mode-alist))
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;C# mode setting
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Patterns for finding Microsoft C# compiler error messages:
 (require 'compile)
 (push '("^\\(.*\\)(\\([0-9]+\\),\\([0-9]+\\)): error" 1 2 3 2) compilation-error-regexp-alist)
@@ -123,21 +150,24 @@
 	nil
 	hs-c-like-adjust-block-beginning)
       hs-special-modes-alist)
-;;for magit
-(require 'magit)
-;; まず、install-elisp のコマンドを使える様にします。
-(require 'install-elisp)
-;; 次に、Elisp ファイルをインストールする場所を指定します。
-(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;cuda-mode
 (load "cuda-mode.el")
-;;(setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode forb OCaml
 (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;verify mode section end.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;for magit
+(require 'magit)
+;; まず、install-elisp のコマンドを使える様にします。
+(require 'install-elisp)
+;; 次に、Elisp ファイルをインストールする場所を指定します。
+(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;;Hide message
 (setq inhibit-startup-message t)
 (load "elscreen" "ElScreen" t)
@@ -201,3 +231,5 @@
     ;; Your init file should contain only one such instance.
     ;; If there is more than one, they won't work right.
    '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック"))))))
+;;change default directory
+(cd "/media/Data/Document")
