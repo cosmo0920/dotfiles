@@ -295,8 +295,14 @@
                 (set-file-modes name (logior mode (logand (/ mode 4) 73)))
                 (message (concat "Wrote " name " (+x)"))))))))
 (add-hook 'after-save-hook 'make-file-executable)
-;;change default directory
-(cd "/media/Data/Document")
+;;change default directory for Ubuntu
+(when run-linux
+  (cd "/media/Data/Document")
+)
+;;change default directory for OSX
+(when run-darwin
+  (cd "~/Document/")
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
