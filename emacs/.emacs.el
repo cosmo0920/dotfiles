@@ -39,33 +39,41 @@
 (when run-linux
   (load-file "~/.emacs.d/cedet/common/cedet.el")
   (require 'semantic-gcc)
-  (global-ede-mode t)
-  ;(semantic-mode t)
+  ;;(global-ede-mode t)
   (require 'semanticdb)
-  (global-semanticdb-minor-mode 1)
   ;; if you want to enable support for gnu global
   (when (cedet-gnu-global-version-check t)
     (require 'semanticdb-global)
     (semanticdb-enable-gnu-global-databases 'c-mode)
     (semanticdb-enable-gnu-global-databases 'c++-mode))
-  (semantic-add-system-include "/media/Data/libboost_1_49_0" 'c++-mode)
+  ;;for linux Kernel Reading
+  (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/" 'c-mode)
+  ;;for BSD Kernel Reading
+  (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
+  (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
+
   ;;関数と名前空間等のタグに飛べるimenuの追加
   (defun my-semantic-hook ()
-    (imenu-add-to-menubar "cedet-TAGS"))
+    (imenu-add-to-menubar "TAGS"))
   ;;その他色々設定するよ
-  (semantic-load-enable-gaudy-code-helpers)
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
   (semantic-load-enable-gaudy-code-helpers)
   (defun my-cedet-hook ()
     (local-set-key [(control return)] 'semantic-ia-complete-symbol) 
-    (local-set-key "." 'semantic-complete-self-insert)
-    (local-set-key ">" 'semantic-complete-self-insert)
+    ;(local-set-key "." 'semantic-complete-self-insert)
+    ;(local-set-key ">" 'semantic-complete-self-insert)
     (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
     (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
     (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
     (local-set-key "\C-xp" 'eassist-switch-h-cpp)
     (local-set-key "\C-xe" 'eassist-list-methods)
+	;;シンボルの参照を検索
+    (local-set-key "\C-c/" 'semantic-symref)
+	;;insert get/set methoid pair inc class field
+    (local-set-key "\C-cgs" 'srecode-insert-getset)
+	;;コメントのひな形を生成
+	(local-set-key "\C-ci" 'srecode-document-insert-comment)
   )
   (add-hook 'c-mode-common-hook 'my-cedet-hook)
   (add-hook 'c++-mode-common-hook 'my-cedet-hook)
@@ -76,24 +84,31 @@
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
   (setq semantic-default-submodes 
-      '(
-	global-semantic-idle-scheduler-mode 
-	global-semantic-idle-completions-mode
-	global-semanticdb-minor-mode
-	global-semantic-decoration-mode
-	global-semantic-highlight-func-mode
-	global-semantic-stickyfunc-mode
-	global-semantic-mru-bookmark-mode
-	))
-)
+    '(
+       global-semantic-idle-scheduler-mode 
+       global-semantic-idle-completions-mode
+       global-semanticdb-minor-mode
+       global-semantic-decoration-mode
+       global-semantic-highlight-func-mode
+       global-semantic-stickyfunc-mode
+       global-semantic-mru-bookmark-mode
+	)))
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
+;補完。auto-completeがあるから要らないかも
+;(define-key global-map "\C-c\C-i" 'dabbrev-expand)   
 ;; dirty fix for having AC everywhere
 (define-globalized-minor-mode real-global-auto-complete-mode
   auto-complete-mode (lambda ()
                        (if (not (minibufferp (current-buffer)))
                          (auto-complete-mode 1))
                        ))
+;;補完候補をC-n/C-pでも選択できるように
+;;Vimmerには嬉しいかも。
+(add-hook 'auto-complete-mode-hook
+          (lambda ()
+            (define-key ac-completing-map (kbd "C-n") 'ac-next)
+            (define-key ac-completing-map (kbd "C-p") 'ac-previous)))
 (real-global-auto-complete-mode t)
 ;;twmode
 (when run-darwin
@@ -324,9 +339,29 @@
 (when run-darwin
   (cd "~/Document/")
 )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック")))))
+(when run-linux
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック")))))
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;その他雑多な設定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; バックアップファイルを作らない
+(setq backup-inhibited t)
+;;; 終了時にオートセーブファイルを消す
+(setq delete-auto-save-files t)
+;;; 圧縮されたファイルも編集できるようにする
+(auto-compression-mode t)
+;;; タイトルバーにファイル名を表示する
+(setq frame-title-format (format "emacs@%s : %%f" (system-name)))
+;;; モードラインに時間を表示する
+(display-time)
+(define-key global-map (kbd "C-z") 'undo)                 ; undo
+(which-function-mode 1)
+;; spell check
+(setq-default flyspell-mode t)
+(setq ispell-dictionary "american")
