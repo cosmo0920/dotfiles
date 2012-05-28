@@ -360,7 +360,6 @@
 (setq frame-title-format (format "emacs@%s : %%f" (system-name)))
 ;;; モードラインに時間を表示する
 (display-time)
-(define-key global-map (kbd "C-z") 'undo)                 ; undo
 (which-function-mode 1)
 ;; spell check
 (setq-default flyspell-mode t)
