@@ -46,19 +46,25 @@
     (require 'semanticdb-global)
     (semanticdb-enable-gnu-global-databases 'c-mode)
     (semanticdb-enable-gnu-global-databases 'c++-mode))
-  ;;for linux Kernel Reading
-  (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/" 'c-mode)
-  ;;for BSD Kernel Reading
-  (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
-  (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
-
-  ;;関数と名前空間等のタグに飛べるimenuの追加
   (defun my-semantic-hook ()
-    (imenu-add-to-menubar "TAGS"))
+    ;;for linux Kernel Reading (x86)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/arch/x86/include" 'c-mode)
+    ;;for BSD Kernel Reading
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/9.0.0/sys/" 'c-mode)
+	;;for boost library
+	(semantic-add-system-include "/media/Data/libboost_1_49_0/include" 'c++-mode)
+
+	;;関数と名前空間等のタグに飛べるimenuの追加
+    (imenu-add-to-menubar "cedet-TAGS")
+  )
+  (semantic-load-enable-gaudy-code-helpers)
   ;;その他色々設定するよ
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
-  (semantic-load-enable-gaudy-code-helpers)
+  
   (defun my-cedet-hook ()
     (local-set-key [(control return)] 'semantic-ia-complete-symbol) 
     ;(local-set-key "." 'semantic-complete-self-insert)
