@@ -24,6 +24,7 @@
   (setq load-path (append '("~/.emacs.d/site-lisp/"
                             "~/.emacs.d/site-elisp/"
 							"~/.emacs.d/elisp/"
+							"/usr/local/share/gtags/"
                             )
                             load-path))
   ;;Ubuntuだとapt-getしたElispはここに置かれる
@@ -48,8 +49,8 @@
     (semanticdb-enable-gnu-global-databases 'c++-mode))
   (defun my-semantic-hook ()
     ;;for linux Kernel Reading (x86)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/include" 'c-mode)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.0/arch/x86/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.4/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.4/arch/x86/include" 'c-mode)
     ;;for BSD Kernel Reading
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
@@ -109,6 +110,8 @@
                        (if (not (minibufferp (current-buffer)))
                          (auto-complete-mode 1))
                        ))
+(when run-linux
+  (require 'auto-complete-etags)) 
 ;;補完候補をC-n/C-pでも選択できるように
 ;;Vimmerには嬉しいかも。
 (add-hook 'auto-complete-mode-hook
@@ -145,6 +148,13 @@
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode t)
+(when run-linux
+  (require 'anything)
+  (require 'anything-config)
+  (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+  (define-key global-map (kbd "C-x b") 'anything)
+  (autoload 'gtags-mode "gtags" "" t))
+
 ; twmode で無効にする
 (defadvice linum-on(around my-linum-twmode-on() activate)
   (unless (eq major-mode 'twittering-mode) ad-do-it))
@@ -157,26 +167,26 @@
 ;;--------------------------------------------------------------------------
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;org-mode
-;(require 'org)
+(autoload 'org "org" "md-lang" t)
 (autoload 'org-install "org-mode" "md lang" t)
-;(require 'org-install)
 (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 (setq org-startup-truncated nil)	; ファイルは折り畳んだ状態で開く
 (setq org-return-follows-link t)	; return でリンクを追う
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org を org-modeで開く
 (setq org-directory "/media/Data/Document/org-memo/")
 ;;Haskell-mode
+(load-library "haskell-site-file")
 (setq auto-mode-alist
   (append auto-mode-alist
-    '(("\\.[hg]s$"  . haskell-mode)    
+    '(("\\.[hg]s$"  . haskell-mode)
       ("\\.hi$"     . haskell-mode)
       ("\\.l[hg]s$" . literate-haskell-mode))))
-
 (autoload 'haskell-mode "haskell-mode"
           "Major mode for editing Haskell scripts." t)
 (autoload 'literate-haskell-mode "haskell-mode"
           "Major mode for editing literate Haskell scripts." t)
-
+(autoload 'ghc-init "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)(flymake-mode)))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -186,7 +196,7 @@
 ;#!/usr/bin/env runghc 用
 (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
 ;#!/usr/bin/env runhaskell 用
-(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
+;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
 ;;for obj-c
 (setq auto-mode-alist
 (append '(("\\.h$" . objc-mode)
@@ -195,6 +205,157 @@
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
 ;;for c
+;;; C-mode,C++-modeの設定
+(defconst my-c-style
+  '(
+    ;; 基本オフセット量の設定
+    (c-basic-offset             . 2)
+    ;; tab キーでインデントを実行
+    (c-tab-always-indent        . t)
+    ;; コメント行のオフセット量の設定
+    (c-comment-only-line-offset . 0)
+    ;; カッコ前後の自動改行処理の設定
+    (c-hanging-braces-alist
+     . (
+        (class-open after)       ; クラス宣言の'{'の後
+        (class-close nil)            ; クラス宣言の'}'の後
+        (defun-open before after)       ; 関数宣言の'{'の前後
+        (defun-close after)             ; 関数宣言の'}'の後
+        (inline-open after)             ; クラス内のインライン
+                                        ; 関数宣言の'{'の後
+        (inline-close after)            ; クラス内のインライン
+                                        ; 関数宣言の'}'の後
+        (brace-list-close after) ; 列挙型、配列宣言の'}'の後
+        (block-open after)              ; ステートメントの'{'の後
+        (block-close after)             ; ステートメントの'}'前後
+        (substatement-open after)       ; サブステートメント
+                                        ; (if 文等)の'{'の後
+        (statement-case-open after)     ; case 文の'{'の後
+        (extern-lang-open after) ; 他言語へのリンケージ宣言の
+                                        ; '{'の前後
+        (extern-lang-close before)      ; 他言語へのリンケージ宣言の
+                                        ; '}'の前
+		(inexpr-class-open after)
+		(inexpr-class-close before)
+        ))
+    ;; コロン前後の自動改行処理の設定
+    (c-hanging-colons-alist
+     . (
+        (case-label after)              ; case ラベルの':'の後
+        (label after)                   ; ラベルの':'の後
+        (access-label after)            ; アクセスラベル(public等)の':'の後
+        (member-init-intro)             ; コンストラクタでのメンバー初期化
+                                        ; リストの先頭の':'では改行しない
+        (inher-intro before)            ; クラス宣言での継承リストの先頭の
+                                        ; ':'では改行しない
+        ))
+    ;; 挿入された余計な空白文字のキャンセル条件の設定
+    ;; 下記の*を削除する
+    (c-cleanup-list
+     . (
+	    brace-else-brace                ; else の直前
+                                        ; "} * else {"  ->  "} else {"
+        brace-elseif-brace              ; else if の直前
+                                        ; "} * else if (.*) {"
+                                        ; ->  } "else if (.*) {"
+        empty-defun-braces              ; 空のクラス・関数定義の'}' の直前
+                                        ;；"{ * }"  ->  "{}"
+        defun-close-semi                ; クラス・関数定義後の';' の直前
+                                        ; "} * ;"  ->  "};"
+        list-close-comma                ; 配列初期化時の'},'の直前
+                                        ; "} * ,"  ->  "},"
+        scope-operator                  ; スコープ演算子'::' の間
+                                        ; ": * :"  ->  "::"
+        ))
+    ;; オフセット量の設定
+    ;; 必要部分のみ抜粋(他の設定に付いては info 参照)
+    ;; オフセット量は下記で指定
+    ;; +  c-basic-offsetの 1倍, ++ c-basic-offsetの 2倍
+    ;; -  c-basic-offsetの-1倍, -- c-basic-offsetの-2倍
+    (c-offsets-alist
+     . (
+        (arglist-intro          . ++)   ; 引数リストの開始行
+        (arglist-close          . c-lineup-arglist) ; 引数リストの終了行
+        (substatement-open      . ++)    ; サブステートメントの開始行
+        (statement-cont         . ++)   ; ステートメントの継続行
+        (case-label             . 0)    ; case 文のラベル行
+        (label                  . 0)    ; ラベル行
+        (block-open             . 0)    ; ブロックの開始行
+		(member-init-intro      . ++)   ; メンバオブジェクトの初期化リスト
+		(defun-block-intro      . +)    ; ブロックで字下げ
+        ))
+    ;; インデント時に構文解析情報を表示する
+    (c-echo-syntactic-information-p . t)
+    )
+  "My C Programming Style")
+;; hook 用の関数の定義
+(defun my-c-mode-common-hook ()
+  ;; my-c-stye を登録して有効にする
+  (c-add-style "My C Programming Style" my-c-style t)
+
+  ;; 次のスタイルがデフォルトで用意されているので選択してもよい
+  ;; (c-set-style "gnu")
+  ;; (c-set-style "k&r")
+  ;; (c-set-style "bsd")
+  ;; (c-set-style "linux")
+  ;; (c-set-style "cc-mode")
+  ;; (c-set-style "stroustrup")
+  ;; (c-set-style "ellemtel")
+  ;; (c-set-style "whitesmith")
+  ;; (c-set-style "python")
+  
+  ;; 既存のスタイルを変更する場合は次のようにする
+  ;; (c-set-offset 'member-init-intro '++)
+
+  ;; auto-fill-mode を有効にする
+  (auto-fill-mode t)
+  ;; タブ長の設定
+  (make-variable-buffer-local 'tab-width)
+  (setq tab-width 4)
+  ;; タブの代わりにスペースを使う
+  (setq indent-tabs-mode nil)
+  ;; 自動改行(auto-newline)を有効にする
+  (setq c-auto-newline 1)
+  ;; 連続する空白の一括削除(hungry-delete)を有効にする
+  (c-toggle-auto-hungry-state 1)
+  ;; セミコロンで自動改行しない
+  (setq c-hanging-semi&comma-criteria nil)
+
+  ;; キーバインドの追加
+  ;; ------------------
+  ;; C-m        改行＋インデント
+  ;; C-c c      コンパイルコマンドの起動
+  ;; C-h        空白の一括削除
+  (define-key c-mode-base-map "\C-m" 'newline-and-indent)
+  (define-key c-mode-base-map "\C-cc" 'compile)
+  (define-key c-mode-base-map "\C-h" 'c-electric-backspace)
+
+  ;; コンパイルコマンドの設定
+  ;; (setq compile-command "gcc ")
+  ;;(setq compile-command "make -k ")
+  (setq compile-command "")
+  ;; (setq compile-command "gmake -k ")
+)
+
+;;; Ruby用のスタイル
+(c-add-style
+ "ruby"
+ '("bsd"
+   (c-basic-offset . 2)
+   (knr-argdecl-intro . 2)
+   (defun-block-intro . 2)
+   ))
+;;; Python用のスタイル
+(c-add-style
+ "python"
+ '("python"
+   (c-basic-offset . 2)
+   (knr-argdecl-intro . 2)
+   (defun-block-intro . 2)
+   ))
+;; モードに入るときに呼び出す hook の設定
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
 (setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
 ;;for asm
 (setq auto-mode-alist (cons '("\\.S$" . asm-mode) auto-mode-alist))
@@ -226,6 +387,9 @@
 ;; for C# mode
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist (cons '("\\.cs$" . csharp-mode) auto-mode-alist))
+;; for SML mode
+(autoload 'sml-mode "sml-mode" "Major mode for editing SML code." t)
+(setq auto-mode-alist (cons '("\\.sml$" . sml-mode) auto-mode-alist))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;C# mode setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -245,7 +409,7 @@
 ;;cuda-mode
 (autoload 'cuda-mode "cuda-mode" "NVIDIA GPGPU Computing Lang." t)
 (setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
-;;tuareg-mode forb OCaml
+;;tuareg-mode for OCaml
 (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
 (autoload 'tuareg-mode "tuareg-mode" "Major mode for editing Caml code" t)
 ;;for D Lang
@@ -263,11 +427,34 @@
 ;;;Hide message
 (setq inhibit-startup-message t)
 (load "elscreen" "ElScreen" t)
+(global-set-key "\M-n" 'next-buffer)
+(global-set-key "\M-p" 'previous-buffer)
+;; 以下は自動でスクリーンを生成する場合の設定
+(defmacro elscreen-create-automatically (ad-do-it)
+  `(if (not (elscreen-one-screen-p))
+       ,ad-do-it
+     (elscreen-create)
+     (elscreen-notify-screen-modification 'force-immediately)
+     (elscreen-message "New screen is automatically created")))
+
+(defadvice elscreen-next (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
+(defadvice elscreen-previous (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
+(defadvice elscreen-toggle (around elscreen-create-automatically activate)
+  (elscreen-create-automatically ad-do-it))
+
+;; elscreen-server
+(require 'elscreen-server)
+;; elscreen-dired
+(require 'elscreen-dired)
+;; elscreen-color-theme
+(require 'elscreen-color-theme)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
       (append (list
 	       '(width . 85)
-	       '(height . 45)
+	       '(height . 50)
 	      )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
@@ -279,6 +466,7 @@
 ;; 日本語入力の設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-language-environment "Japanese")
+(setq default-input-method "japanese-mozc")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;for Ubuntu setting
 (when run-linux
@@ -292,7 +480,25 @@
   (ibus-define-common-key ?\C-/ nil)
   ;; Change cursor color depending on IBus status
   (setq ibus-cursor-color '("limegreen" "white" "yellow"))
-  (global-set-key "\C-\\" 'ibus-toggle))
+  (global-set-key "\C-\\" 'ibus-toggle)
+  ;; 変換キーでon、無変換キーでoffで切り替え
+  (global-set-key
+   [henkan]
+   (lambda () (interactive)
+     (when (null current-input-method) (toggle-input-method))))
+  (global-set-key
+   [muhenkan]
+   (lambda () (interactive)
+     (inactivate-input-method)))
+  (defadvice mozc-handle-event (around intercept-keys (event))
+    "Intercept keys muhenkan and zenkaku-hankaku, before passing keys to mozc-server (which the function mozc-handle-event does), to properly disable mozc-mode."
+  (if (member event (list 'zenkaku-hankaku 'muhenkan))
+      (progn (mozc-clean-up-session)
+             (toggle-input-method))
+    (progn ;(message "%s" event) ;debug
+      ad-do-it)))
+  (ad-activate 'mozc-handle-event)
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ; UTF-8 and Japanese Setting
 
@@ -318,13 +524,7 @@
  '(ede-project-directories (quote ("/media/Data/Document")))
  '(haskell-notify-p t)
  '(haskell-process-type (quote cabal-dev)))
-(when run-linux
-  (custom-set-faces
-    ;; custom-set-faces was added by Custom.
-    ;; If you edit it by hand, you could mess it up, so be careful.
-    ;; Your init file should contain only one such instance.
-    ;; If there is more than one, they won't work right.
-   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ゴシック"))))))
+
 ;;chmod +x
 (defun make-file-executable ()
   "Make the file of this buffer executable, when it is a script source."
@@ -368,5 +568,44 @@
 (display-time)
 (which-function-mode 1)
 ;; spell check
-(setq-default flyspell-mode t)
+(flyspell-mode t)
 (setq ispell-dictionary "american")
+(eval-when-compile
+  ;; Emacs 21 defines `values' as a (run-time) alias for list.
+  ;; Don't maerge this with the pervious clause.
+  (if (string-match "values"
+            (pp (byte-compile (lambda () (values t)))))
+      (defsubst values (&rest values)
+    values)))
+
+;; 同名のファイルを開いたとき親のディレクトリ名も表示
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+;; ファイルの履歴
+(require 'recentf)
+(recentf-mode t)
+(setq recentf-exclude '("^\\.emacs\\.bmk$"))
+(setq recentf-max-menu-items 10)
+(setq recentf-max-saved-items 20)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; キーバインドの設定
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; M-g で指定行へジャンプ
+(global-set-key "\M-g" 'goto-line)
+
+;; リージョンをコメントアウト
+(global-set-key "\C-c;" 'comment-region)
+
+;; バッファの最初の行で previous-line しても、
+;; "beginning-of-buffer" と注意されないようにする。
+(defun previous-line (arg)
+  (interactive "p")
+  (if (interactive-p)
+      (condition-case nil
+          (line-move (- arg))
+        ((beginning-of-buffer end-of-buffer)))
+    (line-move (- arg)))
+  nil)
+;;大文字小文字を区別したい
+(setq default-case-fold-search nil)
