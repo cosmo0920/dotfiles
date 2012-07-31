@@ -1,17 +1,17 @@
-;; OS¤òÈ½ÊÌ¡¢UNIX·Ï¡©
+;; OSã‚’åˆ¤åˆ¥ã€UNIXç³»ï¼Ÿ
 (defvar run-unix
   (or (equal system-type 'gnu/linux)
       (or (equal system-type 'usg-unix-v)
           (or  (equal system-type 'berkeley-unix)
                (equal system-type 'cygwin)))))
-; OS¤òÈ½ÊÌ¡¢¸ÄÊÌÈ½ÊÌ
+; OSã‚’åˆ¤åˆ¥ã€å€‹åˆ¥åˆ¤åˆ¥
 (defvar run-linux
   (equal system-type 'gnu/linux))
 (defvar run-system-v
   (equal system-type 'usg-unix-v)); OpenSolaris2090.06
 (defvar run-bsd
   (equal system-type 'berkeley-unix))
-(defvar run-cygwin ;; cygwin¤âunix¥°¥ë¡¼¥×¤Ë¤·¤Æ¤ª¤¯
+(defvar run-cygwin ;; cygwinã‚‚unixã‚°ãƒ«ãƒ¼ãƒ—ã«ã—ã¦ãŠã
   (equal system-type 'cygwin))
 
 (defvar run-w32
@@ -27,7 +27,7 @@
 							"/usr/local/share/gtags/"
                             )
                             load-path))
-  ;;Ubuntu¤À¤Èapt-get¤·¤¿Elisp¤Ï¤³¤³¤ËÃÖ¤«¤ì¤ë
+  ;;Ubuntuã ã¨apt-getã—ãŸElispã¯ã“ã“ã«ç½®ã‹ã‚Œã‚‹
   (let ((default-directory "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
 )
@@ -58,11 +58,11 @@
 	;;for boost library
 	(semantic-add-system-include "/media/Data/libboost_1_49_0/include" 'c++-mode)
 
-	;;´Ø¿ô¤ÈÌ¾Á°¶õ´ÖÅù¤Î¥¿¥°¤ËÈô¤Ù¤ëimenu¤ÎÄÉ²Ã
+	;;é–¢æ•°ã¨åå‰ç©ºé–“ç­‰ã®ã‚¿ã‚°ã«é£›ã¹ã‚‹imenuã®è¿½åŠ 
     (imenu-add-to-menubar "cedet-TAGS")
   )
   (semantic-load-enable-gaudy-code-helpers)
-  ;;¤½¤ÎÂ¾¿§¡¹ÀßÄê¤¹¤ë¤è
+  ;;ãã®ä»–è‰²ã€…è¨­å®šã™ã‚‹ã‚ˆ
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
   
@@ -75,11 +75,11 @@
     (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
     (local-set-key "\C-xp" 'eassist-switch-h-cpp)
     (local-set-key "\C-xe" 'eassist-list-methods)
-	;;¥·¥ó¥Ü¥ë¤Î»²¾È¤ò¸¡º÷
+	;;ã‚·ãƒ³ãƒœãƒ«ã®å‚ç…§ã‚’æ¤œç´¢
     (local-set-key "\C-c/" 'semantic-symref)
 	;;insert get/set methoid pair inc class field
     (local-set-key "\C-cgs" 'srecode-insert-getset)
-	;;¥³¥á¥ó¥È¤Î¤Ò¤Ê·Á¤òÀ¸À®
+	;;ã‚³ãƒ¡ãƒ³ãƒˆã®ã²ãªå½¢ã‚’ç”Ÿæˆ
 	(local-set-key "\C-ci" 'srecode-document-insert-comment)
   )
   (add-hook 'c-mode-common-hook 'my-cedet-hook)
@@ -101,8 +101,8 @@
        global-semantic-mru-bookmark-mode
 	)))
 (require 'auto-complete)
-(require 'auto-complete-config)    ; É¬¿Ü¤Ç¤Ï¤Ê¤¤¤Ç¤¹¤¬°ì±ş
-;Êä´°¡£auto-complete¤¬¤¢¤ë¤«¤éÍ×¤é¤Ê¤¤¤«¤â
+(require 'auto-complete-config)    ; å¿…é ˆã§ã¯ãªã„ã§ã™ãŒä¸€å¿œ
+;è£œå®Œã€‚auto-completeãŒã‚ã‚‹ã‹ã‚‰è¦ã‚‰ãªã„ã‹ã‚‚
 ;(define-key global-map "\C-c\C-i" 'dabbrev-expand)   
 ;; dirty fix for having AC everywhere
 (define-globalized-minor-mode real-global-auto-complete-mode
@@ -112,8 +112,8 @@
                        ))
 (when run-linux
   (require 'auto-complete-etags)) 
-;;Êä´°¸õÊä¤òC-n/C-p¤Ç¤âÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë
-;;Vimmer¤Ë¤Ï´ò¤·¤¤¤«¤â¡£
+;;è£œå®Œå€™è£œã‚’C-n/C-pã§ã‚‚é¸æŠã§ãã‚‹ã‚ˆã†ã«
+;;Vimmerã«ã¯å¬‰ã—ã„ã‹ã‚‚ã€‚
 (add-hook 'auto-complete-mode-hook
           (lambda ()
             (define-key ac-completing-map (kbd "C-n") 'ac-next)
@@ -145,7 +145,7 @@
                      ("U" . twittering-user-timeline)
                      ("W" . twittering-update-status-interactive)
 					 ("F". twittering-favorite )))))
-;; ¹ÔÈÖ¹æÉ½¼¨
+;; è¡Œç•ªå·è¡¨ç¤º
 (require 'linum)
 (global-linum-mode t)
 (when run-linux
@@ -155,7 +155,7 @@
   (define-key global-map (kbd "C-x b") 'anything)
   (autoload 'gtags-mode "gtags" "" t))
 
-; twmode ¤ÇÌµ¸ú¤Ë¤¹¤ë
+; twmode ã§ç„¡åŠ¹ã«ã™ã‚‹
 (defadvice linum-on(around my-linum-twmode-on() activate)
   (unless (eq major-mode 'twittering-mode) ad-do-it))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -170,9 +170,9 @@
 (autoload 'org "org" "md-lang" t)
 (autoload 'org-install "org-mode" "md lang" t)
 (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
-(setq org-startup-truncated nil)	; ¥Õ¥¡¥¤¥ë¤ÏÀŞ¤ê¾ö¤ó¤À¾õÂÖ¤Ç³«¤¯
-(setq org-return-follows-link t)	; return ¤Ç¥ê¥ó¥¯¤òÄÉ¤¦
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org ¤ò org-mode¤Ç³«¤¯
+(setq org-startup-truncated nil)	; ãƒ•ã‚¡ã‚¤ãƒ«ã¯æŠ˜ã‚Šç•³ã‚“ã çŠ¶æ…‹ã§é–‹ã
+(setq org-return-follows-link t)	; return ã§ãƒªãƒ³ã‚¯ã‚’è¿½ã†
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org ã‚’ org-modeã§é–‹ã
 (setq org-directory "/media/Data/Document/org-memo/")
 ;;Haskell-mode
 (load-library "haskell-site-file")
@@ -191,11 +191,11 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; HugsÍÑ
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; Hugsç”¨
 (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)  
-;#!/usr/bin/env runghc ÍÑ
+;#!/usr/bin/env runghc ç”¨
 (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
-;#!/usr/bin/env runhaskell ÍÑ
+;#!/usr/bin/env runhaskell ç”¨
 ;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
 ;;for obj-c
 (setq auto-mode-alist
@@ -205,95 +205,95 @@
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
 ;;for c
-;;; C-mode,C++-mode¤ÎÀßÄê
+;;; C-mode,C++-modeã®è¨­å®š
 (defconst my-c-style
   '(
-    ;; ´ğËÜ¥ª¥Õ¥»¥Ã¥ÈÎÌ¤ÎÀßÄê
+    ;; åŸºæœ¬ã‚ªãƒ•ã‚»ãƒƒãƒˆé‡ã®è¨­å®š
     (c-basic-offset             . 2)
-    ;; tab ¥­¡¼¤Ç¥¤¥ó¥Ç¥ó¥È¤ò¼Â¹Ô
+    ;; tab ã‚­ãƒ¼ã§ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’å®Ÿè¡Œ
     (c-tab-always-indent        . t)
-    ;; ¥³¥á¥ó¥È¹Ô¤Î¥ª¥Õ¥»¥Ã¥ÈÎÌ¤ÎÀßÄê
+    ;; ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã®ã‚ªãƒ•ã‚»ãƒƒãƒˆé‡ã®è¨­å®š
     (c-comment-only-line-offset . 0)
-    ;; ¥«¥Ã¥³Á°¸å¤Î¼«Æ°²ş¹Ô½èÍı¤ÎÀßÄê
+    ;; ã‚«ãƒƒã‚³å‰å¾Œã®è‡ªå‹•æ”¹è¡Œå‡¦ç†ã®è¨­å®š
     (c-hanging-braces-alist
      . (
-        (class-open after)       ; ¥¯¥é¥¹Àë¸À¤Î'{'¤Î¸å
-        (class-close nil)            ; ¥¯¥é¥¹Àë¸À¤Î'}'¤Î¸å
-        (defun-open before after)       ; ´Ø¿ôÀë¸À¤Î'{'¤ÎÁ°¸å
-        (defun-close after)             ; ´Ø¿ôÀë¸À¤Î'}'¤Î¸å
-        (inline-open after)             ; ¥¯¥é¥¹Æâ¤Î¥¤¥ó¥é¥¤¥ó
-                                        ; ´Ø¿ôÀë¸À¤Î'{'¤Î¸å
-        (inline-close after)            ; ¥¯¥é¥¹Æâ¤Î¥¤¥ó¥é¥¤¥ó
-                                        ; ´Ø¿ôÀë¸À¤Î'}'¤Î¸å
-        (brace-list-close after) ; Îóµó·¿¡¢ÇÛÎóÀë¸À¤Î'}'¤Î¸å
-        (block-open after)              ; ¥¹¥Æ¡¼¥È¥á¥ó¥È¤Î'{'¤Î¸å
-        (block-close after)             ; ¥¹¥Æ¡¼¥È¥á¥ó¥È¤Î'}'Á°¸å
-        (substatement-open after)       ; ¥µ¥Ö¥¹¥Æ¡¼¥È¥á¥ó¥È
-                                        ; (if Ê¸Åù)¤Î'{'¤Î¸å
-        (statement-case-open after)     ; case Ê¸¤Î'{'¤Î¸å
-        (extern-lang-open after) ; Â¾¸À¸ì¤Ø¤Î¥ê¥ó¥±¡¼¥¸Àë¸À¤Î
-                                        ; '{'¤ÎÁ°¸å
-        (extern-lang-close before)      ; Â¾¸À¸ì¤Ø¤Î¥ê¥ó¥±¡¼¥¸Àë¸À¤Î
-                                        ; '}'¤ÎÁ°
+        (class-open after)       ; ã‚¯ãƒ©ã‚¹å®£è¨€ã®'{'ã®å¾Œ
+        (class-close nil)            ; ã‚¯ãƒ©ã‚¹å®£è¨€ã®'}'ã®å¾Œ
+        (defun-open before after)       ; é–¢æ•°å®£è¨€ã®'{'ã®å‰å¾Œ
+        (defun-close after)             ; é–¢æ•°å®£è¨€ã®'}'ã®å¾Œ
+        (inline-open after)             ; ã‚¯ãƒ©ã‚¹å†…ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³
+                                        ; é–¢æ•°å®£è¨€ã®'{'ã®å¾Œ
+        (inline-close after)            ; ã‚¯ãƒ©ã‚¹å†…ã®ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³
+                                        ; é–¢æ•°å®£è¨€ã®'}'ã®å¾Œ
+        (brace-list-close after) ; åˆ—æŒ™å‹ã€é…åˆ—å®£è¨€ã®'}'ã®å¾Œ
+        (block-open after)              ; ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã®'{'ã®å¾Œ
+        (block-close after)             ; ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã®'}'å‰å¾Œ
+        (substatement-open after)       ; ã‚µãƒ–ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆ
+                                        ; (if æ–‡ç­‰)ã®'{'ã®å¾Œ
+        (statement-case-open after)     ; case æ–‡ã®'{'ã®å¾Œ
+        (extern-lang-open after) ; ä»–è¨€èªã¸ã®ãƒªãƒ³ã‚±ãƒ¼ã‚¸å®£è¨€ã®
+                                        ; '{'ã®å‰å¾Œ
+        (extern-lang-close before)      ; ä»–è¨€èªã¸ã®ãƒªãƒ³ã‚±ãƒ¼ã‚¸å®£è¨€ã®
+                                        ; '}'ã®å‰
 		(inexpr-class-open after)
 		(inexpr-class-close before)
         ))
-    ;; ¥³¥í¥óÁ°¸å¤Î¼«Æ°²ş¹Ô½èÍı¤ÎÀßÄê
+    ;; ã‚³ãƒ­ãƒ³å‰å¾Œã®è‡ªå‹•æ”¹è¡Œå‡¦ç†ã®è¨­å®š
     (c-hanging-colons-alist
      . (
-        (case-label after)              ; case ¥é¥Ù¥ë¤Î':'¤Î¸å
-        (label after)                   ; ¥é¥Ù¥ë¤Î':'¤Î¸å
-        (access-label after)            ; ¥¢¥¯¥»¥¹¥é¥Ù¥ë(publicÅù)¤Î':'¤Î¸å
-        (member-init-intro)             ; ¥³¥ó¥¹¥È¥é¥¯¥¿¤Ç¤Î¥á¥ó¥Ğ¡¼½é´ü²½
-                                        ; ¥ê¥¹¥È¤ÎÀèÆ¬¤Î':'¤Ç¤Ï²ş¹Ô¤·¤Ê¤¤
-        (inher-intro before)            ; ¥¯¥é¥¹Àë¸À¤Ç¤Î·Ñ¾µ¥ê¥¹¥È¤ÎÀèÆ¬¤Î
-                                        ; ':'¤Ç¤Ï²ş¹Ô¤·¤Ê¤¤
+        (case-label after)              ; case ãƒ©ãƒ™ãƒ«ã®':'ã®å¾Œ
+        (label after)                   ; ãƒ©ãƒ™ãƒ«ã®':'ã®å¾Œ
+        (access-label after)            ; ã‚¢ã‚¯ã‚»ã‚¹ãƒ©ãƒ™ãƒ«(publicç­‰)ã®':'ã®å¾Œ
+        (member-init-intro)             ; ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§ã®ãƒ¡ãƒ³ãƒãƒ¼åˆæœŸåŒ–
+                                        ; ãƒªã‚¹ãƒˆã®å…ˆé ­ã®':'ã§ã¯æ”¹è¡Œã—ãªã„
+        (inher-intro before)            ; ã‚¯ãƒ©ã‚¹å®£è¨€ã§ã®ç¶™æ‰¿ãƒªã‚¹ãƒˆã®å…ˆé ­ã®
+                                        ; ':'ã§ã¯æ”¹è¡Œã—ãªã„
         ))
-    ;; ÁŞÆş¤µ¤ì¤¿Í¾·×¤Ê¶õÇòÊ¸»ú¤Î¥­¥ã¥ó¥»¥ë¾ò·ï¤ÎÀßÄê
-    ;; ²¼µ­¤Î*¤òºï½ü¤¹¤ë
+    ;; æŒ¿å…¥ã•ã‚ŒãŸä½™è¨ˆãªç©ºç™½æ–‡å­—ã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«æ¡ä»¶ã®è¨­å®š
+    ;; ä¸‹è¨˜ã®*ã‚’å‰Šé™¤ã™ã‚‹
     (c-cleanup-list
      . (
-	    brace-else-brace                ; else ¤ÎÄ¾Á°
+	    brace-else-brace                ; else ã®ç›´å‰
                                         ; "} * else {"  ->  "} else {"
-        brace-elseif-brace              ; else if ¤ÎÄ¾Á°
+        brace-elseif-brace              ; else if ã®ç›´å‰
                                         ; "} * else if (.*) {"
                                         ; ->  } "else if (.*) {"
-        empty-defun-braces              ; ¶õ¤Î¥¯¥é¥¹¡¦´Ø¿ôÄêµÁ¤Î'}' ¤ÎÄ¾Á°
-                                        ;¡¨"{ * }"  ->  "{}"
-        defun-close-semi                ; ¥¯¥é¥¹¡¦´Ø¿ôÄêµÁ¸å¤Î';' ¤ÎÄ¾Á°
+        empty-defun-braces              ; ç©ºã®ã‚¯ãƒ©ã‚¹ãƒ»é–¢æ•°å®šç¾©ã®'}' ã®ç›´å‰
+                                        ;ï¼›"{ * }"  ->  "{}"
+        defun-close-semi                ; ã‚¯ãƒ©ã‚¹ãƒ»é–¢æ•°å®šç¾©å¾Œã®';' ã®ç›´å‰
                                         ; "} * ;"  ->  "};"
-        list-close-comma                ; ÇÛÎó½é´ü²½»ş¤Î'},'¤ÎÄ¾Á°
+        list-close-comma                ; é…åˆ—åˆæœŸåŒ–æ™‚ã®'},'ã®ç›´å‰
                                         ; "} * ,"  ->  "},"
-        scope-operator                  ; ¥¹¥³¡¼¥×±é»»»Ò'::' ¤Î´Ö
+        scope-operator                  ; ã‚¹ã‚³ãƒ¼ãƒ—æ¼”ç®—å­'::' ã®é–“
                                         ; ": * :"  ->  "::"
         ))
-    ;; ¥ª¥Õ¥»¥Ã¥ÈÎÌ¤ÎÀßÄê
-    ;; É¬Í×ÉôÊ¬¤Î¤ßÈ´¿è(Â¾¤ÎÀßÄê¤ËÉÕ¤¤¤Æ¤Ï info »²¾È)
-    ;; ¥ª¥Õ¥»¥Ã¥ÈÎÌ¤Ï²¼µ­¤Ç»ØÄê
-    ;; +  c-basic-offset¤Î 1ÇÜ, ++ c-basic-offset¤Î 2ÇÜ
-    ;; -  c-basic-offset¤Î-1ÇÜ, -- c-basic-offset¤Î-2ÇÜ
+    ;; ã‚ªãƒ•ã‚»ãƒƒãƒˆé‡ã®è¨­å®š
+    ;; å¿…è¦éƒ¨åˆ†ã®ã¿æŠœç²‹(ä»–ã®è¨­å®šã«ä»˜ã„ã¦ã¯ info å‚ç…§)
+    ;; ã‚ªãƒ•ã‚»ãƒƒãƒˆé‡ã¯ä¸‹è¨˜ã§æŒ‡å®š
+    ;; +  c-basic-offsetã® 1å€, ++ c-basic-offsetã® 2å€
+    ;; -  c-basic-offsetã®-1å€, -- c-basic-offsetã®-2å€
     (c-offsets-alist
      . (
-        (arglist-intro          . ++)   ; °ú¿ô¥ê¥¹¥È¤Î³«»Ï¹Ô
-        (arglist-close          . c-lineup-arglist) ; °ú¿ô¥ê¥¹¥È¤Î½ªÎ»¹Ô
-        (substatement-open      . ++)    ; ¥µ¥Ö¥¹¥Æ¡¼¥È¥á¥ó¥È¤Î³«»Ï¹Ô
-        (statement-cont         . ++)   ; ¥¹¥Æ¡¼¥È¥á¥ó¥È¤Î·ÑÂ³¹Ô
-        (case-label             . 0)    ; case Ê¸¤Î¥é¥Ù¥ë¹Ô
-        (label                  . 0)    ; ¥é¥Ù¥ë¹Ô
-        (block-open             . 0)    ; ¥Ö¥í¥Ã¥¯¤Î³«»Ï¹Ô
-		(member-init-intro      . ++)   ; ¥á¥ó¥Ğ¥ª¥Ö¥¸¥§¥¯¥È¤Î½é´ü²½¥ê¥¹¥È
-		(defun-block-intro      . +)    ; ¥Ö¥í¥Ã¥¯¤Ç»ú²¼¤²
+        (arglist-intro          . ++)   ; å¼•æ•°ãƒªã‚¹ãƒˆã®é–‹å§‹è¡Œ
+        (arglist-close          . c-lineup-arglist) ; å¼•æ•°ãƒªã‚¹ãƒˆã®çµ‚äº†è¡Œ
+        (substatement-open      . ++)    ; ã‚µãƒ–ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã®é–‹å§‹è¡Œ
+        (statement-cont         . ++)   ; ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã®ç¶™ç¶šè¡Œ
+        (case-label             . 0)    ; case æ–‡ã®ãƒ©ãƒ™ãƒ«è¡Œ
+        (label                  . 0)    ; ãƒ©ãƒ™ãƒ«è¡Œ
+        (block-open             . 0)    ; ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹è¡Œ
+		(member-init-intro      . ++)   ; ãƒ¡ãƒ³ãƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–ãƒªã‚¹ãƒˆ
+		(defun-block-intro      . +)    ; ãƒ–ãƒ­ãƒƒã‚¯ã§å­—ä¸‹ã’
         ))
-    ;; ¥¤¥ó¥Ç¥ó¥È»ş¤Ë¹½Ê¸²òÀÏ¾ğÊó¤òÉ½¼¨¤¹¤ë
+    ;; ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ™‚ã«æ§‹æ–‡è§£ææƒ…å ±ã‚’è¡¨ç¤ºã™ã‚‹
     (c-echo-syntactic-information-p . t)
     )
   "My C Programming Style")
-;; hook ÍÑ¤Î´Ø¿ô¤ÎÄêµÁ
+;; hook ç”¨ã®é–¢æ•°ã®å®šç¾©
 (defun my-c-mode-common-hook ()
-  ;; my-c-stye ¤òÅĞÏ¿¤·¤ÆÍ­¸ú¤Ë¤¹¤ë
+  ;; my-c-stye ã‚’ç™»éŒ²ã—ã¦æœ‰åŠ¹ã«ã™ã‚‹
   (c-add-style "My C Programming Style" my-c-style t)
 
-  ;; ¼¡¤Î¥¹¥¿¥¤¥ë¤¬¥Ç¥Õ¥©¥ë¥È¤ÇÍÑ°Õ¤µ¤ì¤Æ¤¤¤ë¤Î¤ÇÁªÂò¤·¤Æ¤â¤è¤¤
+  ;; æ¬¡ã®ã‚¹ã‚¿ã‚¤ãƒ«ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ç”¨æ„ã•ã‚Œã¦ã„ã‚‹ã®ã§é¸æŠã—ã¦ã‚‚ã‚ˆã„
   ;; (c-set-style "gnu")
   ;; (c-set-style "k&r")
   ;; (c-set-style "bsd")
@@ -304,40 +304,40 @@
   ;; (c-set-style "whitesmith")
   ;; (c-set-style "python")
   
-  ;; ´ûÂ¸¤Î¥¹¥¿¥¤¥ë¤òÊÑ¹¹¤¹¤ë¾ì¹ç¤Ï¼¡¤Î¤è¤¦¤Ë¤¹¤ë
+  ;; æ—¢å­˜ã®ã‚¹ã‚¿ã‚¤ãƒ«ã‚’å¤‰æ›´ã™ã‚‹å ´åˆã¯æ¬¡ã®ã‚ˆã†ã«ã™ã‚‹
   ;; (c-set-offset 'member-init-intro '++)
 
-  ;; auto-fill-mode ¤òÍ­¸ú¤Ë¤¹¤ë
+  ;; auto-fill-mode ã‚’æœ‰åŠ¹ã«ã™ã‚‹
   (auto-fill-mode t)
-  ;; ¥¿¥ÖÄ¹¤ÎÀßÄê
+  ;; ã‚¿ãƒ–é•·ã®è¨­å®š
   (make-variable-buffer-local 'tab-width)
   (setq tab-width 4)
-  ;; ¥¿¥Ö¤ÎÂå¤ï¤ê¤Ë¥¹¥Ú¡¼¥¹¤ò»È¤¦
+  ;; ã‚¿ãƒ–ã®ä»£ã‚ã‚Šã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’ä½¿ã†
   (setq indent-tabs-mode nil)
-  ;; ¼«Æ°²ş¹Ô(auto-newline)¤òÍ­¸ú¤Ë¤¹¤ë
+  ;; è‡ªå‹•æ”¹è¡Œ(auto-newline)ã‚’æœ‰åŠ¹ã«ã™ã‚‹
   (setq c-auto-newline 1)
-  ;; Ï¢Â³¤¹¤ë¶õÇò¤Î°ì³çºï½ü(hungry-delete)¤òÍ­¸ú¤Ë¤¹¤ë
+  ;; é€£ç¶šã™ã‚‹ç©ºç™½ã®ä¸€æ‹¬å‰Šé™¤(hungry-delete)ã‚’æœ‰åŠ¹ã«ã™ã‚‹
   (c-toggle-auto-hungry-state 1)
-  ;; ¥»¥ß¥³¥í¥ó¤Ç¼«Æ°²ş¹Ô¤·¤Ê¤¤
+  ;; ã‚»ãƒŸã‚³ãƒ­ãƒ³ã§è‡ªå‹•æ”¹è¡Œã—ãªã„
   (setq c-hanging-semi&comma-criteria nil)
 
-  ;; ¥­¡¼¥Ğ¥¤¥ó¥É¤ÎÄÉ²Ã
+  ;; ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã®è¿½åŠ 
   ;; ------------------
-  ;; C-m        ²ş¹Ô¡Ü¥¤¥ó¥Ç¥ó¥È
-  ;; C-c c      ¥³¥ó¥Ñ¥¤¥ë¥³¥Ş¥ó¥É¤Îµ¯Æ°
-  ;; C-h        ¶õÇò¤Î°ì³çºï½ü
+  ;; C-m        æ”¹è¡Œï¼‹ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
+  ;; C-c c      ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚³ãƒãƒ³ãƒ‰ã®èµ·å‹•
+  ;; C-h        ç©ºç™½ã®ä¸€æ‹¬å‰Šé™¤
   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
   (define-key c-mode-base-map "\C-cc" 'compile)
   (define-key c-mode-base-map "\C-h" 'c-electric-backspace)
 
-  ;; ¥³¥ó¥Ñ¥¤¥ë¥³¥Ş¥ó¥É¤ÎÀßÄê
+  ;; ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚³ãƒãƒ³ãƒ‰ã®è¨­å®š
   ;; (setq compile-command "gcc ")
   ;;(setq compile-command "make -k ")
   (setq compile-command "")
   ;; (setq compile-command "gmake -k ")
 )
 
-;;; RubyÍÑ¤Î¥¹¥¿¥¤¥ë
+;;; Rubyç”¨ã®ã‚¹ã‚¿ã‚¤ãƒ«
 (c-add-style
  "ruby"
  '("bsd"
@@ -345,7 +345,7 @@
    (knr-argdecl-intro . 2)
    (defun-block-intro . 2)
    ))
-;;; PythonÍÑ¤Î¥¹¥¿¥¤¥ë
+;;; Pythonç”¨ã®ã‚¹ã‚¿ã‚¤ãƒ«
 (c-add-style
  "python"
  '("python"
@@ -353,7 +353,7 @@
    (knr-argdecl-intro . 2)
    (defun-block-intro . 2)
    ))
-;; ¥â¡¼¥É¤ËÆş¤ë¤È¤­¤Ë¸Æ¤Ó½Ğ¤¹ hook ¤ÎÀßÄê
+;; ãƒ¢ãƒ¼ãƒ‰ã«å…¥ã‚‹ã¨ãã«å‘¼ã³å‡ºã™ hook ã®è¨­å®š
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 (setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
@@ -420,16 +420,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;for magit
 (autoload 'magit "magit" "Emacs git client." t)
-;; ¤Ş¤º¡¢install-elisp ¤Î¥³¥Ş¥ó¥É¤ò»È¤¨¤ëÍÍ¤Ë¤·¤Ş¤¹¡£
+;; ã¾ãšã€install-elisp ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ä½¿ãˆã‚‹æ§˜ã«ã—ã¾ã™ã€‚
 (autoload 'install-elisp "install-elisp" "install emacs lisp" t)
-;; ¼¡¤Ë¡¢Elisp ¥Õ¥¡¥¤¥ë¤ò¥¤¥ó¥¹¥È¡¼¥ë¤¹¤ë¾ì½ê¤ò»ØÄê¤·¤Ş¤¹¡£
+;; æ¬¡ã«ã€Elisp ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹å ´æ‰€ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;;Hide message
 (setq inhibit-startup-message t)
 (load "elscreen" "ElScreen" t)
 (global-set-key "\M-n" 'next-buffer)
 (global-set-key "\M-p" 'previous-buffer)
-;; °Ê²¼¤Ï¼«Æ°¤Ç¥¹¥¯¥ê¡¼¥ó¤òÀ¸À®¤¹¤ë¾ì¹ç¤ÎÀßÄê
+;; ä»¥ä¸‹ã¯è‡ªå‹•ã§ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚’ç”Ÿæˆã™ã‚‹å ´åˆã®è¨­å®š
 (defmacro elscreen-create-automatically (ad-do-it)
   `(if (not (elscreen-one-screen-p))
        ,ad-do-it
@@ -450,7 +450,7 @@
 (require 'elscreen-dired)
 ;; elscreen-color-theme
 (require 'elscreen-color-theme)
-;; µ¯Æ°»ş¤Î¥µ¥¤¥º,É½¼¨°ÌÃÖ,¥Õ¥©¥ó¥È¤ò»ØÄê
+;; èµ·å‹•æ™‚ã®ã‚µã‚¤ã‚º,è¡¨ç¤ºä½ç½®,ãƒ•ã‚©ãƒ³ãƒˆã‚’æŒ‡å®š
 (setq initial-frame-alist
       (append (list
 	       '(width . 85)
@@ -463,7 +463,7 @@
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ÆüËÜ¸ìÆşÎÏ¤ÎÀßÄê
+;; æ—¥æœ¬èªå…¥åŠ›ã®è¨­å®š
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-language-environment "Japanese")
 (setq default-input-method "japanese-mozc")
@@ -481,7 +481,7 @@
   ;; Change cursor color depending on IBus status
   (setq ibus-cursor-color '("limegreen" "white" "yellow"))
   (global-set-key "\C-\\" 'ibus-toggle)
-  ;; ÊÑ´¹¥­¡¼¤Çon¡¢ÌµÊÑ´¹¥­¡¼¤Çoff¤ÇÀÚ¤êÂØ¤¨
+  ;; å¤‰æ›ã‚­ãƒ¼ã§onã€ç„¡å¤‰æ›ã‚­ãƒ¼ã§offã§åˆ‡ã‚Šæ›¿ãˆ
   (global-set-key
    [henkan]
    (lambda () (interactive)
@@ -551,20 +551,20 @@
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ¥´¥·¥Ã¥¯")))))
+   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ã‚´ã‚·ãƒƒã‚¯")))))
 )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;¤½¤ÎÂ¾»¨Â¿¤ÊÀßÄê
+;;ãã®ä»–é›‘å¤šãªè¨­å®š
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ¥Ğ¥Ã¥¯¥¢¥Ã¥×¥Õ¥¡¥¤¥ë¤òºî¤é¤Ê¤¤
+;;; ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
 (setq backup-inhibited t)
-;;; ½ªÎ»»ş¤Ë¥ª¡¼¥È¥»¡¼¥Ö¥Õ¥¡¥¤¥ë¤ò¾Ã¤¹
+;;; çµ‚äº†æ™‚ã«ã‚ªãƒ¼ãƒˆã‚»ãƒ¼ãƒ–ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¶ˆã™
 (setq delete-auto-save-files t)
-;;; °µ½Ì¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤âÊÔ½¸¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+;;; åœ§ç¸®ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚‚ç·¨é›†ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 (auto-compression-mode t)
-;;; ¥¿¥¤¥È¥ë¥Ğ¡¼¤Ë¥Õ¥¡¥¤¥ëÌ¾¤òÉ½¼¨¤¹¤ë
+;;; ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã«ãƒ•ã‚¡ã‚¤ãƒ«åã‚’è¡¨ç¤ºã™ã‚‹
 (setq frame-title-format (format "emacs@%s : %%f" (system-name)))
-;;; ¥â¡¼¥É¥é¥¤¥ó¤Ë»ş´Ö¤òÉ½¼¨¤¹¤ë
+;;; ãƒ¢ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ³ã«æ™‚é–“ã‚’è¡¨ç¤ºã™ã‚‹
 (display-time)
 (which-function-mode 1)
 ;; spell check
@@ -578,27 +578,27 @@
       (defsubst values (&rest values)
     values)))
 
-;; Æ±Ì¾¤Î¥Õ¥¡¥¤¥ë¤ò³«¤¤¤¿¤È¤­¿Æ¤Î¥Ç¥£¥ì¥¯¥È¥êÌ¾¤âÉ½¼¨
+;; åŒåã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã„ãŸã¨ãè¦ªã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚‚è¡¨ç¤º
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-;; ¥Õ¥¡¥¤¥ë¤ÎÍúÎò
+;; ãƒ•ã‚¡ã‚¤ãƒ«ã®å±¥æ­´
 (require 'recentf)
 (recentf-mode t)
 (setq recentf-exclude '("^\\.emacs\\.bmk$"))
 (setq recentf-max-menu-items 10)
 (setq recentf-max-saved-items 20)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ¥­¡¼¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+;; ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; M-g ¤Ç»ØÄê¹Ô¤Ø¥¸¥ã¥ó¥×
+;; M-g ã§æŒ‡å®šè¡Œã¸ã‚¸ãƒ£ãƒ³ãƒ—
 (global-set-key "\M-g" 'goto-line)
 
-;; ¥ê¡¼¥¸¥ç¥ó¤ò¥³¥á¥ó¥È¥¢¥¦¥È
+;; ãƒªãƒ¼ã‚¸ãƒ§ãƒ³ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 (global-set-key "\C-c;" 'comment-region)
 
-;; ¥Ğ¥Ã¥Õ¥¡¤ÎºÇ½é¤Î¹Ô¤Ç previous-line ¤·¤Æ¤â¡¢
-;; "beginning-of-buffer" ¤ÈÃí°Õ¤µ¤ì¤Ê¤¤¤è¤¦¤Ë¤¹¤ë¡£
+;; ãƒãƒƒãƒ•ã‚¡ã®æœ€åˆã®è¡Œã§ previous-line ã—ã¦ã‚‚ã€
+;; "beginning-of-buffer" ã¨æ³¨æ„ã•ã‚Œãªã„ã‚ˆã†ã«ã™ã‚‹ã€‚
 (defun previous-line (arg)
   (interactive "p")
   (if (interactive-p)
@@ -607,5 +607,5 @@
         ((beginning-of-buffer end-of-buffer)))
     (line-move (- arg)))
   nil)
-;;ÂçÊ¸»ú¾®Ê¸»ú¤ò¶èÊÌ¤·¤¿¤¤
+;;å¤§æ–‡å­—å°æ–‡å­—ã‚’åŒºåˆ¥ã—ãŸã„
 (setq default-case-fold-search nil)
