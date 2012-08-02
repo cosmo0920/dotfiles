@@ -151,7 +151,13 @@
 (when run-linux
   (require 'anything)
   (require 'anything-config)
-  (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+  (setq  anything-sources
+     '(anything-c-source-buffers
+       anything-c-source-imenu
+       anything-c-source-emacs-commands
+       anything-c-source-etags-select
+       anything-c-source-gtags-select
+      )) 
   (define-key global-map (kbd "C-x b") 'anything)
   (autoload 'gtags-mode "gtags" "" t))
 
