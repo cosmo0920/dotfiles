@@ -49,8 +49,8 @@
     (semanticdb-enable-gnu-global-databases 'c++-mode))
   (defun my-semantic-hook ()
     ;;for linux Kernel Reading (x86)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.4/include" 'c-mode)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.4.4/arch/x86/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.0/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.0/arch/x86/include" 'c-mode)
     ;;for BSD Kernel Reading
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
@@ -316,8 +316,37 @@
   (setq indent-tabs-mode nil)
   ;; 自動改行(auto-newline)を有効にする
   (setq c-auto-newline 1)
+  ;; 最後に改行を入れる。
+  (setq require-final-newline t)
   ;; 連続する空白の一括削除(hungry-delete)を有効にする
   (c-toggle-auto-hungry-state 1)
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;参考：http://d.hatena.ne.jp/syohex/20110119/1295450495
+  ;; for whitespace-mode
+  (require 'whitespace)
+  ;; see whitespace.el for more details
+  (setq whitespace-style '(face tabs tab-mark spaces space-mark))
+  (setq whitespace-display-mappings
+    '((space-mark ?\u3000 [?\u25a1])
+      ;; WARNING: the mapping below has a problem.
+      ;; When a TAB occupies exactly one column, it will display the
+      ;; character ?\xBB at that column followed by a TAB which goes to
+      ;; the next TAB column.
+      ;; If this is a problem for you, please, comment the line below.
+      (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t])))
+  (setq whitespace-space-regexp "\\(\u3000+\\)")
+  (set-face-foreground 'whitespace-tab "#20b2aa")
+  (set-face-background 'whitespace-tab 'nil)
+  (set-face-underline  'whitespace-tab t)
+  (set-face-foreground 'whitespace-space "#4169e1")
+  (set-face-background 'whitespace-space 'nil)
+  (set-face-bold-p 'whitespace-space t)
+  (global-whitespace-mode 1)
+  (global-set-key (kbd "C-x w") 'global-whitespace-mode)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; white space mode setting end
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; セミコロンで自動改行しない
   (setq c-hanging-semi&comma-criteria nil)
 
