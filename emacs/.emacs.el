@@ -155,8 +155,8 @@
      '(anything-c-source-buffers
        anything-c-source-imenu
        anything-c-source-emacs-commands
-       anything-c-source-etags-select
-       anything-c-source-gtags-select
+       ;;anything-c-source-etags-select
+       ;;anything-c-source-gtags-select
       )) 
   (define-key global-map (kbd "C-x b") 'anything)
   (autoload 'gtags-mode "gtags" "" t))
@@ -181,17 +181,17 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org を org-modeで開く
 (setq org-directory "/media/Data/Document/org-memo/")
 ;;Haskell-mode
-(load-library "haskell-site-file")
+(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+(autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
+(autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
+(autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
+(autoload 'ghc-init "ghc" nil t)
 (setq auto-mode-alist
   (append auto-mode-alist
     '(("\\.[hg]s$"  . haskell-mode)
       ("\\.hi$"     . haskell-mode)
-      ("\\.l[hg]s$" . literate-haskell-mode))))
-(autoload 'haskell-mode "haskell-mode"
-          "Major mode for editing Haskell scripts." t)
-(autoload 'literate-haskell-mode "haskell-mode"
-          "Major mode for editing literate Haskell scripts." t)
-(autoload 'ghc-init "ghc" nil t)
+      ("\\.l[hg]s$" . literate-haskell-mode)
+      ("\\.cabal\\'" . haskell-cabal-mode))))
 (add-hook 'haskell-mode-hook (lambda () (ghc-init)(flymake-mode)))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
@@ -202,7 +202,7 @@
 ;#!/usr/bin/env runghc 用
 (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
 ;#!/usr/bin/env runhaskell 用
-;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
+(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
 ;;for obj-c
 (setq auto-mode-alist
 (append '(("\\.h$" . objc-mode)
@@ -450,6 +450,11 @@
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
+;;for Kuin
+(autoload 'kuin-mode "kuin-mode" nil t)
+(add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
+(setq auto-mode-alist
+    (cons (cons "\\.kn$" 'kuin-mode) auto-mode-alist))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;verify mode section end.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -490,13 +495,32 @@
       (append (list
 	       '(width . 85)
 	       '(height . 50)
-	      )
+		   )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 (setq-default tab-width 4)
 (setq default-tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+;;speedbarの設定
+(when (locate-library "speedbar")
+  (require 'speedbar)
+  (add-hook 'speedbar-mode-hook
+          '(lambda ()
+             (speedbar-add-supported-extension '("cs" "hs" "cu"))))
+  ; "a" で無視ファイル表示/非表示のトグル
+  (define-key speedbar-file-key-map "a" 'speedbar-toggle-show-all-files)
+  ;; ← や → でもディレクトリを開閉 ;;デフォルト: "=" "+", "-"
+  (define-key speedbar-file-key-map [right] 'my-speedbar-expand-line)
+  (define-key speedbar-file-key-map "\C-f" 'my-speedbar-expand-line)
+  (define-key speedbar-file-key-map [left] 'speedbar-contract-line)
+  (define-key speedbar-file-key-map "\C-b" 'speedbar-contract-line)
+  ;; BS でも上位ディレクトリへ ;;デフォルト: "U"
+  (define-key speedbar-file-key-map [backspace] 'speedbar-up-directory)
+  (define-key speedbar-file-key-map "\C-h" 'speedbar-up-directory)
+  ;; F4 で Speedbar
+  (global-set-key [f4] 'speedbar-get-focus)
+           )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 日本語入力の設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
