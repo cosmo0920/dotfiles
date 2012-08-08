@@ -425,6 +425,10 @@
 ;; for SML mode
 (autoload 'sml-mode "sml-mode" "Major mode for editing SML code." t)
 (setq auto-mode-alist (cons '("\\.sml$" . sml-mode) auto-mode-alist))
+;;for Emas Lisp mode
+(autoload 'emacs-lisp-mode "emacs-lisp-mode" "editing ELisp." t)
+(setq auto-mode-alist (cons '("\\.el$" . emacs-lisp-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '(".emacs$" . emacs-lisp-mode) auto-mode-alist))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;C# mode setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
