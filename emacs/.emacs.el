@@ -1,10 +1,10 @@
 ;; OSを判別、UNIX系？
 (defvar run-unix
   (or (equal system-type 'gnu/linux)
-      (or (equal system-type 'usg-unix-v)
+     (or (equal system-type 'usg-unix-v)
           (or  (equal system-type 'berkeley-unix)
                (equal system-type 'cygwin)))))
-; OSを判別、個別判別
+;; OSを判別、個別判別
 (defvar run-linux
   (equal system-type 'gnu/linux))
 (defvar run-system-v
@@ -17,14 +17,14 @@
 (defvar run-w32
   (and (null run-unix)
        (or (equal system-type 'windows-nt)
-           (equal system-type 'ms-dos))))
+          (equal system-type 'ms-dos))))
 (defvar run-darwin (equal system-type 'darwin))
 ;;for Ubuntu setting
 (when run-linux
   (setq load-path (append '("~/.emacs.d/site-lisp/"
                             "~/.emacs.d/site-elisp/"
-							"~/.emacs.d/elisp/"
-							"/usr/local/share/gtags/"
+                            "~/.emacs.d/elisp/"
+                            "/usr/local/share/gtags/"
                             )
                             load-path))
   ;;Ubuntuだとapt-getしたElispはここに置かれる
@@ -49,15 +49,17 @@
     (semanticdb-enable-gnu-global-databases 'c++-mode))
   (defun my-semantic-hook ()
     ;;for linux Kernel Reading (x86)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.0/include" 'c-mode)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.0/arch/x86/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.3/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.5.3/arch/x86/include" 'c-mode)
     ;;for BSD Kernel Reading
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/9.0.0/sys/" 'c-mode)
 	;;for boost library
-	(semantic-add-system-include "/media/Data/libboost_1_49_0/include" 'c++-mode)
-
+	(semantic-add-system-include "/media/Data/libboost_1_51_0/include" 'c++-mode)
+	;; for glib-2.0
+    (semantic-add-system-include "/usr/include/glib-2.0" 'c-mode)
+	(semantic-add-system-include "/usr/lib/x86_64-linux-gnu/glib-2.0/include" 'c-mode)
 	;;関数と名前空間等のタグに飛べるimenuの追加
     (imenu-add-to-menubar "cedet-TAGS")
   )
@@ -67,7 +69,8 @@
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
   
   (defun my-cedet-hook ()
-    (local-set-key [(control return)] 'semantic-ia-complete-symbol) 
+    (local-set-key [(control return)] 'semantic-ia-complete-symbol)
+    ;;(semantic-mode 1)
     ;(local-set-key "." 'semantic-complete-self-insert)
     ;(local-set-key ">" 'semantic-complete-self-insert)
     (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
@@ -103,7 +106,7 @@
 (require 'auto-complete)
 (require 'auto-complete-config)    ; 必須ではないですが一応
 ;補完。auto-completeがあるから要らないかも
-;(define-key global-map "\C-c\C-i" 'dabbrev-expand)   
+(define-key global-map "\C-c\C-i" 'dabbrev-expand)   
 ;; dirty fix for having AC everywhere
 (define-globalized-minor-mode real-global-auto-complete-mode
   auto-complete-mode (lambda ()
@@ -144,26 +147,28 @@
                      ("R" . twittering-replies-timeline)
                      ("U" . twittering-user-timeline)
                      ("W" . twittering-update-status-interactive)
-					 ("F". twittering-favorite )))))
+                     ("F". twittering-favorite )))))
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode t)
-(when run-linux
-  (require 'anything)
-  (require 'anything-config)
-  (setq  anything-sources
-     '(anything-c-source-buffers
-       anything-c-source-imenu
-       anything-c-source-emacs-commands
-       ;;anything-c-source-etags-select
-       ;;anything-c-source-gtags-select
-      )) 
-  (define-key global-map (kbd "C-x b") 'anything)
-  (autoload 'gtags-mode "gtags" "" t))
-
-; twmode で無効にする
+;; twmode で無効にする
 (defadvice linum-on(around my-linum-twmode-on() activate)
   (unless (eq major-mode 'twittering-mode) ad-do-it))
+(when run-linux
+  (when (locate-library "anything")
+	(require 'anything)
+	(require 'anything-startup)
+	(setq  anything-sources
+		   '(anything-c-source-buffers
+			 anything-c-source-imenu
+			 anything-c-source-emacs-commands
+			 ;;anything-c-source-etags-select
+			 ;;anything-c-source-gtags-select
+			 )) 
+	(define-key global-map (kbd "C-x b") 'anything)
+	(autoload 'gtags-mode "gtags" "" t)))
+;;(when run-linux
+;;  (when (locate-library "flymake")))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;verify file mode section
 ;;--------------------------------------------------------------------------
@@ -181,8 +186,8 @@
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org を org-modeで開く
 (setq org-directory "/media/Data/Document/org-memo/")
 ;;Haskell-mode
-(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
 (autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
+(require 'inf-haskell)
 (autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
 (autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
 (autoload 'ghc-init "ghc" nil t)
@@ -192,7 +197,6 @@
       ("\\.hi$"     . haskell-mode)
       ("\\.l[hg]s$" . literate-haskell-mode)
       ("\\.cabal\\'" . haskell-cabal-mode))))
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)(flymake-mode)))
 (add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -429,6 +433,8 @@
 (autoload 'emacs-lisp-mode "emacs-lisp-mode" "editing ELisp." t)
 (setq auto-mode-alist (cons '("\\.el$" . emacs-lisp-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '(".emacs$" . emacs-lisp-mode) auto-mode-alist))
+;;for OpenCL
+(setq auto-mode-alist (cons '("\.cl$" . c-mode) auto-mode-alist))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;C# mode setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -470,30 +476,32 @@
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 ;;;Hide message
 (setq inhibit-startup-message t)
-(load "elscreen" "ElScreen" t)
-(global-set-key "\M-n" 'next-buffer)
-(global-set-key "\M-p" 'previous-buffer)
-;; 以下は自動でスクリーンを生成する場合の設定
-(defmacro elscreen-create-automatically (ad-do-it)
-  `(if (not (elscreen-one-screen-p))
-       ,ad-do-it
-     (elscreen-create)
-     (elscreen-notify-screen-modification 'force-immediately)
-     (elscreen-message "New screen is automatically created")))
+(when (locate-library "elscreen")
+  (load "elscreen" "ElScreen" t)
+  (global-set-key "\M-n" 'next-buffer)
+  (global-set-key "\M-p" 'previous-buffer)
+  ;; 以下は自動でスクリーンを生成する場合の設定
+  (defmacro elscreen-create-automatically (ad-do-it)
+	`(if (not (elscreen-one-screen-p))
+		 ,ad-do-it
+	   (elscreen-create)
+	   (elscreen-notify-screen-modification 'force-immediately)
+	   (elscreen-message "New screen is automatically created")))
 
-(defadvice elscreen-next (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
-(defadvice elscreen-previous (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
-(defadvice elscreen-toggle (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
+  (defadvice elscreen-next (around elscreen-create-automatically activate)
+	(elscreen-create-automatically ad-do-it))
+  (defadvice elscreen-previous (around elscreen-create-automatically activate)
+	(elscreen-create-automatically ad-do-it))
+  (defadvice elscreen-toggle (around elscreen-create-automatically activate)
+	(elscreen-create-automatically ad-do-it))
 
-;; elscreen-server
-(require 'elscreen-server)
-;; elscreen-dired
-(require 'elscreen-dired)
-;; elscreen-color-theme
-(require 'elscreen-color-theme)
+  ;; elscreen-server
+  (require 'elscreen-server)
+  ;; elscreen-dired
+  (require 'elscreen-dired)
+  ;; elscreen-color-theme
+  (require 'elscreen-color-theme)
+  )
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
       (append (list
@@ -511,7 +519,7 @@
   (require 'speedbar)
   (add-hook 'speedbar-mode-hook
           '(lambda ()
-             (speedbar-add-supported-extension '("cs" "hs" "cu"))))
+             (speedbar-add-supported-extension '("cs" "hs" "cu" "lhs"))))
   ; "a" で無視ファイル表示/非表示のトグル
   (define-key speedbar-file-key-map "a" 'speedbar-toggle-show-all-files)
   ;; ← や → でもディレクトリを開閉 ;;デフォルト: "=" "+", "-"
@@ -650,6 +658,23 @@
 (setq recentf-exclude '("^\\.emacs\\.bmk$"))
 (setq recentf-max-menu-items 10)
 (setq recentf-max-saved-items 20)
+(setq semantic-load-turn-useful-things-on t)
+(require 'shell-pop)
+(shell-pop-set-internal-mode "ansi-term")
+(shell-pop-set-internal-mode-shell "/usr/bin/zsh")
+
+(defvar ansi-term-after-hook nil)
+(add-hook 'ansi-term-after-hook
+          (function
+           (lambda ()
+             (define-key term-raw-map "\C-t" 'shell-pop))))
+(defadvice ansi-term (after ansi-term-after-advice (arg))
+  "run hook as after advice"
+  (run-hooks 'ansi-term-after-hook))
+(ad-activate 'ansi-term)
+
+(global-set-key "\C-t" 'shell-pop)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインドの設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -659,6 +684,8 @@
 
 ;; リージョンをコメントアウト
 (global-set-key "\C-c;" 'comment-region)
+;;bookmark-jump
+(global-set-key "\C-c\C-f" 'bookmark-jump)
 
 ;; バッファの最初の行で previous-line しても、
 ;; "beginning-of-buffer" と注意されないようにする。
