@@ -39,9 +39,13 @@
 ;;for Ubuntu setting
 (when run-linux
   (load-file "~/.emacs.d/cedet/common/cedet.el")
+  (setq semantic-load-turn-everything-on t)
+  (require 'semantic-load)
   (require 'semantic-gcc)
   ;;(global-ede-mode t)
   (require 'semanticdb)
+  ;; function definition is void: eieio-build-class-alist
+  (require 'eieio-opt)
   ;; if you want to enable support for gnu global
   (when (cedet-gnu-global-version-check t)
     (require 'semanticdb-global)
@@ -227,26 +231,27 @@
     ;; カッコ前後の自動改行処理の設定
     (c-hanging-braces-alist
      . (
-        (class-open after)       ; クラス宣言の'{'の後
-        (class-close nil)            ; クラス宣言の'}'の後
+        (class-open after)              ; クラス宣言の'{'の後
+        (class-close nil)               ; クラス宣言の'}'の後
         (defun-open before after)       ; 関数宣言の'{'の前後
         (defun-close after)             ; 関数宣言の'}'の後
         (inline-open after)             ; クラス内のインライン
                                         ; 関数宣言の'{'の後
         (inline-close after)            ; クラス内のインライン
                                         ; 関数宣言の'}'の後
-        (brace-list-close after) ; 列挙型、配列宣言の'}'の後
-        (block-open after)              ; ステートメントの'{'の後
-        (block-close after)             ; ステートメントの'}'前後
+        (brace-if-brace after)          ; ifの'{'の後
+        (brace-else-brace after)        ; else'{'の後
+        (brace-elseif-brace after)      ; else if'{'の後
+        (brace-list-close after)        ; 列挙型、配列宣言の'}'の後
+        (block-open before)             ; ステートメントの'{'の後
+        (block-close before)            ; ステートメントの'}'前後
         (substatement-open after)       ; サブステートメント
                                         ; (if 文等)の'{'の後
         (statement-case-open after)     ; case 文の'{'の後
-        (extern-lang-open after) ; 他言語へのリンケージ宣言の
+        (extern-lang-open after)        ; 他言語へのリンケージ宣言の
                                         ; '{'の前後
         (extern-lang-close before)      ; 他言語へのリンケージ宣言の
                                         ; '}'の前
-		(inexpr-class-open after)
-		(inexpr-class-close before)
         ))
     ;; コロン前後の自動改行処理の設定
     (c-hanging-colons-alist
@@ -308,7 +313,7 @@
   ;; (c-set-style "k&r")
   ;; (c-set-style "bsd")
   ;; (c-set-style "linux")
-  ;; (c-set-style "cc-mode")
+  ;;(c-set-style "cc-mode")
   ;; (c-set-style "stroustrup")
   ;; (c-set-style "ellemtel")
   ;; (c-set-style "whitesmith")
@@ -507,11 +512,11 @@
       (append (list
 	       '(width . 85)
 	       '(height . 50)
-		   )
+      )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
-(setq-default tab-width 4)
-(setq default-tab-width 4)
+(setq-default tab-width 2)
+(setq default-tab-width 2)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 ;;speedbarの設定
@@ -633,6 +638,11 @@
 (setq delete-auto-save-files t)
 ;;; 圧縮されたファイルも編集できるようにする
 (auto-compression-mode t)
+;;=====ediff=====
+;;; ediffを1ウィンドウで実行
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;;; diffのオプション
+(setq diff-switches '("-u" "-p" "-N"))
 ;;; タイトルバーにファイル名を表示する
 (setq frame-title-format (format "emacs@%s : %%f" (system-name)))
 ;;; モードラインに時間を表示する
@@ -648,6 +658,29 @@
             (pp (byte-compile (lambda () (values t)))))
       (defsubst values (&rest values)
     values)))
+
+;; バッファの最初の行で previous-line しても、
+;; "beginning-of-buffer" と注意されないようにする。
+(defun previous-line (arg)
+  (interactive "p")
+  (if (interactive-p)
+      (condition-case nil
+          (line-move (- arg))
+        ((beginning-of-buffer end-of-buffer)))
+    (line-move (- arg)))
+  nil)
+;;大文字小文字を区別したい
+(setq default-case-fold-search nil)
+;;; 対応する括弧を光らせる。
+(show-paren-mode 1)
+;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
+(setq show-paren-style 'mixed)
+;;; 現在行を目立たせる
+;(global-hl-line-mode)
+;;; カーソルの位置が何文字目かを表示する
+(column-number-mode t)
+;;; カーソルの位置が何行目かを表示する
+(line-number-mode t)
 
 ;; 同名のファイルを開いたとき親のディレクトリ名も表示
 (require 'uniquify)
@@ -672,9 +705,11 @@
   "run hook as after advice"
   (run-hooks 'ansi-term-after-hook))
 (ad-activate 'ansi-term)
-
 (global-set-key "\C-t" 'shell-pop)
-
+;;行ハイライト
+;;参考：http://kawaguchi.posterous.com/25367725
+(global-hl-line-mode t)
+(set-face-background 'hl-line "light sky blue")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインドの設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -686,16 +721,10 @@
 (global-set-key "\C-c;" 'comment-region)
 ;;bookmark-jump
 (global-set-key "\C-c\C-f" 'bookmark-jump)
-
-;; バッファの最初の行で previous-line しても、
-;; "beginning-of-buffer" と注意されないようにする。
-(defun previous-line (arg)
-  (interactive "p")
-  (if (interactive-p)
-      (condition-case nil
-          (line-move (- arg))
-        ((beginning-of-buffer end-of-buffer)))
-    (line-move (- arg)))
-  nil)
-;;大文字小文字を区別したい
-(setq default-case-fold-search nil)
+;; Emacsを半透明・透明にする
+(global-set-key "\C-xa" 
+  (lambda () (interactive) 
+    (set-frame-parameter nil 'alpha 80)))
+(global-set-key "\C-ca"
+  (lambda () (interactive)
+     (set-frame-parameter nil 'alpha 100)))
