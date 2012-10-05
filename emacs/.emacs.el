@@ -162,6 +162,7 @@
   (when (locate-library "anything")
 	(require 'anything)
 	(require 'anything-startup)
+	(require 'anything-config)
 	(setq  anything-sources
 		   '(anything-c-source-buffers
 			 anything-c-source-imenu
@@ -379,6 +380,7 @@
   ;;(setq compile-command "make -k ")
   (setq compile-command "")
   ;; (setq compile-command "gmake -k ")
+  (setq compilation-window-height 20)
 )
 
 ;;; Ruby用のスタイル
@@ -515,8 +517,8 @@
       )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
-(setq-default tab-width 2)
-(setq default-tab-width 2)
+(setq-default tab-width 4)
+(setq default-tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 ;;speedbarの設定
@@ -634,6 +636,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; バックアップファイルを作らない
 (setq backup-inhibited t)
+; バックアップファイルを一箇所にまとめる
+(setq make-backup-files t)
+(setq backup-directory-alist
+      (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
+     backup-directory-alist))
+
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 ;;; 圧縮されたファイルも編集できるようにする
@@ -675,12 +683,12 @@
 (show-paren-mode 1)
 ;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
 (setq show-paren-style 'mixed)
-;;; 現在行を目立たせる
-;(global-hl-line-mode)
 ;;; カーソルの位置が何文字目かを表示する
 (column-number-mode t)
 ;;; カーソルの位置が何行目かを表示する
 (line-number-mode t)
+; scratchバッファの初期メッセージを消す
+(setq initial-scratch-message "")
 
 ;; 同名のファイルを開いたとき親のディレクトリ名も表示
 (require 'uniquify)
@@ -695,7 +703,7 @@
 (require 'shell-pop)
 (shell-pop-set-internal-mode "ansi-term")
 (shell-pop-set-internal-mode-shell "/usr/bin/zsh")
-
+;;shell-pop.elの設定
 (defvar ansi-term-after-hook nil)
 (add-hook 'ansi-term-after-hook
           (function
@@ -706,10 +714,11 @@
   (run-hooks 'ansi-term-after-hook))
 (ad-activate 'ansi-term)
 (global-set-key "\C-t" 'shell-pop)
+
 ;;行ハイライト
 ;;参考：http://kawaguchi.posterous.com/25367725
 (global-hl-line-mode t)
-(set-face-background 'hl-line "light sky blue")
+(set-face-background 'hl-line "alice blue")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインドの設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -718,7 +727,11 @@
 (global-set-key "\M-g" 'goto-line)
 
 ;; リージョンをコメントアウト
-(global-set-key "\C-c;" 'comment-region)
+(global-set-key "\C-x;" 'comment-region)
+;; リージョンをコメントアウト解除
+(global-set-key "\C-c;" 'uncomment-region)
+;; リージョンのコメントアウトをトグル
+(global-set-key "\M-;" 'comment-or-uncomment-region)
 ;;bookmark-jump
 (global-set-key "\C-c\C-f" 'bookmark-jump)
 ;; Emacsを半透明・透明にする
@@ -728,3 +741,10 @@
 (global-set-key "\C-ca"
   (lambda () (interactive)
      (set-frame-parameter nil 'alpha 100)))
+;;etags関連のキーバインド定義
+(defun find-tag-next ()
+  (interactive)
+  (find-tag last-tag t))
+(global-set-key (kbd "C-M-.")   'find-tag-next)
+(global-set-key (kbd "M-,")     'find-tag-other-window)
+(global-set-key (kbd "C-M-,")   'find-tag-regexp)
