@@ -1,8 +1,15 @@
-﻿;;for Ubuntu setting
+;;for Ubuntu setting
+(require 'my-ostype)
 (provide 'my-semantic)
 (when run-linux
   (load-file "~/.emacs.d/cedet/common/cedet.el")
   (setq semantic-load-turn-everything-on t)
+  (semantic-load-enable-code-helpers)
+  (global-semantic-tag-folding-mode)
+  (global-semantic-idle-scheduler-mode 1)
+  (global-semantic-idle-completions-mode 1)
+  (global-semantic-idle-summary-mode 1)
+  (global-srecode-minor-mode 1)
   (require 'semantic/senator)
   (require 'semantic)
   (require 'semantic-ia)
@@ -55,7 +62,6 @@
     (local-set-key "\C-cj" 'semantic-complete-jump-local)
     (local-set-key "\C-cn" 'senator-next-tag)
     (local-set-key "\C-cp" 'senator-previous-tag)
-    (local-set-key "\C-c\M-t" 'senator-fold-tag-toggle)
     ;;シンボルの参照を検索    
     (local-set-key "\C-c\M-g" 'semantic-symref-symbol)
     (local-set-key "\C-c/" 'semantic-symref)

@@ -1,4 +1,4 @@
-﻿(provide 'my-ostype)
+(provide 'my-ostype)
 ;; OSを判別、UNIX系？
 (defvar run-unix
   (or (equal system-type 'gnu/linux)

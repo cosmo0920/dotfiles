@@ -1,3 +1,4 @@
+(require 'my-ostype)
 (provide 'my-ftype)
 ;;my autoload elisp library
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

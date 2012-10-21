@@ -1,4 +1,5 @@
-﻿(provide 'my-langenv)
+(require 'my-ostype)
+(provide 'my-langenv)
 ;;my japanese language Emacs environment setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 日本語入力の設定
