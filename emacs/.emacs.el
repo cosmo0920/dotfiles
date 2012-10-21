@@ -52,7 +52,8 @@
                          (auto-complete-mode 1))
                        ))
 (when run-linux
-  (require 'auto-complete-etags)) 
+  (require 'auto-complete-etags)
+  (add-to-list 'ac-sources 'ac-source-etags)) 
 ;;補完候補をC-n/C-pでも選択できるように
 ;;Vimmerには嬉しいかも。
 (add-hook 'auto-complete-mode-hook
@@ -101,14 +102,12 @@
 		   '(anything-c-source-buffers
 			 anything-c-source-imenu
 			 anything-c-source-emacs-commands
-			 ;;anything-c-source-etags-select
-			 ;;anything-c-source-gtags-select
+			 anything-c-source-etags-select
 			 )) 
-	(define-key global-map (kbd "C-x b") 'anything)
-	(autoload 'gtags-mode "gtags" "" t)))
+	(define-key global-map (kbd "C-x b") 'anything)))
+
 ;;(when run-linux
 ;;  (when (locate-library "flymake")))
-
 ;;verify file mode
 (require 'my-ftype)
 ;;for magit
@@ -153,8 +152,7 @@
       )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
-(setq-default tab-width 4)
-(setq default-tab-width 4)
+(setq tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 ;;speedbarの設定
@@ -199,41 +197,8 @@
                 (set-file-modes name (logior mode (logand (/ mode 4) 73)))
                 (message (concat "Wrote " name " (+x)"))))))))
 (add-hook 'after-save-hook 'make-file-executable)
-;;change default directory for Ubuntu
-(when run-linux
-  (cd "/media/Data/Document")
-)
-;;change default directory for OSX
-(when run-darwin
-  (cd "~/Document/")
-)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;その他雑多な設定
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; バックアップファイルを作らない
-(setq backup-inhibited t)
-; バックアップファイルを一箇所にまとめる
-(setq make-backup-files t)
-(setq backup-directory-alist
-      (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
-     backup-directory-alist))
-
-;;; 終了時にオートセーブファイルを消す
-(setq delete-auto-save-files t)
-;;; 圧縮されたファイルも編集できるようにする
-(auto-compression-mode t)
-;;=====ediff=====
-;;; ediffを1ウィンドウで実行
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-;;; diffのオプション
-(setq diff-switches '("-u" "-p" "-N"))
-;;; タイトルバーにファイル名を表示する
-(setq frame-title-format (format "emacs@%s : %%f" (system-name)))
-;;; モードラインに時間を表示する
-(display-time)
-(which-function-mode 1)
-;; spell check
+;;雑多な設定 @my-econf
+(require 'my-econf)
 (flyspell-mode t)
 (setq ispell-dictionary "american")
 (eval-when-compile
@@ -243,29 +208,6 @@
             (pp (byte-compile (lambda () (values t)))))
       (defsubst values (&rest values)
     values)))
-
-;; バッファの最初の行で previous-line しても、
-;; "beginning-of-buffer" と注意されないようにする。
-(defun previous-line (arg)
-  (interactive "p")
-  (if (interactive-p)
-      (condition-case nil
-          (line-move (- arg))
-        ((beginning-of-buffer end-of-buffer)))
-    (line-move (- arg)))
-  nil)
-;;大文字小文字を区別したい
-(setq default-case-fold-search nil)
-;;; 対応する括弧を光らせる。
-(show-paren-mode 1)
-;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
-(setq show-paren-style 'mixed)
-;;; カーソルの位置が何文字目かを表示する
-(column-number-mode t)
-;;; カーソルの位置が何行目かを表示する
-(line-number-mode t)
-; scratchバッファの初期メッセージを消す
-(setq initial-scratch-message "")
 
 ;; 同名のファイルを開いたとき親のディレクトリ名も表示
 (require 'uniquify)
@@ -291,40 +233,28 @@
   (run-hooks 'ansi-term-after-hook))
 (ad-activate 'ansi-term)
 (global-set-key "\C-t" 'shell-pop)
-
-;;行ハイライト
-;;参考：http://kawaguchi.posterous.com/25367725
-(global-hl-line-mode t)
-(set-face-background 'hl-line "alice blue")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; キーバインドの設定
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; M-g で指定行へジャンプ
-(global-set-key "\M-g" 'goto-line)
-;; リージョンをコメントアウト
-(global-set-key "\C-x;" 'comment-region)
-;; リージョンをコメントアウト解除
-(global-set-key "\C-c;" 'uncomment-region)
-;; リージョンのコメントアウトをトグル
-(global-set-key "\M-;" 'comment-or-uncomment-region)
-;;bookmark-jump
-(global-set-key "\C-c\C-f" 'bookmark-jump)
-;; Emacsを半透明・透明にする
-(global-set-key "\C-xa" 
-  (lambda () (interactive) 
-    (set-frame-parameter nil 'alpha 80)))
-(global-set-key "\C-ca"
-  (lambda () (interactive)
-     (set-frame-parameter nil 'alpha 100)))
-;;etags関連のキーバインド定義
-(defun find-tag-next ()
-  (interactive)
-  (find-tag last-tag t))
-(global-set-key (kbd "C-M-.")   'find-tag-next)
-(global-set-key (kbd "M-,")     'find-tag-other-window)
-(global-set-key (kbd "C-M-,")   'find-tag-regexp)
-
+;; @ hideshow/fold-dwim.el
+;; ブロックの折畳みと展開
+;; http://www.dur.ac.uk/p.j.heslin/Software/Emacs/Download/fold-dwim.el
+(when (require 'fold-dwim nil t)
+  (require 'hideshow nil t)
+  ;; 機能を利用するメジャーモード一覧
+  (let ((hook))
+    (dolist (hook
+             '(emacs-lisp-mode-hook
+               c-mode-common-hook
+               python-mode-hook
+               php-mode-hook
+               ruby-mode-hook
+               js2-mode-hook
+               css-mode-hook
+			   cuda-mode-hook
+			   d-mode-hook
+               apples-mode-hook))
+      (add-hook hook 'hs-minor-mode))))
+(global-set-key (kbd "<f7>")      'fold-dwim-toggle)
+(global-set-key (kbd "<S-f7>")  'fold-dwim-hide-all)
+(global-set-key (kbd "<S-M-f7>")  'fold-dwim-show-all)
 ;; Prefixのghciとシステムのghciを切り替える
 (when (locate-library "haskell-mode")
   (global-set-key "\C-\M-h" 

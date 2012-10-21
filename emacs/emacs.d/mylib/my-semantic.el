@@ -5,11 +5,6 @@
   (load-file "~/.emacs.d/cedet/common/cedet.el")
   (setq semantic-load-turn-everything-on t)
   (semantic-load-enable-code-helpers)
-  (global-semantic-tag-folding-mode)
-  (global-semantic-idle-scheduler-mode 1)
-  (global-semantic-idle-completions-mode 1)
-  (global-semantic-idle-summary-mode 1)
-  (global-srecode-minor-mode 1)
   (require 'semantic/senator)
   (require 'semantic)
   (require 'semantic-ia)
@@ -22,6 +17,10 @@
   ;; function definition is void: eieio-build-class-alist
   (require 'eieio)
   (require 'eieio-opt)
+  (require 'eassist)
+  ;; ctags
+  (require 'semanticdb-ectag)
+  (semantic-load-enable-secondary-exuberent-ctags-support)
   ;; if you want to enable support for gnu global
   (when (cedet-gnu-global-version-check t)
     (require 'semanticdb-global)
@@ -57,8 +56,8 @@
     (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
     (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
     (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
-    (local-set-key "\C-xp" 'eassist-switch-h-cpp)
-    (local-set-key "\C-xe" 'eassist-list-methods)
+    (local-set-key "\M-o" 'eassist-switch-h-cpp)
+    (local-set-key "\M-m" 'eassist-list-methods)
     (local-set-key "\C-cj" 'semantic-complete-jump-local)
     (local-set-key "\C-cn" 'senator-next-tag)
     (local-set-key "\C-cp" 'senator-previous-tag)

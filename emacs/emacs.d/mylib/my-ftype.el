@@ -47,6 +47,8 @@
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
 ;;for c
+;; タブ長の設定
+(make-variable-buffer-local 'tab-width)
 ;;; C-mode,C++-modeの設定
 (defconst my-c-style
   '(
@@ -152,8 +154,6 @@
 
   ;; auto-fill-mode を有効にする
   (auto-fill-mode t)
-  ;; タブ長の設定
-  (make-variable-buffer-local 'tab-width)
   (setq tab-width 4)
   ;; タブの代わりにスペースを使う
   (setq indent-tabs-mode nil)
