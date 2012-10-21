@@ -1,4 +1,4 @@
-;;for Ubuntu setting
+ï»¿;;for Ubuntu setting
 (provide 'my-semantic)
 (when run-linux
   (load-file "~/.emacs.d/cedet/common/cedet.el")
@@ -33,11 +33,11 @@
 	;; for glib-2.0
     (semantic-add-system-include "/usr/include/glib-2.0" 'c-mode)
 	(semantic-add-system-include "/usr/lib/x86_64-linux-gnu/glib-2.0/include" 'c-mode)
-	;;´Ø¿ô¤ÈÌ¾Á°¶õ´ÖÅù¤Î¥¿¥°¤ËÈô¤Ù¤ëimenu¤ÎÄÉ²Ã
+	;;é–¢æ•°ã¨åå‰ç©ºé–“ç­‰ã®ã‚¿ã‚°ã«é£›ã¹ã‚‹imenuã®è¿½åŠ 
     (imenu-add-to-menubar "cedet-TAGS"))
 
   (semantic-load-enable-gaudy-code-helpers)
-  ;;¤½¤ÎÂ¾¿§¡¹ÀßÄê¤¹¤ë¤è
+  ;;ãã®ä»–è‰²ã€…è¨­å®šã™ã‚‹ã‚ˆ
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
   
@@ -46,7 +46,7 @@
     ;;(semantic-mode 1)
     ;(local-set-key "." 'semantic-complete-self-insert)
     ;(local-set-key ">" 'semantic-complete-self-insert)
-    ;;semantic¤Î¥­¡¼¥Ğ¥¤¥ó¥É´ØÏ¢    
+    ;;semanticã®ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰é–¢é€£    
     (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
     (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
     (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
@@ -56,13 +56,13 @@
     (local-set-key "\C-cn" 'senator-next-tag)
     (local-set-key "\C-cp" 'senator-previous-tag)
     (local-set-key "\C-c\M-t" 'senator-fold-tag-toggle)
-    ;;¥·¥ó¥Ü¥ë¤Î»²¾È¤ò¸¡º÷    
+    ;;ã‚·ãƒ³ãƒœãƒ«ã®å‚ç…§ã‚’æ¤œç´¢    
     (local-set-key "\C-c\M-g" 'semantic-symref-symbol)
     (local-set-key "\C-c/" 'semantic-symref)
     (local-set-key "\C-c\M-l" 'semantic-analyze-possible-completions)
 	;;insert get/set methoid pair inc class field
     (local-set-key "\C-cgs" 'srecode-insert-getset)
-	;;¥³¥á¥ó¥È¤Î¤Ò¤Ê·Á¤òÀ¸À®
+	;;ã‚³ãƒ¡ãƒ³ãƒˆã®ã²ãªå½¢ã‚’ç”Ÿæˆ
 	(local-set-key "\C-ci" 'srecode-document-insert-comment))
 
   (add-hook 'c-mode-common-hook 'my-cedet-hook)

@@ -1,7 +1,7 @@
-(provide 'my-langenv)
+ï»¿(provide 'my-langenv)
 ;;my japanese language Emacs environment setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ÆüËÜ¸ìÆşÎÏ¤ÎÀßÄê
+;; æ—¥æœ¬èªå…¥åŠ›ã®è¨­å®š
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-language-environment "Japanese")
 (setq default-input-method "japanese-mozc")
@@ -19,7 +19,7 @@
   ;; Change cursor color depending on IBus status
   (setq ibus-cursor-color '("limegreen" "white" "yellow"))
   (global-set-key "\C-\\" 'ibus-toggle)
-  ;; ÊÑ´¹¥­¡¼¤Çon¡¢ÌµÊÑ´¹¥­¡¼¤Çoff¤ÇÀÚ¤êÂØ¤¨
+  ;; å¤‰æ›ã‚­ãƒ¼ã§onã€ç„¡å¤‰æ›ã‚­ãƒ¼ã§offã§åˆ‡ã‚Šæ›¿ãˆ
   (global-set-key
    [henkan]
    (lambda () (interactive)
@@ -61,4 +61,4 @@
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ¥´¥·¥Ã¥¯"))))))
+   '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 83 :width normal :foundry "unknown" :family "VL ã‚´ã‚·ãƒƒã‚¯"))))))

@@ -1,18 +1,18 @@
-(provide 'my-ostype)
-;; OS¤òÈ½ÊÌ¡¢UNIX·Ï¡©
+ï»¿(provide 'my-ostype)
+;; OSã‚’åˆ¤åˆ¥ã€UNIXç³»ï¼Ÿ
 (defvar run-unix
   (or (equal system-type 'gnu/linux)
      (or (equal system-type 'usg-unix-v)
           (or  (equal system-type 'berkeley-unix)
                (equal system-type 'cygwin)))))
-;; OS¤òÈ½ÊÌ¡¢¸ÄÊÌÈ½ÊÌ
+;; OSã‚’åˆ¤åˆ¥ã€å€‹åˆ¥åˆ¤åˆ¥
 (defvar run-linux
   (equal system-type 'gnu/linux))
 (defvar run-system-v
   (equal system-type 'usg-unix-v)); OpenSolaris2090.06
 (defvar run-bsd
   (equal system-type 'berkeley-unix))
-(defvar run-cygwin ;; cygwin¤âunix¥°¥ë¡¼¥×¤Ë¤·¤Æ¤ª¤¯
+(defvar run-cygwin ;; cygwinã‚‚unixã‚°ãƒ«ãƒ¼ãƒ—ã«ã—ã¦ãŠã
   (equal system-type 'cygwin))
 
 (defvar run-w32
