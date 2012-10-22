@@ -34,12 +34,12 @@
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/9.0.0/sys/" 'c-mode)
-	;;for boost library
-	(semantic-add-system-include "/media/Data/libboost_1_51_0/include" 'c++-mode)
-	;; for glib-2.0
+    ;;for boost library
+    (semantic-add-system-include "/media/Data/libboost_1_51_0/include" 'c++-mode)
+    ;; for glib-2.0
     (semantic-add-system-include "/usr/include/glib-2.0" 'c-mode)
-	(semantic-add-system-include "/usr/lib/x86_64-linux-gnu/glib-2.0/include" 'c-mode)
-	;;関数と名前空間等のタグに飛べるimenuの追加
+    (semantic-add-system-include "/usr/lib/x86_64-linux-gnu/glib-2.0/include" 'c-mode)
+    ;;関数と名前空間等のタグに飛べるimenuの追加
     (imenu-add-to-menubar "cedet-TAGS"))
 
   (semantic-load-enable-gaudy-code-helpers)
@@ -65,10 +65,10 @@
     (local-set-key "\C-c\M-g" 'semantic-symref-symbol)
     (local-set-key "\C-c/" 'semantic-symref)
     (local-set-key "\C-c\M-l" 'semantic-analyze-possible-completions)
-	;;insert get/set methoid pair inc class field
+    ;;insert get/set methoid pair inc class field
     (local-set-key "\C-cgs" 'srecode-insert-getset)
-	;;コメントのひな形を生成
-	(local-set-key "\C-ci" 'srecode-document-insert-comment))
+    ;;コメントのひな形を生成
+    (local-set-key "\C-ci" 'srecode-document-insert-comment))
 
   (add-hook 'c-mode-common-hook 'my-cedet-hook)
   (add-hook 'c++-mode-common-hook 'my-cedet-hook)
@@ -87,4 +87,4 @@
        global-semantic-highlight-func-mode
        global-semantic-stickyfunc-mode
        global-semantic-mru-bookmark-mode
-	)))
+    )))

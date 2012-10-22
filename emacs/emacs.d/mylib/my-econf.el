@@ -1,5 +1,16 @@
 (require 'my-ostype)
 (provide 'my-econf)
+;; 起動時のサイズ,表示位置,フォントを指定
+(setq initial-frame-alist
+      (append (list
+	       '(width . 85)
+	       '(height . 50)
+      )
+	      initial-frame-alist))
+(setq default-frame-alist initial-frame-alist)
+(setq tab-width 4)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
+                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;雑多な設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -49,7 +60,23 @@
 (show-paren-mode 1)
 ;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
 (setq show-paren-style 'mixed)
-(set-face-background 'show-paren-match-face "alice blue")
+(set-face-background 'show-paren-match-face "#a4d1ff")
+(defadvice show-paren-function
+      (after show-matching-paren-offscreen activate)
+      "If the matching paren is offscreen, show the matching line in the
+        echo area. Has no effect if the character before point is not of
+        the syntax class ')'."
+      (interactive)
+      (if (not (minibuffer-prompt))
+          (let ((matching-text nil))
+            ;; Only call `blink-matching-open' if the character before point
+            ;; is a close parentheses type character. Otherwise, there's not
+            ;; really any point, and `blink-matching-open' would just echo
+            ;; "Mismatched parentheses", which gets really annoying.
+            (if (char-equal (char-syntax (char-before (point))) ?\))
+                (setq matching-text (blink-matching-open)))
+            (if (not (null matching-text))
+                (message matching-text)))))
 ;;; カーソルの位置が何文字目かを表示する
 (column-number-mode t)
 ;;; カーソルの位置が何行目かを表示する

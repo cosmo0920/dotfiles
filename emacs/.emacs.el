@@ -95,16 +95,16 @@
   (unless (eq major-mode 'twittering-mode) ad-do-it))
 (when run-linux
   (when (locate-library "anything")
-	(require 'anything)
-	(require 'anything-startup)
-	(require 'anything-config)
-	(setq  anything-sources
-		   '(anything-c-source-buffers
-			 anything-c-source-imenu
-			 anything-c-source-emacs-commands
-			 anything-c-source-etags-select
-			 )) 
-	(define-key global-map (kbd "C-x b") 'anything)))
+    (require 'anything)
+    (require 'anything-startup)
+    (require 'anything-config)
+      (setq  anything-sources
+       '(anything-c-source-buffers
+         anything-c-source-imenu
+         anything-c-source-emacs-commands
+         anything-c-source-ctags
+       )) 
+  (define-key global-map (kbd "C-x b") 'anything)))
 
 ;;(when run-linux
 ;;  (when (locate-library "flymake")))
@@ -124,18 +124,18 @@
   (global-set-key "\M-p" 'previous-buffer)
   ;; 以下は自動でスクリーンを生成する場合の設定
   (defmacro elscreen-create-automatically (ad-do-it)
-	`(if (not (elscreen-one-screen-p))
-		 ,ad-do-it
-	   (elscreen-create)
-	   (elscreen-notify-screen-modification 'force-immediately)
-	   (elscreen-message "New screen is automatically created")))
+    `(if (not (elscreen-one-screen-p))
+     ,ad-do-it
+     (elscreen-create)
+     (elscreen-notify-screen-modification 'force-immediately)
+     (elscreen-message "New screen is automatically created")))
 
   (defadvice elscreen-next (around elscreen-create-automatically activate)
-	(elscreen-create-automatically ad-do-it))
+    (elscreen-create-automatically ad-do-it))
   (defadvice elscreen-previous (around elscreen-create-automatically activate)
-	(elscreen-create-automatically ad-do-it))
+    (elscreen-create-automatically ad-do-it))
   (defadvice elscreen-toggle (around elscreen-create-automatically activate)
-	(elscreen-create-automatically ad-do-it))
+    (elscreen-create-automatically ad-do-it))
 
   ;; elscreen-server
   (require 'elscreen-server)
@@ -144,17 +144,7 @@
   ;; elscreen-color-theme
   (require 'elscreen-color-theme)
   )
-;; 起動時のサイズ,表示位置,フォントを指定
-(setq initial-frame-alist
-      (append (list
-	       '(width . 85)
-	       '(height . 50)
-      )
-	      initial-frame-alist))
-(setq default-frame-alist initial-frame-alist)
-(setq tab-width 4)
-(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
-                      64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+
 ;;speedbarの設定
 (when (locate-library "speedbar")
   (require 'speedbar)
@@ -185,18 +175,6 @@
  '(haskell-notify-p t)
  '(haskell-process-type (quote cabal-dev)))
 
-;;chmod +x
-(defun make-file-executable ()
-  "Make the file of this buffer executable, when it is a script source."
-  (save-restriction
-    (widen)
-    (if (string= "#!" (buffer-substring-no-properties 1 (min 3 (point-max))))
-        (let ((name (buffer-file-name)))
-          (or (equal ?. (string-to-char (file-name-nondirectory name)))
-              (let ((mode (file-modes name)))
-                (set-file-modes name (logior mode (logand (/ mode 4) 73)))
-                (message (concat "Wrote " name " (+x)"))))))))
-(add-hook 'after-save-hook 'make-file-executable)
 ;;雑多な設定 @my-econf
 (require 'my-econf)
 (flyspell-mode t)
@@ -248,20 +226,10 @@
                ruby-mode-hook
                js2-mode-hook
                css-mode-hook
-			   cuda-mode-hook
-			   d-mode-hook
+               cuda-mode-hook
+               d-mode-hook
                apples-mode-hook))
       (add-hook hook 'hs-minor-mode))))
 (global-set-key (kbd "<f7>")      'fold-dwim-toggle)
 (global-set-key (kbd "<S-f7>")  'fold-dwim-hide-all)
 (global-set-key (kbd "<S-M-f7>")  'fold-dwim-show-all)
-;; Prefixのghciとシステムのghciを切り替える
-(when (locate-library "haskell-mode")
-  (global-set-key "\C-\M-h" 
-    (lambda () (interactive) 
-      (setq haskell-program-name "~/gentoo/usr/bin/ghci")
-      (message "ghci change to ~/gentoo/usr/bin/ghci")))
-  (global-set-key "\C-\M-c"
-    (lambda () (interactive)
-      (setq haskell-program-name "/usr/bin/ghci")
-      (message "ghci change to /usr/bin/ghci"))))
