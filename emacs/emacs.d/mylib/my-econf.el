@@ -2,11 +2,10 @@
 (provide 'my-econf)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
-      (append (list
-	       '(width . 85)
-	       '(height . 50)
-      )
-	      initial-frame-alist))
+  (append (list
+    '(width . 85)
+    '(height . 50)
+  )initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 (setq tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60

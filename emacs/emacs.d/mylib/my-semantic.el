@@ -28,8 +28,8 @@
     (semanticdb-enable-gnu-global-databases 'c++-mode))
   (defun my-semantic-hook ()
     ;;for linux Kernel Reading (x86)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.6.2/include" 'c-mode)
-    (semantic-add-system-include "/media/Data/Kernel/linux-3.6.2/arch/x86/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.6.3/include" 'c-mode)
+    (semantic-add-system-include "/media/Data/Kernel/linux-3.6.3/arch/x86/include" 'c-mode)
     ;;for BSD Kernel Reading
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
     (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)

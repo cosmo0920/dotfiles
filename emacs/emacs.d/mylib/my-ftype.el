@@ -1,7 +1,6 @@
 (require 'my-ostype)
 (provide 'my-ftype)
 ;;my autoload elisp library
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;verify file mode section
 ;;--------------------------------------------------------------------------
 ;;such as ... 
@@ -15,37 +14,15 @@
 (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 (setq org-startup-truncated nil)	; ファイルは折り畳んだ状態で開く
 (setq org-return-follows-link t)	; return でリンクを追う
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 	; *.org を org-modeで開く
+(add-to-list 'auto-mode-alist (cons '("\\.org$" . org-mode) auto-mode-alist)) 	; *.org を org-modeで開く
 (setq org-directory "/media/Data/Document/org-memo/")
-;;Haskell-mode
-(autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
-(require 'inf-haskell)
-(autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
-(autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
-(autoload 'ghc-init "ghc" nil t)
-(setq auto-mode-alist
-  (append auto-mode-alist
-    '(("\\.[hg]s$"  . haskell-mode)
-      ("\\.hi$"     . haskell-mode)
-      ("\\.l[hg]s$" . literate-haskell-mode)
-      ("\\.cabal\\'" . haskell-cabal-mode))))
-(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; Hugs用
-(add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)  
-;#!/usr/bin/env runghc 用
-(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode)) 
-;#!/usr/bin/env runhaskell 用
-(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode))
-;;for obj-c
-(setq auto-mode-alist
-(append '(("\\.h$" . objc-mode)
-("\\.m$" . objc-mode))))
 ;;org-mode for tex
 (setq org-export-latex-coding-system 'utf-8)
 (setq org-export-latex-date-format "%Y-%m-%d")
+;;for obj-c
+(setq auto-mode-alist
+  (append '(("\\.h$" . objc-mode)
+            ("\\.m$" . objc-mode))))
 ;;my C and C++ code style
 (require 'my-codestyle)
 (setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
@@ -96,18 +73,43 @@
 (autoload 'tuareg-mode "tuareg-mode" "Major mode for editing Caml code" t)
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
-(add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
+(setq auto-mode-alist (cons '("\\.d[i]?\\'" . d-mode) auto-mode-alist))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" nil t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
-(setq auto-mode-alist
-    (cons (cons "\\.kn$" 'kuin-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.kn$" 'kuin-mode) auto-mode-alist))
 ;; ;;;;
 ;; bison-mode / flex-mode
 ;; ;;;;
-(autoload 'bison-mode "bison-mode" "bison" t)
-;; *.y *.yy ファイルを 自動的に bison-mode にする
-(setq auto-mode-alist (cons '("\\.y[y]\\w?" . bison-mode) auto-mode-alist))
-(autoload 'flex-mode "flex-mode" "flex" t)
-;; *.l *.ll ファイルを 自動的に flex-mode にする
-(setq auto-mode-alist (cons '("\\.l[l]\\w?" . flex-mode) auto-mode-alist))
+(autoload 'bison-mode "bison-mode.el")
+(setq auto-mode-alist (cons '("\\.y$" . bison-mode) auto-mode-alist))
+
+(autoload 'flex-mode "flex-mode")
+(setq auto-mode-alist (cons '("\\.l$" . flex-mode) auto-mode-alist))
+;;Haskell-mode
+(require 'inf-haskell)
+;; haskell mode configuration
+(setq auto-mode-alist
+      (append auto-mode-alist
+              '(("\\.[hg]s$"  . haskell-mode)
+                ("\\.hic?$"   . haskell-mode)
+                ("\\.hsc$"    . haskell-mode)
+                ("\\.chs$"    . haskell-mode)
+                ("\\.l[hg]s$" . literate-haskell-mode))))
+
+(autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
+(autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
+(autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
+(autoload 'ghc-init "ghc" nil t)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; Hugs用
+(add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)  
+;#!/usr/bin/env runghc 用
+(add-to-list 'interpreter-mode-alist 
+  (cons '("runghc" . haskell-mode) auto-mode-alist)) 
+;#!/usr/bin/env runhaskell 用
+(add-to-list 'interpreter-mode-alist 
+  (cons '("runhaskell" . haskell-mode) auto-mode-alist))

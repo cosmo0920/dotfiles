@@ -104,7 +104,8 @@
          anything-c-source-emacs-commands
          anything-c-source-ctags
        )) 
-  (define-key global-map (kbd "C-x b") 'anything)))
+  (define-key global-map (kbd "C-x b") 'anything)
+  (define-key anything-map "\C-o" 'anything-execute-persistent-action)))
 
 ;;(when run-linux
 ;;  (when (locate-library "flymake")))
