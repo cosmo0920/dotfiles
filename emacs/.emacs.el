@@ -25,6 +25,7 @@
                             "~/.emacs.d/site-elisp/"
                             "~/.emacs.d/elisp/"
                             "~/.emacs.d/mylib/"
+                            "~/.emacs.d/auto-install"
                             "/usr/local/share/gtags/"
                             )
                             load-path))
@@ -234,3 +235,8 @@
 (global-set-key (kbd "<f7>")      'fold-dwim-toggle)
 (global-set-key (kbd "<S-f7>")  'fold-dwim-hide-all)
 (global-set-key (kbd "<S-M-f7>")  'fold-dwim-show-all)
+;;http://d.hatena.ne.jp/rubikitch/20100423/bytecomp
+;;自動バイトコンパイルを行う
+(require 'auto-async-byte-compile)
+(setq auto-async-byte-compile-exclude-files-regexp "/junk/")
+(add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)

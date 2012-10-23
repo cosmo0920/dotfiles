@@ -1,4 +1,4 @@
-(require 'my-ostype)
+(eval-when-compile (require 'my-ostype))
 (provide 'my-econf)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
@@ -33,6 +33,8 @@
 (setq delete-auto-save-files t)
 ;;; 圧縮されたファイルも編集できるようにする
 (auto-compression-mode t)
+;; クリップボード
+(setq x-select-enable-clipboard t)
 ;;=====ediff=====
 ;;; ediffを1ウィンドウで実行
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)

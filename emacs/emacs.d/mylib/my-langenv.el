@@ -1,4 +1,4 @@
-(require 'my-ostype)
+(eval-when-compile (require 'my-ostype))
 (provide 'my-langenv)
 ;;my japanese language Emacs environment setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
