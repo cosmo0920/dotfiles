@@ -106,7 +106,9 @@
          anything-c-source-ctags
        )) 
   (define-key global-map (kbd "C-x b") 'anything)
-  (define-key anything-map "\C-o" 'anything-execute-persistent-action)))
+  (define-key global-map (kbd "C-;") 'anything-for-files)
+  (define-key anything-map "\C-o" 'anything-execute-persistent-action)
+))
 
 ;;(when run-linux
 ;;  (when (locate-library "flymake")))
@@ -194,11 +196,15 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 ;; ファイルの履歴
 (require 'recentf)
-(recentf-mode t)
-(setq recentf-exclude '("^\\.emacs\\.bmk$"))
-(setq recentf-max-menu-items 10)
-(setq recentf-max-saved-items 20)
-(setq semantic-load-turn-useful-things-on t)
+(when (locate-library "recentf")
+  (require 'recentf-ext)
+  (recentf-mode t)
+  (setq recentf-exclude '("^\\.emacs\\.bmk$"))
+  (setq recentf-auto-cleanup 'never) ;;tramp対策。
+  (setq recentf-max-menu-items 10)
+  (setq recentf-max-saved-items 20)
+  (recentf-mode 1)
+)
 (require 'shell-pop)
 (shell-pop-set-internal-mode "ansi-term")
 (shell-pop-set-internal-mode-shell "/usr/bin/zsh")

@@ -43,6 +43,7 @@
     (imenu-add-to-menubar "cedet-TAGS"))
 
   (semantic-load-enable-gaudy-code-helpers)
+  (setq semantic-load-turn-useful-things-on t)
   ;;その他色々設定するよ
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
