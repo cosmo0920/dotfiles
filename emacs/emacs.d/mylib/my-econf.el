@@ -10,6 +10,21 @@
 (setq tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+;; まず、install-elisp のコマンドを使える様にします。
+(autoload 'install-elisp "install-elisp" "install emacs lisp" t)
+;; 次に、Elisp ファイルをインストールする場所を指定します。
+(setq install-elisp-repository-directory "~/.emacs.d/elisp/")
+;;;Hide message
+(setq inhibit-startup-message t)
+(flyspell-mode t)
+(setq ispell-dictionary "american")
+(eval-when-compile
+  ;; Emacs 21 defines `values' as a (run-time) alias for list.
+  ;; Don't maerge this with the pervious clause.
+  (if (string-match "values"
+            (pp (byte-compile (lambda () (values t)))))
+      (defsubst values (&rest values)
+    values)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;雑多な設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

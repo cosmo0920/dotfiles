@@ -44,6 +44,14 @@
 
   (semantic-load-enable-gaudy-code-helpers)
   (setq semantic-load-turn-useful-things-on t)
+  (custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(ede-project-directories (quote ("/media/Data/Document")))
+  '(haskell-notify-p t)
+  '(haskell-process-type (quote cabal-dev)))
   ;;その他色々設定するよ
   (add-hook 'semantic-init-hooks 'my-semantic-hook)
   (add-hook 'c++-mode-common-hook 'my-c++-mode-cedet-hook)
