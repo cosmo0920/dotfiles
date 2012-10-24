@@ -1,4 +1,5 @@
-(eval-when-compile (require 'my-ostype))
+;;OS判別
+(load-file "~/.emacs.d/mylib/my-ostype.el")
 (provide 'my-econf)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist

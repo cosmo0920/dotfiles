@@ -1,4 +1,5 @@
-(eval-when-compile (require 'my-ostype))
+;;OS判別
+(load-file "~/.emacs.d/mylib/my-ostype.el")
 (provide 'my-langenv)
 ;;my japanese language Emacs environment setting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

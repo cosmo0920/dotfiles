@@ -1,5 +1,5 @@
-;;for Ubuntu setting
-(eval-when-compile (require 'my-ostype))
+;;OS判別
+(load-file "~/.emacs.d/mylib/my-ostype.el")
 (provide 'my-semantic)
 (when run-linux
   (load-file "~/.emacs.d/cedet/common/cedet.el")

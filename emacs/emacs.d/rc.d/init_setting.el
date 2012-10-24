@@ -1,6 +1,8 @@
 ;; 同名のファイルを開いたとき親のディレクトリ名も表示
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+;;for magit
+(autoload 'magit "magit" "Emacs git client." t)
 ;; ファイルの履歴
 (require 'recentf)
 (when (locate-library "recentf")

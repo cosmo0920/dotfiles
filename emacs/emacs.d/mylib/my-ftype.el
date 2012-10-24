@@ -1,4 +1,3 @@
-(eval-when-compile (require 'my-ostype))
 (provide 'my-ftype)
 ;;my autoload elisp library
 ;;verify file mode section
