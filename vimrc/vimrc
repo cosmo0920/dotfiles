@@ -53,6 +53,58 @@ if has('autocmd')
     	\   exe "normal! g`\"" |
     	\ endif
 endif
+set nocompatible
+filetype off 
+
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+call neobundle#rc(expand('~/.vim/bundle/'))
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
+NeoBundle 'git://github.com/Shougo/vimshell.git'
+NeoBundle 'git://github.com/thinca/vim-quickrun.git'
+NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+NeoBundle 'Smooth-Scroll'
+NeoBundle 'smartword'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'taglist.vim'
+" Installation check.
+if neobundle#exists_not_installed_bundles()
+  echomsg 'Not installed bundles : ' .
+        \ string(neobundle#get_not_installed_bundle_names())
+  echomsg 'Please execute ":NeoBundleInstall" command.'
+  "finish
+endif
+filetype plugin indent on
+set t_Co=256
+let g:Powerline_symbols = 'fancy'
+"-----------------------------------------------------
+"easy-motion
+"-----------------------------------------------------
+" ホームポジションに近いキーを使う
+let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+" 「'」 + 何かにマッピング
+let g:EasyMotion_leader_key="'"
+" 1 ストローク選択を優先する
+let g:EasyMotion_grouping=1
+" カラー設定変更
+hi EasyMotionTarget ctermbg=none ctermfg=red
+hi EasyMotionShade  ctermbg=none ctermfg=blue
+" neocomplcache
+let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
+" vimshell setting
+let g:vimshell_interactive_update_time = 10
+let g:vimshell_prompt = $USERNAME."% "
+
+" vimshell map
+nnoremap <silent> vs :VimShell<CR>
+nnoremap <silent> vsc :VimShellCreate<CR>
+nnoremap <silent> vp :VimShellPop<CR>
 "----------------------------------------------------
 " インデント・タブ
 "----------------------------------------------------
@@ -62,9 +114,8 @@ set autoindent
 set tabstop=4
 "強調表示(色付け)のON/OFF設定
 if has("syntax")
-syntax on
+  syntax on
 endif
-filetype on 
 " ウィンドウの幅より長い行は折り返して、次の行に続けて表示する
 set wrap
 "-----------------------------------------------
@@ -161,3 +212,8 @@ au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
 
 " configure browser for haskell_doc.vim
 let g:haddock_browser = "firefox %u"
+
+nnoremap <space>t :<C-u>Texplore<CR>
+nnoremap >> :tabnext<CR>
+nnoremap << :tabprevious<CR>
+nnoremap <C-t> :Unite
