@@ -1,5 +1,5 @@
 ;;OS判別
-(load-file "~/.emacs.d/mylib/my-ostype.el")
+(require 'my-ostype)
 (provide 'my-econf)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
@@ -31,7 +31,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;change default directory for Ubuntu
 (when run-linux
-  (cd "/media/Data/Document")
+  (cd "/media/Data2/Document")
 )
 ;;change default directory for OSX
 (when run-darwin
@@ -104,6 +104,8 @@
 ;;参考：http://kawaguchi.posterous.com/25367725
 (global-hl-line-mode t)
 (set-face-background 'hl-line "alice blue")
+;;バッファ自動再読み込み
+(global-auto-revert-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; キーバインドの設定
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

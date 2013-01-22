@@ -1,5 +1,5 @@
 (provide 'my-codestyle)
-(require 'cc-mode)
+;;(require 'cc-mode)
 ;;for c
 ;; タブ長の設定
 (make-variable-buffer-local 'tab-width)

@@ -1,4 +1,4 @@
-(provide 'myfunc)
+(provide 'my-func)
 ;;chmod +x
 (defun make-file-executable ()
   "Make the file of this buffer executable, when it is a script source."

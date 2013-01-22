@@ -7,7 +7,7 @@
                             "~/.emacs.d/elisp/"
                             "~/.emacs.d/mylib/"
                             "~/.emacs.d/rc.d/"
-                            "~/.emacs.d/auto-install"
+                            "~/.emacs.d/auto-install/"
                             "/usr/local/share/gtags/"
                             )
                             load-path))

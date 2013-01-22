@@ -28,4 +28,8 @@
   (run-hooks 'ansi-term-after-hook))
 (ad-activate 'ansi-term)
 (global-set-key "\C-t" 'shell-pop)
+;; use shift + arrow keys to switch between visible buffers
+(require 'windmove)
+(windmove-default-keybindings)
 (provide 'init_setting)
+

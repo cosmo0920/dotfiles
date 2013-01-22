@@ -12,4 +12,6 @@
 (require 'init_setting)
 ;; @ hideshow/fold-dwim.el
 (require 'init_fold)
+;;load shellenv.el
+(require 'load_shellenv)
 (provide 'load_rc.d)
