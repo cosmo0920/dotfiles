@@ -1,32 +1,29 @@
 ;;OS判別
-;;(load-file "~/.emacs.d/mylib/my-ostype.el")
+(load-file "~/.emacs.d/mylib/my-ostype.el")
 (provide 'my-semantic)
 (when run-linux
-  (load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
+  (load-file "~/.emacs.d/cedet/cedet-devel-load.el")
   (setq semantic-load-turn-everything-on t)
   (semantic-load-enable-code-helpers)
   (eval-when-compile 
     (require 'semantic/senator)
     (require 'semantic)
-    (require 'semantic-ia)
-    (require 'semantic-symref)
-    (require 'semantic-symref-list)
-    (require 'semantic-load)
-    (require 'semantic-gcc)
+    (require 'semantic/ia)
+    (require 'semantic/symref)
+    (require 'semantic/symref/list)
+    (require 'semantic/analyze)
+    (require 'semantic/bovine/gcc)
     ;;(global-ede-mode t)
-    (require 'semanticdb)
+    (require 'semantic/db)
     ;; function definition is void: eieio-build-class-alist
     (require 'eieio)
     (require 'eieio-opt)
-    (require 'eassist)
+    ;;(require 'eassist)
     ;; ctags
-    (require 'semanticdb-ectag))
-  (semantic-load-enable-secondary-exuberent-ctags-support)
+    (require 'semantic/tag)
+	)
+  ;;(semantic-load-enable-secondary-exuberent-ctags-support)
   ;; if you want to enable support for gnu global
-  (when (cedet-gnu-global-version-check t)
-    (eval-when-compile (require 'semanticdb-global))
-    (semanticdb-enable-gnu-global-databases 'c-mode)
-    (semanticdb-enable-gnu-global-databases 'c++-mode))
   (defun kernel-version()(replace-regexp-in-string "\n+$" "" (shell-command-to-string "uname -r")))
   (defun kernel-version-onlynum()(replace-regexp-in-string "-custom-fornewercore2\n+$" "" (shell-command-to-string "uname -r")))
   (defun my-semantic-hook ()
@@ -35,11 +32,11 @@
     (semantic-add-system-include (format "/media/Data/Kernel/linux-%s/arch/x86/include" (kernel-version-onlynum)) 'c-mode)
     (semantic-add-system-include (format "/usr/src/linux-headers-%s/" (kernel-version)) 'c-mode)
     ;;for BSD Kernel Reading
-    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/lib/libvmmapi" 'c-mode)
-    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/bhyve_inc/sys/amd64/vmm" 'c-mode)
-    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/9.0.0/sys/" 'c-mode)
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/head/lib/libvmmapi" 'c-mode)
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/head/sys/amd64/vmm" 'c-mode)
+    (semantic-add-system-include "/media/Data/RemoteRepo/Subversion/BSD/head/sys/" 'c-mode)
     ;;for boost library
-    (semantic-add-system-include "/media/Data/libboost_1_52_0/include" 'c++-mode)
+    (semantic-add-system-include "/media/Data/libboost_1_53_0/include" 'c++-mode)
     ;; for glib-2.0
     (semantic-add-system-include "/usr/include/glib-2.0" 'c-mode)
     (semantic-add-system-include "/usr/lib/x86_64-linux-gnu/glib-2.0/include" 'c-mode)
@@ -85,12 +82,6 @@
 
   (add-hook 'c-mode-common-hook 'my-cedet-hook)
   (add-hook 'c++-mode-common-hook 'my-cedet-hook)
-  (setq qt4-base-dir "/usr/include/qt4")
-  (semantic-add-system-include qt4-base-dir 'c++-mode)
-  (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
   (setq semantic-default-submodes 
     '(
        global-semantic-idle-scheduler-mode 
