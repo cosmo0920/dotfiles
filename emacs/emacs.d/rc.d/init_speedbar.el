@@ -3,7 +3,8 @@
   (require 'speedbar)
   (add-hook 'speedbar-mode-hook
           '(lambda ()
-             (speedbar-add-supported-extension '("cs" "hs" "cu" "lhs"))))
+             (speedbar-add-supported-extension 
+	      '("cs" "hs" "cu" "lhs" "html" "css" "rb" "erb"))))
   ; "a" で無視ファイル表示/非表示のトグル
   (define-key speedbar-file-key-map "a" 'speedbar-toggle-show-all-files)
   ;; ← や → でもディレクトリを開閉 ;;デフォルト: "=" "+", "-"

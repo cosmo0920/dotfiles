@@ -109,23 +109,6 @@
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (setq auto-mode-alist (cons '("\\.d[i]?\\'" . d-mode) auto-mode-alist))
-;;for Rails(erb)
-(autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
-;;yaml
-(autoload 'yaml-mode "yaml-mode" "YAML" t)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-;;css
-(autoload 'css-mode "css-mode" "YAML" t)
-(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
-;;js2-mode
-(autoload 'js2-mode "js2-mode" "Javascript" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;;coffee-mode
-(autoload 'coffee-mode "coffee" "Coffeescript" t)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . js2-mode))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" nil t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
@@ -138,12 +121,42 @@
 
 (autoload 'flex-mode "flex-mode")
 (setq auto-mode-alist (cons '("\\.l$" . flex-mode) auto-mode-alist))
-;; coffee-mode(emacs goodies)
+;; coffee-mode
 (autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 ;;Haskell-mode
-(load "~/.emacs.d/elisp/haskell-mode/haskell-site-file")
+;; (autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
+;; (autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
+;; (autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
+;; (eval-when-compile
+;;  (require 'inf-haskell))
+;; ;; haskell mode configuration
+;; (setq auto-mode-alist
+;;       (append auto-mode-alist
+;;               '(("\\.[hg]s$"  . haskell-mode)
+;;                 ("\\.hic?$"   . haskell-mode)
+;;                 ("\\.hsc$"    . haskell-mode)
+;;                 ("\\.chs$"    . haskell-mode)
+;;                 ("\\.l[hg]s$" . literate-haskell-mode))))
+
+;; ;;(autoload 'haskell-mode "haskell-mode" "editing Haskell." t)
+;; ;;(autoload 'literate-haskell-mode "haskell-mode" "editing literate Haskell." t)
+;; ;;(autoload 'haskell-cabal "haskell-cabal" "editing Haskell cabal." t)
+;; (autoload 'ghc-init "ghc" nil t)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;; ;(add-hook 'haskell-mode-hook 'turn-on-haskell-hugs) ; Hugs用
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)  
+;; ;#!/usr/bin/env runghc 用
+;; (add-to-list 'interpreter-mode-alist 
+;;   (cons '("runghc" . haskell-mode) auto-mode-alist)) 
+;; ;#!/usr/bin/env runhaskell 用
+;; (add-to-list 'interpreter-mode-alist 
+;;   (cons '("runhaskell" . haskell-mode) auto-mode-alist))
+(load "~/emacs.d/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'font-lock-mode)

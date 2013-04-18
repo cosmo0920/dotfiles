@@ -7,7 +7,8 @@
                             "~/.emacs.d/elisp/"
                             "~/.emacs.d/mylib/"
                             "~/.emacs.d/rc.d/"
-			    "~/.emacs.d/cedet/"
+                            "~/.emacs.d/cedet/"
+                            "~/.emacs.d/rhtml/"
                             "~/.emacs.d/auto-install/"
                             "/usr/local/share/gtags/"
                             )
