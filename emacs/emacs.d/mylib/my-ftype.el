@@ -13,7 +13,7 @@
 (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 (setq org-startup-truncated nil)	; ファイルは折り畳んだ状態で開く
 (setq org-return-follows-link t)	; return でリンクを追う
-(add-to-list 'auto-mode-alist (cons '("\\.org$" . org-mode) auto-mode-alist)) 	; *.org を org-modeで開く
+(setq auto-mode-alist (cons '("\\.org$" . org-mode) auto-mode-alist)) 	; *.org を org-modeで開く
 (setq org-directory "/media/Data/Document/org-memo/")
 ;;org-mode for tex
 (setq org-export-latex-coding-system 'utf-8)
@@ -117,7 +117,7 @@
 (autoload 'yaml-mode "yaml-mode" "YAML" t)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 ;;css
-(autoload 'css-mode "css-mode" "YAML" t)
+(autoload 'css-mode "css-mode" "CSS" t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
 ;;js2-mode
@@ -127,17 +127,20 @@
 (autoload 'coffee-mode "coffee" "Coffeescript" t)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . js2-mode))
 ;;for Kuin
-(autoload 'kuin-mode "kuin-mode" nil t)
+(autoload 'kuin-mode "kuin-mode" "Kuin" t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
 (setq auto-mode-alist (cons '("\\.kn$" 'kuin-mode) auto-mode-alist))
 ;; ;;;;
 ;; bison-mode / flex-mode
 ;; ;;;;
-(autoload 'bison-mode "bison-mode.el")
-(setq auto-mode-alist (cons '("\\.y$" . bison-mode) auto-mode-alist))
-
-(autoload 'flex-mode "flex-mode")
-(setq auto-mode-alist (cons '("\\.l$" . flex-mode) auto-mode-alist))
+(autoload 'bison-mode "bison-mode" nil t)
+;; *.y *.yy ファイルを 自動的に bison-mode にする
+(setq auto-mode-alist
+      (cons '("\.\(y\|yy\)$" . bison-mode) auto-mode-alist))
+(autoload 'flex-mode "flex-mode" nil t)
+;; *.l *.ll ファイルを 自動的に flex-mode にする
+(setq auto-mode-alist
+      (cons '("\.\(l\|ll\)$" . flex-mode) auto-mode-alist))
 ;; coffee-mode(emacs goodies)
 (autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
