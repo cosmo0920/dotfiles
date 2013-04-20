@@ -2,27 +2,29 @@
 (load-file "~/.emacs.d/mylib/my-ostype.el")
 (provide 'my-semantic)
 (when run-linux
-  (load-file "~/.emacs.d/cedet/cedet-devel-load.el")
+  ;; http://stackoverflow.com/questions/15853753/autocompletion-in-cedet
+  ;; sedet-trunk for Emacs 24.3
+  (setq cedet-root-path (file-name-as-directory "~/.emacs.d/cedet/"))
+  (load-file (concat cedet-root-path "cedet-devel-load.el"))
+  (add-to-list 'load-path (concat cedet-root-path "contrib"))
+
   (setq semantic-load-turn-everything-on t)
   (semantic-load-enable-code-helpers)
-  (eval-when-compile 
-    (require 'semantic/senator)
-    (require 'semantic)
-    (require 'semantic/ia)
-    (require 'semantic/symref)
-    (require 'semantic/symref/list)
-    (require 'semantic/analyze)
-    (require 'semantic/bovine/gcc)
-    ;;(global-ede-mode t)
-    (require 'semantic/db)
-    ;; function definition is void: eieio-build-class-alist
-    (require 'eieio)
-    (require 'eieio-opt)
-    ;;(require 'eassist)
-    ;; ctags
-    (require 'semantic/tag)
-	)
-  ;;(semantic-load-enable-secondary-exuberent-ctags-support)
+  ;; select which submodes we want to activate
+  (mapc (lambda (MODE) (add-to-list 'semantic-default-submodes MODE))
+	'(global-semantic-mru-bookmark-mode
+	  global-semanticdb-minor-mode
+	  global-semantic-idle-scheduler-mode
+	  global-semantic-stickyfunc-mode
+	  global-cedet-m3-minor-mode
+	  global-semantic-highlight-func-mode
+	  global-semanticdb-minor-mode))
+  ;; Activate semantic
+  (semantic-mode 1)
+  ;; load contrib library
+  (eval-when-compile
+    (require 'eassist))
+
   ;; if you want to enable support for gnu global
   (defun kernel-version()(replace-regexp-in-string "\n+$" "" (shell-command-to-string "uname -r")))
   (defun kernel-version-onlynum()(replace-regexp-in-string "-custom-fornewercore2\n+$" "" (shell-command-to-string "uname -r")))
@@ -59,7 +61,6 @@
   
   (defun my-cedet-hook ()
     (local-set-key [(control return)] 'semantic-ia-complete-symbol)
-    ;;(semantic-mode 1)
     ;(local-set-key "." 'semantic-complete-self-insert)
     ;(local-set-key ">" 'semantic-complete-self-insert)
     ;;semanticのキーバインド関連    
@@ -79,7 +80,54 @@
     (local-set-key "\C-cgs" 'srecode-insert-getset)
     ;;コメントのひな形を生成
     (local-set-key "\C-ci" 'srecode-document-insert-comment))
+  (when (cedet-ectag-version-check t)
+    (semantic-load-enable-primary-ectags-support))
 
+  ;; SRecode
+  (global-srecode-minor-mode 1)
+  
+  (defun qt-cedet-setup ()
+    "Set up c-mode and related modes. Includes support for Qt code (signal, slots and alikes)."
+    
+    ;; add knowledge of qt to emacs
+    (setq qt4-base-dir (concat (getenv "QTDIR") "/include"))
+    (semantic-add-system-include (concat qt4-base-dir "/Qt") 'c++-mode)
+    (semantic-add-system-include (concat qt4-base-dir "/QtGui") 'c++-mode)
+    (semantic-add-system-include (concat qt4-base-dir "/QtCore") 'c++-mode)
+    (semantic-add-system-include (concat qt4-base-dir "/QtTest") 'c++-mode)
+    (semantic-add-system-include (concat qt4-base-dir "/QtNetwork") 'c++-mode)
+    (semantic-add-system-include (concat qt4-base-dir "/QtSvg") 'c++-mode)
+    (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-large.h"))
+    (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
+    ;; qt keywords and stuff ...
+    ;; set up indenting correctly for new qt kewords
+    (setq c-protection-key (concat "\\<\\(public\\|public slot\\|protected"
+				   "\\|protected slot\\|private\\|private slot"
+				   "\\)\\>")
+	  c-C++-access-key (concat "\\<\\(signals\\|public\\|protected\\|private"
+				   "\\|public slots\\|protected slots\\|private slots"
+				   "\\)\\>[ \t]*:"))
+
+    ;; modify the colour of slots to match public, private, etc ...
+    (font-lock-add-keywords 'c++-mode '(("\\<\\(slots\\|signals\\)\\>" . font-lock-type-face)))
+    ;; make new font for rest of qt keywords
+    (make-face 'qt-keywords-face)
+    (set-face-foreground 'qt-keywords-face "BlueViolet")
+    ;; qt keywords
+    (font-lock-add-keywords 'c++-mode '(("\\<Q_[A-Z]*\\>" . 'qt-keywords-face)))
+    (font-lock-add-keywords 'c++-mode '(("\\<SIGNAL\\|SLOT\\>" . 'qt-keywords-face)))
+    (font-lock-add-keywords 'c++-mode '(("\\<Q[A-Z][A-Za-z]*\\>" . 'qt-keywords-face)))
+    (font-lock-add-keywords 'c++-mode '(("\\<Q[A-Z_]+\\>" . 'qt-keywords-face)))
+    (font-lock-add-keywords 'c++-mode
+			    '(("\\<q\\(Debug\\|Wait\\|Printable\\|Max\\|Min\\|Bound\\)\\>" . 'font-lock-builtin-face)))
+
+    (setq c-macro-names-with-semicolon '("Q_OBJECT" "Q_PROPERTY" "Q_DECLARE" "Q_ENUMS"))
+    (c-make-macro-with-semi-re)
+    )
+  (when (getenv "QTDIR") (add-hook 'c-mode-common-hook 'qt-cedet-setup))
+  
   (add-hook 'c-mode-common-hook 'my-cedet-hook)
   (add-hook 'c++-mode-common-hook 'my-cedet-hook)
   (setq semantic-default-submodes 
@@ -91,4 +139,5 @@
        global-semantic-highlight-func-mode
        global-semantic-stickyfunc-mode
        global-semantic-mru-bookmark-mode
-    )))
+    ))
+)
