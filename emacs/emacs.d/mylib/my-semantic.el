@@ -22,8 +22,7 @@
   ;; Activate semantic
   (semantic-mode 1)
   ;; load contrib library
-  (eval-when-compile
-    (require 'eassist))
+  (require 'eassist)
 
   ;; if you want to enable support for gnu global
   (defun kernel-version()(replace-regexp-in-string "\n+$" "" (shell-command-to-string "uname -r")))
