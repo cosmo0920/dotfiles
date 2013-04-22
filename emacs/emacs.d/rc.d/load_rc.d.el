@@ -12,6 +12,8 @@
 (require 'init_setting)
 ;; @ hideshow/fold-dwim.el
 (require 'init_fold)
+;;flymake
+(require 'init_flymake)
 ;;load shellenv.el
 (require 'load_shellenv)
 (provide 'load_rc.d)
