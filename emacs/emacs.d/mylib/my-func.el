@@ -21,4 +21,3 @@
     (lambda () (interactive)
       (setq haskell-program-name "/usr/bin/ghci")
       (message "ghci change to /usr/bin/ghci"))))
-

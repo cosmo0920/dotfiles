@@ -4,7 +4,7 @@
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
   (append (list
-    '(width . 85)
+    '(width . 90)
     '(height . 50)
   )initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
@@ -136,3 +136,17 @@
 (global-set-key (kbd "C-M-.")   'find-tag-next)
 (global-set-key (kbd "M-,")     'find-tag-other-window)
 (global-set-key (kbd "C-M-,")   'find-tag-regexp)
+;;popwinの設定
+(when (locate-library "popwin")
+  (require 'popwin)
+  (setq display-buffer-function 'popwin:display-buffer)
+  (setq anything-samewindow nil)
+  ;;anything
+  (push '("*anything*" :height 20) popwin:special-display-config)
+  ;; and so on
+  (setq popwin:special-display-config '(
+                                      ("*Help*")
+                                      ("*Completions*" :noselect t)
+                                      ("*compilatoin*" :noselect t)
+                                      ("*Occur*")
+                                      ("*Kill Ring*"))))

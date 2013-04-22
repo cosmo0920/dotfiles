@@ -111,21 +111,21 @@
 (setq auto-mode-alist (cons '("\\.d[i]?\\'" . d-mode) auto-mode-alist))
 ;;for Rails(erb)
 (autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . rhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.html\.erb$" . rhtml-mode))
+(setq auto-mode-alist (cons '("\\.rhtml$" . rhtml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.html\.erb$" . rhtml-mode) auto-mode-alist))
 ;;yaml
 (autoload 'yaml-mode "yaml-mode" "YAML" t)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(setq auto-mode-alist (cons '("\\.yml$" . yaml-mode) auto-mode-alist))
 ;;css
 (autoload 'css-mode "css-mode" "CSS" t)
-(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
+(setq auto-mode-alist (cons '("\\.css$" . css-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.scss$" . css-mode) auto-mode-alist))
 ;;js2-mode
 (autoload 'js2-mode "js2-mode" "Javascript" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(setq auto-mode-alist (cons '("\\.js$" . js2-mode) auto-mode-alist))
 ;;coffee-mode
 (autoload 'coffee-mode "coffee" "Coffeescript" t)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . js2-mode))
+(setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" "Kuin" t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
@@ -143,8 +143,8 @@
       (cons '("\.\(l\|ll\)$" . flex-mode) auto-mode-alist))
 ;; coffee-mode(emacs goodies)
 (autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+(setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("Cakefile" . coffee-mode) auto-mode-alist))
 ;;Haskell-mode
 (load "~/.emacs.d/elisp/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)

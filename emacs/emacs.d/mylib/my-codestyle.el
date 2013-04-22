@@ -52,7 +52,7 @@
     ;; 下記の*を削除する
     (c-cleanup-list
      . (
-	    brace-else-brace                ; else の直前
+	brace-else-brace                ; else の直前
                                         ; "} * else {"  ->  "} else {"
         brace-elseif-brace              ; else if の直前
                                         ; "} * else if (.*) {"
@@ -80,8 +80,8 @@
         (case-label             . 0)    ; case 文のラベル行
         (label                  . 0)    ; ラベル行
         (block-open             . 0)    ; ブロックの開始行
-		(member-init-intro      . ++)   ; メンバオブジェクトの初期化リスト
-		(defun-block-intro      . +)    ; ブロックで字下げ
+	(member-init-intro      . ++)   ; メンバオブジェクトの初期化リスト
+	(defun-block-intro      . +)    ; ブロックで字下げ
         ))
     ;; インデント時に構文解析情報を表示する
     (c-echo-syntactic-information-p . t)
