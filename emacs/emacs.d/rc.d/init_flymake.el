@@ -69,4 +69,5 @@
   (flymake-mode t))
 
 (add-hook 'javascript-mode-hook '(lambda () (flymake-js-load)))
+
 (provide 'init_flymake)
