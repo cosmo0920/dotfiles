@@ -126,6 +126,13 @@
 ;;coffee-mode
 (autoload 'coffee-mode "coffee" "Coffeescript" t)
 (setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
+;;haml-mode
+(autoload 'haml-mode "haml-mode" "HAML" t)
+(setq auto-mode-alist (cons '("\\.haml$" . haml-mode) auto-mode-alist))
+(add-hook 'haml-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" "Kuin" t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))

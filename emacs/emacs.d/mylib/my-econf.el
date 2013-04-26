@@ -31,7 +31,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;change default directory for Ubuntu
 (when run-linux
-  (cd "/media/Data2/Document")
+  (require 'cd-linux nil t)
 )
 ;;change default directory for OSX
 (when run-darwin
