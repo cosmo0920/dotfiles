@@ -71,6 +71,10 @@
 (setq auto-mode-alist (cons '("\\.tmpl$". c++-mode) auto-mode-alist))
 ;;for ruby
 (setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
+(require 'ruby-electric)
+(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+(setq ruby-electric-expand-delimiters-list nil)
 ;;for python
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 ;; for fortran
@@ -133,6 +137,9 @@
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
 	    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
+;;scala-mode2
+(autoload 'scala-mode "scala-mode2" "Scala" t)
+(setq auto-mode-alist (cons '("\\.scala$" . scala-mode) auto-mode-alist))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" "Kuin" t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
@@ -158,3 +165,6 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
+;;hamlet-mode
+(autoload 'hamlet-mode "hamlet-mode" "Major mode for editing hamlet." t)
+(setq auto-mode-alist (cons '("\\.hamlet$" . hamlet-mode) auto-mode-alist))

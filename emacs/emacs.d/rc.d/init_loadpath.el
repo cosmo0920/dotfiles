@@ -5,6 +5,7 @@
   (setq load-path (append '("~/.emacs.d/site-lisp/"
                             "~/.emacs.d/site-elisp/"
                             "~/.emacs.d/elisp/"
+                            "~/.emacs.d/elisp/scala-mode2"
                             "~/.emacs.d/mylib/"
                             "~/.emacs.d/rc.d/"
                             "~/.emacs.d/cedet/"
