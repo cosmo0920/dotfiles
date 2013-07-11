@@ -25,15 +25,14 @@
 (set-face-background 'flymake-errline "red4")
 (set-face-background 'flymake-warnline "dark slate blue")
 ;; Invoke ruby with '-c' to get syntax checking
+;;FIXME: rbenv or system ruby file-exits-p conditions only
+(cond
+ ((equal (file-exists-p "~/.rbenv/shims/ruby") nil)
+  (setq syntax-check-ruby "ruby"))
+ ((equal (file-exists-p "~/.rbenv/shims/ruby") t)
+  (setq syntax-check-ruby "~/.rbenv/shims/ruby")))
 ;;flymake for ruby
 (defun flymake-ruby-init ()
-  ;;FIXME: system ruby or rbenv ruby check at once
-  (if (file-exists-p "/usr/bin/ruby")
-      (progn
-	(setq syntax-check-ruby "ruby")))
-  (if (file-exists-p "~/.rbenv/shims/ruby")
-      (progn
-	(setq syntax-check-ruby "~/.rbenv/shims/ruby")))
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
          (local-file  (file-relative-name
