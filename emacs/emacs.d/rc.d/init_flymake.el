@@ -27,12 +27,19 @@
 ;; Invoke ruby with '-c' to get syntax checking
 ;;flymake for ruby
 (defun flymake-ruby-init ()
+  ;;FIXME: system ruby or rbenv ruby check at once
+  (if (file-exists-p "/usr/bin/ruby")
+      (progn
+	(setq syntax-check-ruby "ruby")))
+  (if (file-exists-p "~/.rbenv/shims/ruby")
+      (progn
+	(setq syntax-check-ruby "~/.rbenv/shims/ruby")))
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
          (local-file  (file-relative-name
                        temp-file
                        (file-name-directory buffer-file-name))))
-    (list "ruby" (list "-c" local-file))))
+    (list syntax-check-ruby (list "-c" local-file))))
 (push '("\\.\\(rb\\|erb\\)\\'" flymake-ruby-init) flymake-allowed-file-name-masks)
 
 (push '("^Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
