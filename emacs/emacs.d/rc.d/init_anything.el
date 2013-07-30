@@ -24,7 +24,7 @@
 			anything-c-source-ctags
 			)) 
   (define-key global-map (kbd "C-x b") 'anything)
-  (define-key global-map (kbd "C-;") 'anything-for-files)
+  (define-key global-map (kbd "C-;") 'anything-filelist+)
   (define-key anything-map "\C-o" 'anything-execute-persistent-action)
 )
 (provide 'init_anything)
