@@ -48,4 +48,21 @@
 ;;C-RET RET -- cua-mode
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
+;; basic
+(define-key global-map (kbd "C-z") 'undo)                 ; undo
+(define-key global-map (kbd "M-C-g") 'grep)               ; grep
+(require 'whitespace)
+(setq whitespace-style '(face              ; faceを使って視覚化する。
+                         trailing          ; 行末の空白を対象とする。
+                         lines-tail        ; 長すぎる行のうち
+                                           ; whitespace-line-column以降のみを
+                                           ; 対象とする。
+                         space-before-tab  ; タブの前にあるスペースを対象とする。
+                         space-after-tab)) ; タブの後にあるスペースを対象とする。
+;; デフォルトで視覚化を有効にする。
+(global-whitespace-mode 1)
+;;; 行の先頭でC-kを一回押すだけで行全体を消去する
+(setq kill-whole-line t)
+;;to ensure that your files have no trailing whitespace
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (provide 'init_setting)
