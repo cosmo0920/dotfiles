@@ -24,11 +24,11 @@
  ((equal (file-exists-p "/bin/bash") t)
   (shell-pop-set-internal-mode-shell "/bin/bash"))
  ((equal (file-exists-p "/bin/dash") t)
-  (shell-pop-set-internal-mode-shell "/bin/dash")) 
+  (shell-pop-set-internal-mode-shell "/bin/dash"))
  ((equal (file-exists-p "/usr/bin/tcsh") t)
-  (shell-pop-set-internal-mode-shell "/usr/bin/tcsh")) 
+  (shell-pop-set-internal-mode-shell "/usr/bin/tcsh"))
  ((equal (file-exists-p "/usr/bin/csh") t)
-  (shell-pop-set-internal-mode-shell "/usr/bin/csh")) 
+  (shell-pop-set-internal-mode-shell "/usr/bin/csh"))
  (t
   (shell-pop-set-internal-mode-shell "/bin/sh")))
 ;;shell-pop.elの設定
@@ -49,7 +49,7 @@
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
 ;; basic
-(define-key global-map (kbd "C-z") 'undo)                 ; undo
+(define-key global-map (kbd "C-u") 'undo)                 ; undo
 (define-key global-map (kbd "M-C-g") 'grep)               ; grep
 (require 'whitespace)
 (setq whitespace-style '(face              ; faceを使って視覚化する。

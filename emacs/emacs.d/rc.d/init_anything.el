@@ -22,9 +22,9 @@
 			anything-c-source-imenu
 			anything-c-source-emacs-commands
 			anything-c-source-ctags
-			)) 
-  (define-key global-map (kbd "C-x b") 'anything)
-  (define-key global-map (kbd "C-;") 'anything-filelist+)
+			))
+  (define-key global-map (kbd "C-;") 'anything)
+  (define-key global-map (kbd "C-x b") 'anything-filelist+)
   (define-key anything-map "\C-o" 'anything-execute-persistent-action)
 )
 (provide 'init_anything)
