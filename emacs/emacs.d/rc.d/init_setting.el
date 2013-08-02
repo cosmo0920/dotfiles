@@ -59,12 +59,25 @@
                                            ; 対象とする。
                          space-before-tab  ; タブの前にあるスペースを対象とする。
                          space-after-tab)) ; タブの後にあるスペースを対象とする。
+
 ;; デフォルトで視覚化を有効にする。
 (global-whitespace-mode 1)
 ;;; 行の先頭でC-kを一回押すだけで行全体を消去する
 (setq kill-whole-line t)
 ;;to ensure that your files have no trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+; make characters after column 80 purple
+(setq whitespace-style
+  (quote (face trailing tab-mark)))
+(add-hook 'find-file-hook 'whitespace-mode)
+(eval-when-compile (require 'cl)
+  (defun toggle-delete-trailing-whitespace-setting ()
+    (interactive)
+    (cond ((find 'delete-trailing-whitespace before-save-hook)
+           (remove-hook 'before-save-hook 'delete-trailing-whitespace))
+          (
+           (add-hook 'before-save-hook 'delete-trailing-whitespace)))
+))
 ;; 再帰的にgrep
 ;; http://www.clear-code.com/blog/2012/3/20.html
 (require 'grep)
