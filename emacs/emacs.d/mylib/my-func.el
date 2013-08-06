@@ -13,11 +13,17 @@
 (add-hook 'after-save-hook 'make-file-executable)
 ;; Prefixのghciとシステムのghciを切り替える
 (when (locate-library "haskell-mode")
-  (global-set-key "\C-\M-h" 
-    (lambda () (interactive) 
+  (global-set-key "\C-\M-h"
+    (lambda () (interactive)
       (setq haskell-program-name "~/gentoo/usr/bin/ghci")
       (message "ghci change to ~/gentoo/usr/bin/ghci")))
   (global-set-key "\C-\M-c"
     (lambda () (interactive)
       (setq haskell-program-name "/usr/bin/ghci")
-      (message "ghci change to /usr/bin/ghci"))))
+      (message "ghci change to /usr/bin/ghci")))
+  ;; change execute "cabal-dev ghci"
+  (global-set-key "\C-\M-m"
+    (lambda () (interactive)
+      (setq haskell-program-name "cabal-dev ghci")
+      (message "ghci change to ghci with cabal-dev")))
+)
