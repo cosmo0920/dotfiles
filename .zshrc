@@ -12,6 +12,7 @@ bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 #---- プロンプトを設定する ------------------------------------------------------
 setopt prompt_subst
+unsetopt promptcr
 ## プロンプトの設定
 autoload colors
 colors
