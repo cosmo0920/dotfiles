@@ -10,6 +10,7 @@
                             "~/.emacs.d/rc.d/"
                             "~/.emacs.d/cedet/"
                             "~/.emacs.d/rhtml/"
+                            "~/.emacs.d/expand-region.el"
                             "~/.emacs.d/auto-install/"
                             "/usr/local/share/gtags/"
                             )

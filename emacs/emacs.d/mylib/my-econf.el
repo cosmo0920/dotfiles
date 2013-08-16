@@ -1,6 +1,5 @@
 ;;OS判別
 (require 'my-ostype)
-(provide 'my-econf)
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
   (append (list
@@ -65,7 +64,7 @@
 ;; "beginning-of-buffer" と注意されないようにする。
 (defun previous-line (arg)
   (interactive "p")
-  (if (called-interactively-p t) 
+  (if (called-interactively-p t)
       (condition-case nil
           (line-move (- arg))
         ((beginning-of-buffer end-of-buffer)))
@@ -123,8 +122,8 @@
 ;; バックスラッシュ
 (define-key global-map (kbd "M-|") "\\")
 ;; Emacsを半透明・透明にする
-(global-set-key "\C-xa" 
-  (lambda () (interactive) 
+(global-set-key "\C-xa"
+  (lambda () (interactive)
     (set-frame-parameter nil 'alpha 80)))
 (global-set-key "\C-ca"
   (lambda () (interactive)
@@ -150,3 +149,8 @@
                                       ("*compilatoin*" :noselect t)
                                       ("*Occur*")
                                       ("*Kill Ring*"))))
+;; expand-region
+(require 'expand-region nil t)
+(global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-M-@") 'er/contract-region)
+(provide 'my-econf)
