@@ -43,7 +43,8 @@
 (setq backup-directory-alist
       (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
      backup-directory-alist))
-
+;;; .#* とかのバックアップファイルを作らない
+(setq auto-save-default nil)
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 ;;; 圧縮されたファイルも編集できるようにする
