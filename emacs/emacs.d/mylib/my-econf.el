@@ -34,7 +34,7 @@
 )
 ;;change default directory for OSX
 (when run-darwin
-  (cd "~/Document/")
+  (cd "~/Documents/")
 )
 ;;; バックアップファイルを作らない
 (setq backup-inhibited t)
