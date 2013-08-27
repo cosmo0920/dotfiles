@@ -1,0 +1,7 @@
+[color]
+	ui = auto
+[alias]
+	graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short 
+[core]
+	editor = vim -c \"set fenc=utf-8\"
+	pager = lv -c
