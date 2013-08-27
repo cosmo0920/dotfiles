@@ -2,7 +2,7 @@
 ;;my autoload elisp library
 ;;verify file mode section
 ;;--------------------------------------------------------------------------
-;;such as ... 
+;;such as ...
 ;;C,C++,C#,Ruby,Obj-C,Haskell,CUDA,Python,Fortran,org-mode,lua,go,rust,perl,D
 ;;and so on.
 ;;--------------------------------------------------------------------------
@@ -34,9 +34,9 @@
    (interactive)
    (if (string-equal (substring (buffer-file-name) -2) ".h")
        (progn
-         ;; OK, we got a .h file, if a .m file exists we'll assume 
+         ;; OK, we got a .h file, if a .m file exists we'll assume
 	 ;;it's an objective c file. Otherwise, we'll look for a .cpp file.
-	 ;; if there's no matching .m or .cpp, then we assume objc as it might  
+	 ;; if there's no matching .m or .cpp, then we assume objc as it might
 	 ;;be a protocol.
          (let ((dot-m-file (concat (substring (buffer-file-name) 0 -1)"m"))
                (dot-cpp-file (concat (substring (buffer-file-name) 0 -1) "cpp")))
@@ -108,8 +108,13 @@
 (autoload 'cuda-mode "cuda-mode" "NVIDIA GPGPU Computing Lang." t)
 (setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode for OCaml
-(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
-(autoload 'tuareg-mode "tuareg-mode" "Major mode for editing Caml code" t)
+(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+;; (add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+ (setq auto-mode-alist
+       (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+               auto-mode-alist))
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (setq auto-mode-alist (cons '("\\.d[i]?\\'" . d-mode) auto-mode-alist))
