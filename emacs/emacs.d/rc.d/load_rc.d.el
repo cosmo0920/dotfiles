@@ -4,6 +4,8 @@
 (require 'init_twmode)
 ;;anything
 (require 'init_anything)
+;;anything-project
+(require 'init_anything-project)
 ;;elscreen
 (require 'init_elscreen)
 ;;speedbar¤ÎÀßÄê
