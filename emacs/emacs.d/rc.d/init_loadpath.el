@@ -11,6 +11,7 @@
                             "~/.emacs.d/cedet/"
                             "~/.emacs.d/rhtml/"
                             "~/.emacs.d/expand-region.el"
+                            "~/.emacs.d/yasnippet"
                             "~/.emacs.d/auto-install/"
                             "/usr/local/share/gtags/"
                             )
