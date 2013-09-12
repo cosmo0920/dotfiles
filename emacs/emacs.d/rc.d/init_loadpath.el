@@ -21,7 +21,18 @@
 
 ;;for OSX setting
 (when run-darwin
-  (add-to-list 'load-path "~/.emacs.d/site-elisp/")
-  (add-to-list 'load-path "~/.emacs.d/apel/")
-  (add-to-list 'load-path "~/.emacs.d/"))
+  (setq load-path (append '("~/.emacs.d/site-lisp/"
+                            "~/.emacs.d/site-elisp/"
+                            "~/.emacs.d/elisp/"
+                            "~/.emacs.d/elisp/scala-mode2"
+                            "~/.emacs.d/mylib/"
+                            "~/.emacs.d/rc.d/"
+                            "~/.emacs.d/cedet/"
+                            "~/.emacs.d/rhtml/"
+                            "~/.emacs.d/expand-region.el"
+                            "~/.emacs.d/auto-install/"
+                            "~/.emacs.d/apel/"
+                          )
+                          load-path)))
+
 (provide 'init_loadpath)
