@@ -1,5 +1,4 @@
 # name: Pry breakpiont
-# contributor: Yuan He <lenage@gmail.com>
 # key: pry
 # --
 binding.pry

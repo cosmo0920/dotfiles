@@ -1,4 +1,4 @@
-# name: it "description" ... end
+# name: it do "description" ... end
 # key: it
 # --
 it ${1:description} do

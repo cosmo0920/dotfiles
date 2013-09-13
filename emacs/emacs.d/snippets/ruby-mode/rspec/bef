@@ -1,4 +1,4 @@
-# name: before 'condtion' ... end
+# name: before do 'condtion' ... end
 # key: bef
 # --
 before do
