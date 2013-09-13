@@ -1,0 +1,6 @@
+# name: block comment
+# key: blc
+# --
+{-
+  ${0:comment}
+-}

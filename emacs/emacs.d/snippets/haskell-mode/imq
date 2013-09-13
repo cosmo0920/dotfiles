@@ -1,0 +1,4 @@
+# name: import qualified Package as P
+# key: imq
+# --
+import qualified $1 as $0
