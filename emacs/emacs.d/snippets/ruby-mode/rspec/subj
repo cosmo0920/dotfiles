@@ -1,0 +1,4 @@
+# name: subject { subject }
+# key: subj
+# --
+subject { $0 }
