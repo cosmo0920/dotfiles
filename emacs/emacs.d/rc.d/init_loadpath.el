@@ -1,5 +1,5 @@
 ;;OS»Ω Ã
-(load-file "~/.emacs.d/mylib/my-ostype.el")
+(eval-when-compile (load-file "~/.emacs.d/mylib/my-ostype.el"))
 ;;for Ubuntu setting
 (when run-linux
   (setq load-path (append '("~/.emacs.d/site-lisp/"
