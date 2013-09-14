@@ -18,4 +18,8 @@
 (require 'init_flymake)
 ;;load shellenv.el
 (require 'load_shellenv)
+;;yasnippet
+(require 'init_yasnippet)
+;;proof general
+(require 'init_proof_general)
 (provide 'load_rc.d)
