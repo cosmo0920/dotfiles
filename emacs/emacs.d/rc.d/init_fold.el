@@ -18,6 +18,6 @@
                apples-mode-hook))
       (add-hook hook 'hs-minor-mode))))
 (global-set-key (kbd "<f7>")      'fold-dwim-toggle)
-(global-set-key (kbd "<S-f7>")  'fold-dwim-hide-all)
+(global-set-key (kbd "<C-f7>")  'fold-dwim-hide-all)
 (global-set-key (kbd "<S-M-f7>")  'fold-dwim-show-all)
 (provide 'init_fold)
