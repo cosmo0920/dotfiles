@@ -2,7 +2,7 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 ;;for magit
-(autoload 'magit "magit" "Emacs git client." t)
+(autoload 'magit "magit" "Emacs git client." nil t)
 ;; ファイルの履歴
 (require 'recentf)
 (when (locate-library "recentf")
