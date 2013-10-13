@@ -1,0 +1,18 @@
+{
+	"installed_packages":
+	[
+		"CUDA C++",
+		"fortran.tmbundle",
+		"Package Control",
+		"SublimeHaskell",
+		"SublimeLinter"
+	],
+	"repositories":
+	[
+		"https://github.com/SublimeText/TrailingSpaces",
+		"https://github.com/textmate/fortran.tmbundle",
+		"https://github.com/harrism/sublimetext-cuda-cpp",
+		"https://github.com/SublimeLinter/SublimeLinter",
+		"https://github.com/SublimeHaskell/SublimeHaskell"
+	]
+}
