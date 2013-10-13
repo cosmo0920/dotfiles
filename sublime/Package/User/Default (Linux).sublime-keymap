@@ -1,0 +1,5 @@
+[// I like "d", as in "detect" (overrides a default binding, though).
+{ "keys": ["ctrl+shift+d"], "command": "toggle_trailing_spaces"},
+{ "keys": ["ctrl+f7"], "command": "fold_all"},
+{ "keys": ["ctrl+shift+f7"], "command": "unfold_all"}
+]
