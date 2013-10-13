@@ -1,4 +1,4 @@
 # name: Pry breakpiont
-# key: pry
+# key: .pry
 # --
 binding.pry

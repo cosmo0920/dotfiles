@@ -1,0 +1,7 @@
+{
+	"enable_hdevtools": false,
+	//"cmd": ["cabal-dev build --ghc-options='-O0 -hidir o0 -odir o0'"],
+	"cmd": ["cabal-dev build"],  // append lib:myPackage or myexecutable here to only build certain cabal targets
+    "shell": true,
+    "file_regex": "^(\\S*?):(\\d+):(\\d+):$"  // this matches the output of ghc
+}
