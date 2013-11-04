@@ -200,3 +200,7 @@ if [ $EMACS ]; then
     chpwd_emacs_ansi_term
     export TERM=xterm-color
 fi
+
+# OPAM configuration
+. /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+alias hsenva='source ~/.hsenv/bin/activate'
