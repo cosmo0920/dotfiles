@@ -205,8 +205,9 @@ fi
 . /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 # hsenv
 alias hsenva='source ~/.hsenv/bin/activate'
-# pythonz
-[[ -s "$HOME/.pythonz/etc/bashrc" ]] && source "$HOME/.pythonz/etc/bashrc"
-source `which virtualenvwrapper.sh`
-export WORKON_HOME=$HOME/.virtualenvs
-export PIP_RESPECT_VIRTUALENV=true
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH=${PYENV_ROOT}/bin:$PATH
+    eval "$(pyenv init -)"
+fi
