@@ -115,6 +115,10 @@
        (append '(("\\.ml[ily]?$" . tuareg-mode)
                 ("\\.topml$" . tuareg-mode))
                auto-mode-alist))
+(add-hook 'tuareg-mode-hook '(lambda ()
+  (define-key tuareg-mode-map [f10] 'caml-types-show-type); requires caml-types
+  ))
+(autoload 'caml-types-show-type "caml-types" "Show the type of expression or pattern at point." t)
 ;;for D Lang
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (setq auto-mode-alist (cons '("\\.d[i]?\\'" . d-mode) auto-mode-alist))
@@ -173,3 +177,6 @@
 ;;hamlet-mode
 (autoload 'hamlet-mode "hamlet-mode" "Major mode for editing hamlet." t)
 (setq auto-mode-alist (cons '("\\.hamlet$" . hamlet-mode) auto-mode-alist))
+;;nemerle-mode
+(autoload 'nemerle-mode "nemerle" "Major mode for editing nemerle." nil t)
+(setq auto-mode-alist (cons '("\\.n$" . nemerle-mode) auto-mode-alist))
