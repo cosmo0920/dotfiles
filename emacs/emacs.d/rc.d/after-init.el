@@ -10,8 +10,8 @@
 (setq auto-async-byte-compile-exclude-files-regexp "/junk/")
 (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
 (add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    (setq indent-tabs-mode nil)))
+          (lambda ()
+            (setq indent-tabs-mode nil)))
 ;;ÊØÍø´Ø¿ô
 (require 'my-func)
 ;;powerline

@@ -180,3 +180,6 @@
 ;;nemerle-mode
 (autoload 'nemerle-mode "nemerle" "Major mode for editing nemerle." nil t)
 (setq auto-mode-alist (cons '("\\.n$" . nemerle-mode) auto-mode-alist))
+;;ats-mode
+(autoload 'ats-mode "ats-mode" "Major mode for editing ats." nil t)
+(setq auto-mode-alist (cons '("\\.dats$" . ats-mode) auto-mode-alist))
