@@ -174,6 +174,8 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
+(autoload 'ghc-init "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
 ;;hamlet-mode
 (autoload 'hamlet-mode "hamlet-mode" "Major mode for editing hamlet." t)
 (setq auto-mode-alist (cons '("\\.hamlet$" . hamlet-mode) auto-mode-alist))

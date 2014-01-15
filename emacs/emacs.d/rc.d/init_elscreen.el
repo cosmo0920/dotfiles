@@ -1,7 +1,7 @@
 (when (locate-library "elscreen")
   (load "elscreen" "ElScreen" t)
-  (global-set-key "\M-n" 'next-buffer)
-  (global-set-key "\M-p" 'previous-buffer)
+  (global-set-key "\M->" 'next-buffer)
+  (global-set-key "\M-<" 'previous-buffer)
   ;; 以下は自動でスクリーンを生成する場合の設定
   (defmacro elscreen-create-automatically (ad-do-it)
     `(if (not (elscreen-one-screen-p))
