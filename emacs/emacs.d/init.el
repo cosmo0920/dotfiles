@@ -1,3 +1,10 @@
+;;use melpa
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
 ;;OS判別とload-pathの設定
 (load-file "~/.emacs.d/rc.d/init_loadpath.el")
 ;;.emacs.d/mylib以下を読み込む
