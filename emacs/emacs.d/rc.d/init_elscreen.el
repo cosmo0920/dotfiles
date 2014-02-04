@@ -18,10 +18,10 @@
     (elscreen-create-automatically ad-do-it))
 
   ;; elscreen-server
-  (require 'elscreen-server)
+  (require 'elscreen-server nil t)
   ;; elscreen-dired
-  (require 'elscreen-dired)
+  (require 'elscreen-dired nil t)
   ;; elscreen-color-theme
-  (require 'elscreen-color-theme)
+  (require 'elscreen-color-theme nil t)
   )
 (provide 'init_elscreen)
