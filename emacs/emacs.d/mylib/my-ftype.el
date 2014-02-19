@@ -185,3 +185,6 @@
 ;;ats-mode
 (autoload 'ats-mode "ats-mode" "Major mode for editing ats." nil t)
 (setq auto-mode-alist (cons '("\\.dats$" . ats-mode) auto-mode-alist))
+;;idris-mode
+(autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
+(setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
