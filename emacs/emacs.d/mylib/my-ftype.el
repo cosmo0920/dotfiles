@@ -188,3 +188,5 @@
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
+(autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
