@@ -105,7 +105,7 @@
   ;; (c-set-style "ellemtel")
   ;; (c-set-style "whitesmith")
   ;; (c-set-style "python")
-  
+
   ;; 既存のスタイルを変更する場合は次のようにする
   ;; (c-set-offset 'member-init-intro '++)
 
@@ -120,7 +120,7 @@
   (setq require-final-newline t)
   ;; 連続する空白の一括削除(hungry-delete)を有効にする
   (c-toggle-auto-hungry-state 1)
-  
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;参考：http://d.hatena.ne.jp/syohex/20110119/1295450495
   ;; for whitespace-mode
@@ -225,4 +225,4 @@
              (c-set-offset 'arglist-intro '+)
              (c-set-offset 'arglist-close 0)
              )
-          ) 
+          )
