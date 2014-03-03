@@ -92,7 +92,7 @@
           '(lambda () (setq indent-tabs-mode nil)))
 ;; hook 用の関数の定義
 (defun my-c-mode-common-hook ()
-  ;; my-c-stye を登録して有効にする
+  ;; my-c-style を登録して有効にする
   (c-add-style "My C Programming Style" my-c-style t)
 
   ;; 次のスタイルがデフォルトで用意されているので選択してもよい
