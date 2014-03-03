@@ -87,6 +87,9 @@
     (c-echo-syntactic-information-p . t)
     )
   "My C Programming Style")
+
+(add-hook 'c-mode-common-hook
+          '(lambda () (setq indent-tabs-mode nil)))
 ;; hook 用の関数の定義
 (defun my-c-mode-common-hook ()
   ;; my-c-stye を登録して有効にする
@@ -163,6 +166,16 @@
   ;; (setq compile-command "gmake -k ")
   (setq compilation-window-height 20)
 )
+
+(c-add-style
+ "Ruby-GNOME2"
+ '("bsd"
+   (c-basic-offset . 4)
+   (c-offsets-alist
+    (case-label . 2)
+    (label . 2)
+    (statement-case-open . 2)
+    (statement-case-intro . 2))))
 
 ;;; Ruby用のスタイル
 (c-add-style
