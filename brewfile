@@ -26,3 +26,5 @@ install dmd || true
 cask install yorufukurou || true
 cask install virtualbox || true
 cask install vagrant || true
+cask install xquartz || true
+install cairo || true
