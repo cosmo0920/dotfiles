@@ -1,0 +1,28 @@
+tap phinze/homebrew-cask || true
+tap homebrew/versions|| true
+update || true
+
+install brew-cask || true
+install git || true
+install hg || true
+install ag || true
+install tmux || true
+install tree || true
+install cmake || true
+install zsh || true
+install wget || true
+install curl || true
+install cmake || true
+install libtool || true
+install automake || true
+
+install go || true
+install erlang || true
+install opam || true
+install scala || true
+install sbt || true
+install dmd || true
+
+cask install yorufukurou || true
+cask install virtualbox || true
+cask install vagrant || true
