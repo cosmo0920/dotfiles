@@ -1,4 +1,16 @@
-alias ls='ls --color'
+case "${OSTYPE}" in
+darwin*)
+	alias ls="ls -G"
+	alias ll="ls -lG"
+	alias la="ls -laG"
+	;;
+linux*)
+	alias ls='ls --color=auto'
+	alias ll='ls -alF'
+	alias la='ls -A'
+	alias l='ls -CF'
+	;;
+esac
 #---- 入力コマンドの履歴機能を設定する ------------------------------------------
 HISTFILE=~/.zsh_history    # 履歴ファイルの指定
 HISTSIZE=10000         # 履歴の記憶量
@@ -72,27 +84,35 @@ fi
 #into bash
 ###############################################################
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+case "${OSTYPE}" in
+darwin*)
+	;;
+linux*)
+	alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+	;;
+esac
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+case "${OSTYPE}" in
+darwin*)
+	;;
+linux*)
+	# enable color support of ls and also add handy aliases
+	if [ -x /usr/bin/dircolors ]; then
+	    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	    alias ls='ls --color=auto'
+	    #alias dir='dir --color=auto'
+	    #alias vdir='vdir --color=auto'
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+	    alias grep='grep --color=auto'
+	    alias fgrep='fgrep --color=auto'
+	    alias egrep='egrep --color=auto'
+	fi
+	;;
+esac
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh)"
@@ -144,8 +164,8 @@ function () { # precompile
     zsh -c "source $A; auto-fu-zcompile $A ${A:h}" >/dev/null 2>&1
 }
 
-if [ -f $HOME/auto-fu.zsh/auto-fu.zsh ]; then
-  source $HOME/auto-fu.zsh/auto-fu.zsh
+if [ -f $HOME/zshlib/auto-fu.zsh/auto-fu.zsh ]; then
+  source $HOME/zshlib/auto-fu.zsh/auto-fu.zsh
   function zle-line-init () {
     auto-fu-init
   }
