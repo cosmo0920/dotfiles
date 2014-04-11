@@ -4,5 +4,5 @@
  (require 'lang-env-linux))
 ;;for windows
 (when run-w32
-  (require 'lang-env-w32))
+  (require 'lang-env-win32))
 (provide 'my-langenv)

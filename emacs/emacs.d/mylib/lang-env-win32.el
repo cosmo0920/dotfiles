@@ -19,4 +19,4 @@
 (add-hook 'w32-ime-off-hook
 	  (function (lambda ()
 		      (set-cursor-color ime-inactivate-cursor-color))))
-(provide 'lang-env-w32)
+(provide 'lang-env-win32)
