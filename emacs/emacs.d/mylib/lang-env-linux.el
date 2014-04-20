@@ -9,16 +9,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;for Ubuntu setting
 ;; ibus-mode
-(require 'ibus)
-;; Turn on ibus-mode automatically after loading .emacs
-(add-hook 'after-init-hook 'ibus-mode-on)
-;; Use C-SPC for Set Mark command
-(ibus-define-common-key ?\C-\s nil)
-;; Use C-/ for Undo command
-(ibus-define-common-key ?\C-/ nil)
-;; Change cursor color depending on IBus status
-(setq ibus-cursor-color '("limegreen" "white" "yellow"))
-(global-set-key "\C-\\" 'ibus-toggle)
+(when
+  (require 'ibus nil t)
+  ;; Turn on ibus-mode automatically after loading .emacs
+  (add-hook 'after-init-hook 'ibus-mode-on)
+  ;; Use C-SPC for Set Mark command
+  (ibus-define-common-key ?\C-\s nil)
+  ;; Use C-/ for Undo command
+  (ibus-define-common-key ?\C-/ nil)
+  ;; Change cursor color depending on IBus status
+  (setq ibus-cursor-color '("limegreen" "white" "yellow"))
+  (global-set-key "\C-\\" 'ibus-toggle))
 ;; 変換キーでon、無変換キーでoffで切り替え
 (global-set-key
  [henkan]
@@ -36,7 +37,7 @@
     (progn ;(message "%s" event) ;debug
       ad-do-it)))
 (ad-activate 'mozc-handle-event)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; UTF-8 and Japanese Setting
 
 ;                      'unicode)
