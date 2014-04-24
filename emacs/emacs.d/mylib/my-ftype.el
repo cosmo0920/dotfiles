@@ -190,3 +190,6 @@
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
 (autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+;;typescript-mode
+(autoload 'typescript-mode "typescript-mode" "Major mode for editing TypeScript." nil t)
+(setq auto-mode-alist (cons '("\\.ts$" . typescript-mode) auto-mode-alist))
