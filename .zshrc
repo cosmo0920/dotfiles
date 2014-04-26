@@ -218,8 +218,6 @@ if [ $EMACS ]; then
     export TERM=xterm-color
 fi
 
-# OPAM configuration
-. /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 # hsenv
 alias hsenva='source ~/.hsenv/bin/activate'
 alias hsenva78='source ~/.haskell/hsenv/ghc-7.8.2/.hsenv/bin/activate'
@@ -238,11 +236,11 @@ if [ -d $PACKERDIR ]; then
 fi
 
 # OPAM configuration
-. /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # for opam binary
-if [ -d /home/cosmo/.opam/4.01.0/bin ]; then
-	export PATH=/home/cosmo/.opam/4.01.0/bin:$PATH
+if [ -d ~/.opam/4.01.0/bin ]; then
+	export PATH=~/.opam/4.01.0/bin:$PATH
 fi
 
 #import export environment variables
