@@ -230,7 +230,7 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
 fi
 # for packer
-PACKERDIR=/media/work/packer 
+PACKERDIR=/media/work/packer
 if [ -d $PACKERDIR ]; then
 	export PATH=$PACKERDIR:$PATH
 fi
