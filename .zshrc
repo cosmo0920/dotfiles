@@ -192,10 +192,7 @@ export LANG=ja_JP.utf8
 autoload -U compinit
 compinit
 setopt complete_aliases
-#import export environment variables
-if [ -f ~/.zsh_profile ]; then
-  . ~/.zsh_profile
-fi
+
 #import export environment variables
 if [ -f ~/.zshenv ]; then
   . ~/.zshenv
@@ -225,9 +222,30 @@ fi
 . /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 # hsenv
 alias hsenva='source ~/.hsenv/bin/activate'
+alias hsenva78='source ~/.haskell/hsenv/ghc-7.8.2/.hsenv/bin/activate'
+# for cabal-sandbox installed binary
+export PATH=./.cabal-sandbox/bin:$PATH
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH=${PYENV_ROOT}/bin:$PATH
     eval "$(pyenv init -)"
+fi
+# for packer
+PACKERDIR=/media/work/packer 
+if [ -d $PACKERDIR ]; then
+	export PATH=$PACKERDIR:$PATH
+fi
+
+# OPAM configuration
+. /home/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# for opam binary
+if [ -d /home/cosmo/.opam/4.01.0/bin ]; then
+	export PATH=/home/cosmo/.opam/4.01.0/bin:$PATH
+fi
+
+#import export environment variables
+if [ -f ~/.zsh_profile ]; then
+  . ~/.zsh_profile
 fi
