@@ -1,8 +1,8 @@
 case "${OSTYPE}" in
 darwin*)
-	alias ls="ls -G"
-	alias ll="ls -lG"
-	alias la="ls -laG"
+	alias ls="ls -Gv"
+	alias ll="ls -lGv"
+	alias la="ls -laGv"
 	;;
 linux*)
 	alias ls='ls --color=auto'
