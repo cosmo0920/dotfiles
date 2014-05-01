@@ -15,22 +15,32 @@
   (recentf-mode 1)
 )
 (require 'shell-pop)
-(shell-pop-set-internal-mode "ansi-term")
 (cond
  ((equal (file-exists-p "/usr/bin/zsh") t)
-  (shell-pop-set-internal-mode-shell "/usr/bin/zsh"))
+  (setq ansi-term-shell-name "/usr/bin/zsh"))
  ((equal (file-exists-p "/bin/zsh") t)
-  (shell-pop-set-internal-mode-shell "/bin/zsh"))
+  (setq ansi-term-shell-name "/bin/zsh"))
  ((equal (file-exists-p "/bin/bash") t)
-  (shell-pop-set-internal-mode-shell "/bin/bash"))
+  (setq ansi-term-shell-name "/bin/bash"))
  ((equal (file-exists-p "/bin/dash") t)
-  (shell-pop-set-internal-mode-shell "/bin/dash"))
+  (setq ansi-term-shell-name "/bin/dash"))
  ((equal (file-exists-p "/usr/bin/tcsh") t)
-  (shell-pop-set-internal-mode-shell "/usr/bin/tcsh"))
+  (setq ansi-term-shell-name "/usr/bin/tcsh"))
  ((equal (file-exists-p "/usr/bin/csh") t)
-  (shell-pop-set-internal-mode-shell "/usr/bin/csh"))
+  (setq ansi-term-shell-name "/usr/bin/csh"))
  (t
-  (shell-pop-set-internal-mode-shell "/bin/sh")))
+  (setq ansi-term-shell-name "/bin/sh")))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+ '(shell-pop-term-shell ansi-term-shell-name)
+ '(shell-pop-universal-key "C-t")
+ '(shell-pop-window-height 30)
+ '(shell-pop-window-position "bottom"))
 ;;shell-pop.elの設定
 (defvar ansi-term-after-hook nil)
 (add-hook 'ansi-term-after-hook
