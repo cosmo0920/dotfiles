@@ -169,7 +169,6 @@
 (setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Cakefile" . coffee-mode) auto-mode-alist))
 ;;Haskell-mode
-(load "~/.emacs.d/elisp/haskell-mode/haskell-site-file")
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'font-lock-mode)
@@ -190,6 +189,3 @@
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
 (autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
-;;typescript-mode
-(autoload 'typescript-mode "typescript-mode" "Major mode for editing TypeScript." nil t)
-(setq auto-mode-alist (cons '("\\.ts$" . typescript-mode) auto-mode-alist))

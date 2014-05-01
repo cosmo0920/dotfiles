@@ -18,4 +18,5 @@
 (eval-when-compile
   (require 'cl))
 (require 'powerline)
+(powerline-default-theme)
 (provide 'after-init)
