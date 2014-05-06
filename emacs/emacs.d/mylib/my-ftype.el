@@ -72,9 +72,13 @@
 ;;for ruby
 (setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
-(require 'ruby-electric)
-(add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
-(setq ruby-electric-expand-delimiters-list nil)
+(require 'ruby-end)
+(add-hook 'ruby-mode-hook
+  '(lambda ()
+    (abbrev-mode 1)
+    (electric-pair-mode t)
+    (electric-indent-mode t)
+    (electric-layout-mode t)))
 ;;for python
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 ;; for fortran
