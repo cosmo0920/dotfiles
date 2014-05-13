@@ -1,0 +1,19 @@
+install glib
+install atk
+install cairo
+install pango
+install poppler
+install gdk-pixbuf
+install gtk+
+install gtk+3
+#install goocanvas2
+install gnome-icon-theme
+install json-glib
+install cogl --without-x
+install gstreamer
+install gst-plugins-base
+install clutter
+install clutter-gtk
+install clutter-gst
+install vte
+install vte3
