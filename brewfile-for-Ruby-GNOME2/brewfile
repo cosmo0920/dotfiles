@@ -6,7 +6,7 @@ install poppler
 install gdk-pixbuf
 install gtk+
 install gtk+3
-#install goocanvas2
+#install goocanvas2 # parhaps goocanvas Formula itself upgrade? 1.0 -> 2.0
 install gnome-icon-theme
 install json-glib
 install cogl --without-x
