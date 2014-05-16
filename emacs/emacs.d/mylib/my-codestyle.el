@@ -213,7 +213,7 @@
   nil
   hs-c-like-adjust-block-beginning)
   hs-special-modes-alist)
-;; Cモード共通フック
+;; C# mode hook
 (add-hook 'csharp-mode-hook
           '(lambda()
              (setq comment-column 40)
@@ -224,6 +224,7 @@
              (c-set-offset 'case-label '+)
              (c-set-offset 'arglist-intro '+)
              (c-set-offset 'arglist-close 0)
+             (setq indent-tabs-mode t)
              )
           )
 ;; Java mode hook
