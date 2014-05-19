@@ -24,6 +24,7 @@ install scala || true
 install sbt || true
 install dmd || true
 install lv || true
+install packer || true
 
 cask install yorufukurou || true
 cask install virtualbox || true
