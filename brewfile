@@ -1,5 +1,6 @@
 tap phinze/homebrew-cask || true
 tap homebrew/versions|| true
+tap homebrew/binary || true
 update || true
 
 install brew-cask || true
