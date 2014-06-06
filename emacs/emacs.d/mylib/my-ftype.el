@@ -72,6 +72,8 @@
 ;;for ruby
 (setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("Rakefile$". ruby-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("Vagrantfile$". ruby-mode) auto-mode-alist))
 (require 'ruby-end)
 (add-hook 'ruby-mode-hook
   '(lambda ()
