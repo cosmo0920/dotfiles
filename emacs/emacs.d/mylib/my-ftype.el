@@ -191,5 +191,9 @@
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
+;;Dockerfile-mode
 (autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
-(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
+;;powershell-mode
+(autoload 'powershell-mode "powershell-mode" "Major mode for editing powershell." nil t)
+(add-to-list 'auto-mode-alist '("\\.ps1$" . powershell-mode))
