@@ -181,8 +181,9 @@
      (add-hook 'haskell-mode-hook 'haskell-hook)
 ))
 (defun haskell-hook ()
-  ;; Use simple indentation.
   (turn-on-haskell-simple-indent)
+  (turn-on-haskell-indent)
+  (turn-on-haskell-indentation)
   (turn-on-haskell-doc)
   (turn-on-haskell-indentdecl-scan))
 ;; Customization
