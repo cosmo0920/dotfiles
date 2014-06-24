@@ -175,12 +175,28 @@
 (setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Cakefile" . coffee-mode) auto-mode-alist))
 ;;Haskell-mode
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'font-lock-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
-(autoload 'ghc-init "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
+(autoload 'haskell-mode-autoloads "haskell-mode-autoloads" "haskell-mode autoload." t)
+(eval-after-load "haskell-mode"
+  '(progn
+     (add-hook 'haskell-mode-hook 'haskell-hook)
+))
+(defun haskell-hook ()
+  ;; Use simple indentation.
+  (turn-on-haskell-simple-indent)
+  (turn-on-haskell-doc)
+  (turn-on-haskell-indentdecl-scan))
+;; Customization
+(custom-set-variables
+  ;; Use notify.el (if you have it installed) at the end of running
+  ;; Cabal commands or generally things worth notifying.
+  '(haskell-notify-p t)
+
+  ;; To enable tags generation on save.
+  '(haskell-tags-on-save t)
+
+  ;; To enable stylish on save.
+  '(haskell-stylish-on-save t))
+
 ;;hamlet-mode
 (autoload 'hamlet-mode "hamlet-mode" "Major mode for editing hamlet." t)
 (setq auto-mode-alist (cons '("\\.hamlet$" . hamlet-mode) auto-mode-alist))
