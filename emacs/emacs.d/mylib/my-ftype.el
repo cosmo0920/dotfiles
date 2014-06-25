@@ -185,7 +185,12 @@
   (turn-on-haskell-indent)
   (turn-on-haskell-indentation)
   (turn-on-haskell-doc)
-  (turn-on-haskell-indentdecl-scan))
+  (turn-on-haskell-indentdecl-scan)
+  (autoload 'ghc-init "ghc" nil t)
+  (add-hook 'haskell-mode-hook
+            (lambda () (ghc-init)))
+  (add-to-list 'ac-sources 'ac-source-ghc-mod)
+)
 ;; Customization
 (custom-set-variables
   ;; Use notify.el (if you have it installed) at the end of running
