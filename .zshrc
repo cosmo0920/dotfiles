@@ -1,8 +1,8 @@
 case "${OSTYPE}" in
 darwin*)
-	alias ls="ls -Gv"
-	alias ll="ls -lGv"
-	alias la="ls -laGv"
+	alias ls="ls -G"
+	alias ll="ls -lG"
+	alias la="ls -laG"
 	;;
 linux*)
 	alias ls='ls --color=auto'
@@ -197,6 +197,9 @@ setopt complete_aliases
 if [ -f ~/.zshenv ]; then
   . ~/.zshenv
 fi
+if [ -f ~/.zsh_function ]; then
+  . ~/.zsh_function
+fi
 #for rbenv
 export RBENV_ROOT="${HOME}/.rbenv"
 if [ -d "${RBENV_ROOT}" ]; then
@@ -219,8 +222,8 @@ if [ $EMACS ]; then
 fi
 
 # hsenv
-alias hsenva='source ~/.hsenv/bin/activate'
-alias hsenva78='source ~/.haskell/hsenv/ghc-7.8.2/.hsenv/bin/activate'
+# alias hsenva='source ~/.hsenv/bin/activate'
+alias hsenva78='source ~/.haskell/hsenv/ghc-7.8.3/.hsenv/bin/activate'
 # for cabal-sandbox installed binary
 export PATH=./.cabal-sandbox/bin:$PATH
 # pyenv
@@ -246,4 +249,9 @@ fi
 #import export environment variables
 if [ -f ~/.zsh_profile ]; then
   . ~/.zsh_profile
+fi
+export ANDROID_HOME=/media/Data2/adt-bundle-linux-x86_64/sdk
+if [ -d $ANDROID_HOME ]; then
+  export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+  export LD_LIBRARY_PATH=$ANDROID_SDK_HOME/tools/lib:$LD_LIBRARY_PATH
 fi
