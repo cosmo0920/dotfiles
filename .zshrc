@@ -255,3 +255,13 @@ if [ -d $ANDROID_HOME ]; then
   export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
   export LD_LIBRARY_PATH=$ANDROID_SDK_HOME/tools/lib:$LD_LIBRARY_PATH
 fi
+case "${OSTYPE}" in
+darwin*)
+    export GOPATH=~/go/lib
+    export LANG=ja_JP.UTF-8
+    export XMODIFIERS=@im=uim
+    export GTK_IM_MODULE=uim
+    ;;
+linux*)
+    ;;
+esac
