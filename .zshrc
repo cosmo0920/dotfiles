@@ -220,6 +220,8 @@ if [ $EMACS ]; then
     chpwd_emacs_ansi_term
     export TERM=xterm-color
 fi
+# for eshell
+[[ $EMACS = t ]] && unsetopt zle
 
 # hsenv
 # alias hsenva='source ~/.hsenv/bin/activate'
