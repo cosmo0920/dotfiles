@@ -22,4 +22,6 @@
 (require 'init_yasnippet)
 ;;proof general
 (require 'init_proof_general)
+;;tramp
+(require 'init_tramp)
 (provide 'load_rc.d)
