@@ -74,26 +74,18 @@
 ;;大文字小文字を区別したい
 (setq case-fold-search nil)
 ;;; 対応する括弧を光らせる。
-(show-paren-mode 1)
+(show-paren-mode t)
 ;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
 (setq show-paren-style 'mixed)
 (set-face-background 'show-paren-match-face "#a4d1ff")
 (defadvice show-paren-function
-      (after show-matching-paren-offscreen activate)
-      "If the matching paren is offscreen, show the matching line in the
-        echo area. Has no effect if the character before point is not of
-        the syntax class ')'."
-      (interactive)
-      (if (not (minibuffer-prompt))
-          (let ((matching-text nil))
-            ;; Only call `blink-matching-open' if the character before point
-            ;; is a close parentheses type character. Otherwise, there's not
-            ;; really any point, and `blink-matching-open' would just echo
-            ;; "Mismatched parentheses", which gets really annoying.
-            (if (char-equal (char-syntax (char-before (point))) ?\))
-                (setq matching-text (blink-matching-open)))
-            (if (not (null matching-text))
-                (message matching-text)))))
+  (around show-paren-closing-before
+          activate compile)
+  (if (eq (syntax-class (syntax-after (point))) 5)
+      (save-excursion
+        (forward-char)
+        ad-do-it)
+    ad-do-it))
 ;;; カーソルの位置が何文字目かを表示する
 (column-number-mode t)
 ;;; カーソルの位置が何行目かを表示する
