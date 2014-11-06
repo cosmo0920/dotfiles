@@ -3,6 +3,8 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 ;;for magit
 (autoload 'magit "magit" "Emacs git client." nil t)
+(when (locate-library "magit")
+  (global-set-key (kbd "C-x g") 'magit-status))
 ;; ファイルの履歴
 (require 'recentf)
 (when (locate-library "recentf")
