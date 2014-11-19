@@ -3,6 +3,8 @@ dotfiles
 
 * Emacs
 * Vim
-* .zshrc
+* .zshrc/.bashrc
+* git related config
+* sbtconfig
 
 And so on.
