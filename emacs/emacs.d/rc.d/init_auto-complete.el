@@ -11,8 +11,8 @@
                        ))
 (ac-set-trigger-key "TAB")
 (when run-linux
-  (require 'auto-complete-etags)
-  (add-to-list 'ac-sources 'ac-source-etags))
+  (when (require 'auto-complete-etags nil t)
+    (add-to-list 'ac-sources 'ac-source-etags)))
 ;;補完候補をC-n/C-pでも選択できるように
 ;;Vimmerには嬉しいかも。
 (add-hook 'auto-complete-mode-hook

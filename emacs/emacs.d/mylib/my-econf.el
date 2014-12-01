@@ -97,14 +97,14 @@
 (global-hl-line-mode t)
 (set-face-background 'hl-line "alice blue")
 ;;; col-highlight.el
-(require 'col-highlight nil t)
-;; 常にハイライト
-;;(column-highlight-mode 1)
-;; col-highlightの色を変える
-(custom-set-faces
- '(col-highlight((t (:background "lightgray")))))
-(toggle-highlight-column-when-idle 1)
-(col-highlight-set-interval 3)
+(when (require 'col-highlight nil t)
+  ;; 常にハイライト
+  (column-highlight-mode 1)
+  ;; col-highlightの色を変える
+  (custom-set-faces
+   '(col-highlight((t (:background "lightgray")))))
+  ;; (toggle-highlight-column-when-idle 1)
+  (col-highlight-set-interval 3))
 ;;バッファ自動再読み込み
 (global-auto-revert-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -74,7 +74,7 @@
 (setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Rakefile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Vagrantfile$". ruby-mode) auto-mode-alist))
-(require 'ruby-end)
+(require 'ruby-end nil t)
 (add-hook 'ruby-mode-hook
   '(lambda ()
     (abbrev-mode 1)

@@ -7,7 +7,7 @@
   (global-set-key (kbd "C-x g") 'magit-status))
 ;; ファイルの履歴
 (require 'recentf)
-(when (locate-library "recentf")
+(when (locate-library "recentf" nil t)
   (require 'recentf-ext)
   (recentf-mode t)
   (setq recentf-exclude '("^\\.emacs\\.bmk$"))
@@ -16,22 +16,22 @@
   (setq recentf-max-saved-items 20)
   (recentf-mode 1)
 )
-(require 'shell-pop)
-(cond
- ((equal (file-exists-p "/usr/bin/zsh") t)
-  (setq ansi-term-shell-name "/usr/bin/zsh"))
- ((equal (file-exists-p "/bin/zsh") t)
-  (setq ansi-term-shell-name "/bin/zsh"))
- ((equal (file-exists-p "/bin/bash") t)
-  (setq ansi-term-shell-name "/bin/bash"))
- ((equal (file-exists-p "/bin/dash") t)
-  (setq ansi-term-shell-name "/bin/dash"))
- ((equal (file-exists-p "/usr/bin/tcsh") t)
-  (setq ansi-term-shell-name "/usr/bin/tcsh"))
- ((equal (file-exists-p "/usr/bin/csh") t)
-  (setq ansi-term-shell-name "/usr/bin/csh"))
- (t
-  (setq ansi-term-shell-name "/bin/sh")))
+(when (require 'shell-pop nil t)
+  (cond
+   ((equal (file-exists-p "/usr/bin/zsh") t)
+    (setq ansi-term-shell-name "/usr/bin/zsh"))
+   ((equal (file-exists-p "/bin/zsh") t)
+    (setq ansi-term-shell-name "/bin/zsh"))
+   ((equal (file-exists-p "/bin/bash") t)
+    (setq ansi-term-shell-name "/bin/bash"))
+   ((equal (file-exists-p "/bin/dash") t)
+    (setq ansi-term-shell-name "/bin/dash"))
+   ((equal (file-exists-p "/usr/bin/tcsh") t)
+    (setq ansi-term-shell-name "/usr/bin/tcsh"))
+   ((equal (file-exists-p "/usr/bin/csh") t)
+    (setq ansi-term-shell-name "/usr/bin/csh"))
+   (t
+    (setq ansi-term-shell-name "/bin/sh"))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

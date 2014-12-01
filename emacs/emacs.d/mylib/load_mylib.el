@@ -1,5 +1,5 @@
 ;;semanticの設定をまとめてみた。
-(require 'my-semantic)
+;; (require 'my-semantic)
 ;;verify file mode
 (require 'my-ftype)
 ;; 日本語入力の設定
