@@ -17,5 +17,6 @@
 ;;powerline
 (eval-when-compile
   (require 'cl))
-(when (require 'powerline nil t))
+(when (require 'powerline nil t)
+  (powerline-default-theme))
 (provide 'after-init)
