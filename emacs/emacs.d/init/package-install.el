@@ -5,10 +5,13 @@
     ;; ここに使っているパッケージを書く。
     auto-async-byte-compile
     anything
+    anzu
     expand-region
     col-highlight
     powerline
     recentf-ext
+    shell-pop
+    dired+
     yasnippet
     markdown-mode
     haskell-mode
