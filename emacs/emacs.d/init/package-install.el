@@ -6,6 +6,7 @@
     auto-async-byte-compile
     anything
     anzu
+    elscreen
     expand-region
     col-highlight
     powerline

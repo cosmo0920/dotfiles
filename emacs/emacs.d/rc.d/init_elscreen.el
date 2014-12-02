@@ -1,5 +1,6 @@
 (when (locate-library "elscreen")
   (load "elscreen" "ElScreen" t)
+  (elscreen-start)
   (global-set-key "\M->" 'next-buffer)
   (global-set-key "\M-<" 'previous-buffer)
   ;; 以下は自動でスクリーンを生成する場合の設定
