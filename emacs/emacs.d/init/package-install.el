@@ -4,6 +4,7 @@
   '(
     ;; ここに使っているパッケージを書く。
     auto-async-byte-compile
+    auto-complete
     anything
     anzu
     elscreen
