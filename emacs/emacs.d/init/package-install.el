@@ -5,6 +5,7 @@
     ;; ここに使っているパッケージを書く。
     auto-async-byte-compile
     anything
+    expand-region
     col-highlight
     powerline
     recentf-ext
