@@ -1,0 +1,7 @@
+/*.elc
+/**/*.elc
+/ac-comphist.dat
+/auto-save-list/
+/elpa/
+session.*
+/shellenv.el
