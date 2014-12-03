@@ -99,7 +99,7 @@
 ;;; col-highlight.el
 (when (require 'col-highlight nil t)
   ;; 常にハイライト
-  (column-highlight-mode 1)
+  ;; (column-highlight-mode 1)
   ;; col-highlightの色を変える
   (custom-set-faces
    '(col-highlight((t (:background "lightgray")))))
