@@ -8,3 +8,9 @@ dotfiles
 * sbtconfig
 
 And so on.
+
+## Setup
+
+```bash
+$ ./setup.sh
+```
