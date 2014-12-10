@@ -32,11 +32,13 @@ case $ARCH in
 		;;
 esac
 #for boost library
-export BOOSTROOT=<path to boostlib>/libboost_1_54_0
-export BOOSTINC=$BOOSTROOT/include
-export BOOSTLIB=$BOOSTROOT/lib
-export BOOSTLINK="-I $BOOSTINC -L $BOOSTLIB"
-export LD_LIBRARY_PATH=$BOOSTROOT/lib:$LD_LIBRARY_PATH
-
+export BOOSTROOT=/path/to/boostlib
+if [ -d $BOOSTROOT ]; then
+  export BOOSTROOTWITHVER=$BOOSTROOT/libboost_1_54_0
+  export BOOSTINC=$BOOSTROOTWITHVER/include
+  export BOOSTLIB=$BOOSTROOTWITHVER/lib
+  export BOOSTLINK="-I $BOOSTINC -L $BOOSTLIB"
+  export LD_LIBRARY_PATH=$BOOSTROOTWITHVER/lib:$LD_LIBRARY_PATH
+fi
 #for Haskell cabal
 export PATH=$HOME/.cabal/bin:$PATH
