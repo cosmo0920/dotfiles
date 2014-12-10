@@ -12,7 +12,7 @@ ln -s `pwd`/vimrc/vimrc ~/.vimrc
 ln -s `pwd`/vimrc/gvimrc ~/.gvimrc
 # zsh
 ln -s `pwd`/.zshrc ~/.zshrc
-ln -s `pwd`/.zsh_profile ~/.zsh_profile
+#ln -s `pwd`/.zsh_profile ~/.zsh_profile
 ln -s `pwd`/.zshenv ~/.zshenv
 # git
 ln -s `pwd`/.gitconfig ~/.gitconfig
