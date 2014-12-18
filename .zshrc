@@ -61,7 +61,8 @@ local LEFTC='%{$fg[cyan]%}' #$'%{\e[38;5;37m%}'
 #local RIGHTC=$'%{\e[38;5;88m%}'
 RPROMPT+="%(?.%F{green}[OK]%f.%F{red}[Fail]%f)"
 #SPROMPT="%r is correct? [n,y,a,e]: "
-PROMPT="$LEFTC%n@%m$DEFAULTC %c%% "
+PROMPT="$LEFTC%n@%m$DEFAULTC %c
+%% "
 PROMPT2='>> '
 if [ "$TERM" = "xterm" -o "$TERM" = "kterm" ]
 then
