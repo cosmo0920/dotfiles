@@ -63,14 +63,7 @@
 (setq auto-mode-alist (cons '("\\.S$" . asm-mode) auto-mode-alist))
 ;;for java
 (setq auto-mode-alist (cons '("\\.java$" . java-mode) auto-mode-alist))
-;;for c++
-(setq auto-mode-alist (cons '("\\.cpp$". c++-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.cc$". c++-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.cxx$". c++-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.hpp$". c++-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.tmpl$". c++-mode) auto-mode-alist))
 ;;for ruby
-(setq auto-mode-alist (cons '("\\.rb$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Rakefile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Vagrantfile$". ruby-mode) auto-mode-alist))
@@ -98,16 +91,9 @@
 ;;rust-mode
 (autoload 'rust-mode "rust-mode" "a mozilla's language." t)
 (setq auto-mode-alist (cons '("\\.rs$". rust-mode) auto-mode-alist))
-;; for C# mode
-(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
-(setq auto-mode-alist (cons '("\\.cs$" . csharp-mode) auto-mode-alist))
 ;; for SML mode
 (autoload 'sml-mode "sml-mode" "Major mode for editing SML code." t)
 (setq auto-mode-alist (cons '("\\.sml$" . sml-mode) auto-mode-alist))
-;;for Emas Lisp mode
-(autoload 'emacs-lisp-mode "emacs-lisp-mode" "editing ELisp." t)
-(setq auto-mode-alist (cons '("\\.el$" . emacs-lisp-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '(".emacs$" . emacs-lisp-mode) auto-mode-alist))
 ;;for OpenCL
 (setq auto-mode-alist (cons '("\.cl$" . c-mode) auto-mode-alist))
 ;;cuda-mode
@@ -132,9 +118,6 @@
 (autoload 'rhtml-mode "rhtml-mode" "RHTML" t)
 (setq auto-mode-alist (cons '("\\.rhtml$" . rhtml-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.html\.erb$" . rhtml-mode) auto-mode-alist))
-;;yaml
-(autoload 'yaml-mode "yaml-mode" "YAML" t)
-(setq auto-mode-alist (cons '("\\.yml$" . yaml-mode) auto-mode-alist))
 ;;css
 (autoload 'css-mode "css-mode" "CSS" t)
 (setq auto-mode-alist (cons '("\\.css$" . css-mode) auto-mode-alist))
@@ -175,7 +158,6 @@
 (setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Cakefile" . coffee-mode) auto-mode-alist))
 ;;Haskell-mode
-(autoload 'haskell-mode-autoloads "haskell-mode-autoloads" "haskell-mode autoload." t)
 (eval-after-load "haskell-mode"
   '(progn
      (add-hook 'haskell-mode-hook 'haskell-hook)
@@ -203,9 +185,6 @@
   ;; To enable stylish on save.
   '(haskell-stylish-on-save t))
 
-;;hamlet-mode
-(autoload 'hamlet-mode "hamlet-mode" "Major mode for editing hamlet." t)
-(setq auto-mode-alist (cons '("\\.hamlet$" . hamlet-mode) auto-mode-alist))
 ;;nemerle-mode
 (autoload 'nemerle-mode "nemerle" "Major mode for editing nemerle." nil t)
 (setq auto-mode-alist (cons '("\\.n$" . nemerle-mode) auto-mode-alist))
@@ -218,6 +197,3 @@
 ;;Dockerfile-mode
 (autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
 (add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
-;;powershell-mode
-(autoload 'powershell-mode "powershell-mode" "Major mode for editing powershell." nil t)
-(add-to-list 'auto-mode-alist '("\\.ps1$" . powershell-mode))
