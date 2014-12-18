@@ -67,46 +67,28 @@
 (setq auto-mode-alist (cons '("Gemfile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Rakefile$". ruby-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Vagrantfile$". ruby-mode) auto-mode-alist))
-(require 'ruby-end nil t)
-(add-hook 'ruby-mode-hook
-  '(lambda ()
-    (abbrev-mode 1)
-    (electric-pair-mode t)
-    (electric-indent-mode t)
-    (electric-layout-mode t)))
+(eval-after-load "ruby-end"
+  '(progn (abbrev-mode 1)
+          (electric-pair-mode t)
+          (electric-indent-mode t)
+          (electric-layout-mode t)))
 ;;for python
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 ;; for fortran
 (setq auto-mode-alist (cons '("\\.f$" . fortran-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.for$" . fortran-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.f90$" . fortran-mode) auto-mode-alist))
-;;for lua
-(autoload 'lua-mode "lua-mode" "LightweightLang." t)
-(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 ;;for go mode
 (autoload 'go-mode "go-mode" "GoLang" t)
 (setq auto-mode-alist (cons '("\\.go$". go-mode) auto-mode-alist))
 ;;for perl mode
 (setq auto-mode-alist (cons '("\\.pl$". perl-mode) auto-mode-alist))
-;;rust-mode
-(autoload 'rust-mode "rust-mode" "a mozilla's language." t)
-(setq auto-mode-alist (cons '("\\.rs$". rust-mode) auto-mode-alist))
 ;; for SML mode
 (autoload 'sml-mode "sml-mode" "Major mode for editing SML code." t)
 (setq auto-mode-alist (cons '("\\.sml$" . sml-mode) auto-mode-alist))
 ;;for OpenCL
 (setq auto-mode-alist (cons '("\.cl$" . c-mode) auto-mode-alist))
-;;cuda-mode
-(autoload 'cuda-mode "cuda-mode" "NVIDIA GPGPU Computing Lang." t)
-(setq auto-mode-alist (cons '("\\.cu\\w?" . cuda-mode) auto-mode-alist))
 ;;tuareg-mode for OCaml
-(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
-(autoload 'camldebug "camldebug" "Run the Caml debugger" t)
-;; (add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
- (setq auto-mode-alist
-       (append '(("\\.ml[ily]?$" . tuareg-mode)
-                ("\\.topml$" . tuareg-mode))
-               auto-mode-alist))
 (add-hook 'tuareg-mode-hook '(lambda ()
   (define-key tuareg-mode-map [f10] 'caml-types-show-type); requires caml-types
   ))
@@ -125,19 +107,11 @@
 ;;js2-mode
 (autoload 'js2-mode "js2-mode" "Javascript" t)
 (setq auto-mode-alist (cons '("\\.js$" . js2-mode) auto-mode-alist))
-;;coffee-mode
-(autoload 'coffee-mode "coffee" "Coffeescript" t)
-(setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 ;;haml-mode
-(autoload 'haml-mode "haml-mode" "HAML" t)
-(setq auto-mode-alist (cons '("\\.haml$" . haml-mode) auto-mode-alist))
 (add-hook 'haml-mode-hook
 	  (lambda ()
 	    (setq indent-tabs-mode nil)
 	    (define-key haml-mode-map "\C-m" 'newline-and-indent)))
-;;scala-mode2
-(autoload 'scala-mode "scala-mode2" "Scala" t)
-(setq auto-mode-alist (cons '("\\.scala$" . scala-mode) auto-mode-alist))
 ;;for Kuin
 (autoload 'kuin-mode "kuin-mode" "Kuin" t)
 (add-hook 'kuin-mode-hook '(lambda () (font-lock-mode 1)))
@@ -154,8 +128,6 @@
 (setq auto-mode-alist
       (cons '("\.\(l\|ll\)$" . flex-mode) auto-mode-alist))
 ;; coffee-mode(emacs goodies)
-(autoload 'coffee-mode "coffee-mode" "Major mode for editing CoffeeScript." t)
-(setq auto-mode-alist (cons '("\\.coffee$" . coffee-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("Cakefile" . coffee-mode) auto-mode-alist))
 ;;Haskell-mode
 (eval-after-load "haskell-mode"
@@ -194,6 +166,3 @@
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
-;;Dockerfile-mode
-(autoload 'dockerfile-mode "dockerfile-mode" "Major mode for editing Dockerfile." nil t)
-(add-to-list 'auto-mode-alist '("Dockerfile" . dockerfile-mode))
