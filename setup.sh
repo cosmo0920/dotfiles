@@ -21,3 +21,4 @@ ln -s `pwd`/.gitignore ~/.gitignore
 ln -s `pwd`/.sbtconfig ~/.sbtconfig
 # opam
 ln -s `pwd`/.ocamlinit ~/.ocamlinit
+bash shellenv.bash
