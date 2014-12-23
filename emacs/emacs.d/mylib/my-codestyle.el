@@ -236,4 +236,5 @@
 (add-hook 'js2-mode-hook (lambda ()
                           (setq c-basic-offset 2
                                 tab-width 2
-                                indent-tabs-mode t)))
+                                ;; インデントにスペースを使う
+                                indent-tabs-mode nil)))
