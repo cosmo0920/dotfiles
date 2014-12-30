@@ -155,6 +155,8 @@
 (require 'expand-region nil t)
 (global-set-key (kbd "C-@") 'er/expand-region)
 (global-set-key (kbd "C-M-@") 'er/contract-region)
+;; maximize/unmaximize frame
+(global-set-key (kbd "C-x 4") 'toggle-frame-maximized)
 ;;3 split vertically ref:http://d.hatena.ne.jp/yascentur/20110621/1308585547
 (defun split-window-vertically-n (num_wins)
   (interactive "p")
