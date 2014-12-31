@@ -7,6 +7,9 @@
 (package-initialize)
 ;;OS判別とload-pathの設定
 (load-file "~/.emacs.d/rc.d/init_loadpath.el")
+(require 'load-path-subdir)
+;;; site-lispディレクトリをサブディレクトリごとload-pathに追加
+(add-to-load-path-with-subdir "site-lisp")
 ;; loading init/package-install
 (require 'package-install)
 ;;.emacs.d/mylib以下を読み込む
