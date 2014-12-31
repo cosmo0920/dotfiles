@@ -5,3 +5,4 @@
 /elpa/
 session.*
 /shellenv.el
+/site-lisp
