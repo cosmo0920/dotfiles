@@ -27,7 +27,6 @@
                             "~/.emacs.d/init/"
                             "~/.emacs.d/cedet/"
                             "~/.emacs.d/auto-install/"
-                            "~/.emacs.d/apel/"
                           )
                           load-path)))
 

@@ -3,6 +3,7 @@
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
+    apel
     auto-async-byte-compile
     auto-complete
     anything
