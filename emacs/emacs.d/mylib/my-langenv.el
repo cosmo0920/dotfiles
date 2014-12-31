@@ -1,5 +1,5 @@
 ;;OS判別
-;;(load-file "~/.emacs.d/mylib/my-ostype.el")
+(load-file "~/.emacs.d/mylib/my-ostype.el")
 (when run-linux
  (require 'lang-env-linux))
 ;;for windows

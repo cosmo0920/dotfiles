@@ -1,4 +1,3 @@
-(provide 'my-ftype)
 ;;my autoload elisp library
 ;;verify file mode section
 ;;--------------------------------------------------------------------------
@@ -166,3 +165,4 @@
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
+(provide 'my-ftype)

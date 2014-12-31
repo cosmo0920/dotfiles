@@ -1,5 +1,5 @@
 (require 'auto-complete)
-(require 'auto-complete-config)    ; 必須ではないですが一応
+(require 'auto-complete-config)
 (require 'my-ostype)
 ;補完。auto-completeがあるから要らないかも
 (define-key global-map "\C-c\C-i" 'dabbrev-expand)

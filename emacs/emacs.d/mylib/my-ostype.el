@@ -1,4 +1,3 @@
-(provide 'my-ostype)
 ;; OSを判別、UNIX系？
 (defvar run-unix
   (or (equal system-type 'gnu/linux)
@@ -20,3 +19,4 @@
        (or (equal system-type 'windows-nt)
           (equal system-type 'ms-dos))))
 (defvar run-darwin (equal system-type 'darwin))
+(provide 'my-ostype)

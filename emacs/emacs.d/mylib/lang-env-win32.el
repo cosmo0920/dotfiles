@@ -7,7 +7,7 @@
 (setq-default w32-ime-mode-line-state-indicator "[--]") ;; おこのみで
 (setq w32-ime-mode-line-state-indicator-list '("[--]" "[あ]" "[--]")) ;; おこのみで
 (w32-ime-initialize)
-  
+
 ;;; IME ON/OFF 時にカーソル色を変える。
 (setq ime-activate-cursor-color "#00a000")
 (setq ime-inactivate-cursor-color "#000000")
