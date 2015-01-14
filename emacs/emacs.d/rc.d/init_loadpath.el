@@ -32,15 +32,10 @@
 
 (when run-w32
   (setq load-path (append '("~/.emacs.d/site-lisp/"
-                            "~/.emacs.d/site-elisp/"
                             "~/.emacs.d/elisp/"
                             "~/.emacs.d/mylib/"
                             "~/.emacs.d/rc.d/"
                             "~/.emacs.d/init/"
-                            "~/.emacs.d/cedet/"
-                            "~/.emacs.d/rhtml/"
-                            "~/.emacs.d/auto-install/"
-                            "~/.emacs.d/apel/"
                             )
                             load-path)))
 (provide 'init_loadpath)
