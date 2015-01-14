@@ -17,43 +17,47 @@
   (recentf-mode 1)
 )
 (when (require 'shell-pop nil t)
-  (cond
-   ((equal (file-exists-p "/usr/bin/zsh") t)
-    (setq ansi-term-shell-name "/usr/bin/zsh"))
-   ((equal (file-exists-p "/bin/zsh") t)
-    (setq ansi-term-shell-name "/bin/zsh"))
-   ((equal (file-exists-p "/bin/bash") t)
-    (setq ansi-term-shell-name "/bin/bash"))
-   ((equal (file-exists-p "/bin/dash") t)
-    (setq ansi-term-shell-name "/bin/dash"))
-   ((equal (file-exists-p "/usr/bin/tcsh") t)
-    (setq ansi-term-shell-name "/usr/bin/tcsh"))
-   ((equal (file-exists-p "/usr/bin/csh") t)
-    (setq ansi-term-shell-name "/usr/bin/csh"))
-   (t
-    (setq ansi-term-shell-name "/bin/sh"))))
+  (unless run-w32
+    (cond
+     ((equal (file-exists-p "/usr/bin/zsh") t)
+      (setq ansi-term-shell-name "/usr/bin/zsh"))
+     ((equal (file-exists-p "/bin/zsh") t)
+      (setq ansi-term-shell-name "/bin/zsh"))
+     ((equal (file-exists-p "/bin/bash") t)
+      (setq ansi-term-shell-name "/bin/bash"))
+     ((equal (file-exists-p "/bin/dash") t)
+      (setq ansi-term-shell-name "/bin/dash"))
+     ((equal (file-exists-p "/usr/bin/tcsh") t)
+      (setq ansi-term-shell-name "/usr/bin/tcsh"))
+     ((equal (file-exists-p "/usr/bin/csh") t)
+      (setq ansi-term-shell-name "/usr/bin/csh"))
+     (t
+      (setq ansi-term-shell-name "/bin/sh")))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
- '(shell-pop-term-shell ansi-term-shell-name)
- '(shell-pop-universal-key "C-t")
- '(shell-pop-window-height 30)
- '(shell-pop-window-position "bottom"))
-;;shell-pop.elの設定
-(defvar ansi-term-after-hook nil)
-(add-hook 'ansi-term-after-hook
-          (function
-           (lambda ()
-             (define-key term-raw-map "\C-t" 'shell-pop))))
-(defadvice ansi-term (after ansi-term-after-advice (arg))
-  "run hook as after advice"
-  (run-hooks 'ansi-term-after-hook))
-(ad-activate 'ansi-term)
-(global-set-key "\C-t" 'shell-pop)
+    (custom-set-variables
+     ;; custom-set-variables was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+     '(shell-pop-term-shell ansi-term-shell-name)
+     '(shell-pop-universal-key "C-t")
+     '(shell-pop-window-height 30)
+     '(shell-pop-window-position "bottom"))
+    ;;shell-pop.elの設定
+    (defvar ansi-term-after-hook nil)
+    (add-hook 'ansi-term-after-hook
+              (function
+               (lambda ()
+                 (define-key term-raw-map "\C-t" 'shell-pop))))
+    (defadvice ansi-term (after ansi-term-after-advice (arg))
+      "run hook as after advice"
+      (run-hooks 'ansi-term-after-hook))
+    (ad-activate 'ansi-term)
+    (global-set-key "\C-t" 'shell-pop))
+  (when run-w32
+    (global-set-key "\C-t" 'shell)))
+
 ;; use shift + arrow keys to switch between visible buffers
 (require 'windmove)
 (windmove-default-keybindings)
