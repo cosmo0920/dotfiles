@@ -54,12 +54,15 @@ if has('autocmd')
     	\ endif
 endif
 set nocompatible
-filetype off 
+filetype off
 
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set runtimepath+=$VIM/.vim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
+
+call neobundle#begin(expand('$VIM/.vim/bundle/'))
+" originalrepos on github
+NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'thinca/vim-ref'
@@ -134,7 +137,7 @@ set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
 "改行コード指定
-setl ff=unix 
+setl ff=unix
 "------------------------------------------------
 "エディタの動作
 "------------------------------------------------
