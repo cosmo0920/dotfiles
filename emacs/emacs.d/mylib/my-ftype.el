@@ -160,8 +160,10 @@
 (autoload 'nemerle-mode "nemerle" "Major mode for editing nemerle." nil t)
 (setq auto-mode-alist (cons '("\\.n$" . nemerle-mode) auto-mode-alist))
 ;;ats-mode
-(autoload 'ats-mode "ats-mode" "Major mode for editing ats." nil t)
+(autoload 'ats-mode "ats2-mode" "Major mode for editing ats." nil t)
 (setq auto-mode-alist (cons '("\\.dats$" . ats-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.sats$" . ats-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.hats$" . ats-mode) auto-mode-alist))
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
