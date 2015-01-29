@@ -6,7 +6,7 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 ;;OS判別とload-pathの設定
-(load-file "~/.emacs.d/rc.d/init_loadpath.el")
+(load-file "~/.emacs.d/init/loadpath.el")
 (require 'load-path-subdir)
 ;;; site-lispディレクトリをサブディレクトリごとload-pathに追加
 (add-to-load-path-with-subdir "site-lisp")
