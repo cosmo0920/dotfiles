@@ -1,6 +1,7 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
-(require 'my-ostype)
+;;OS判別
+(eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
 ;補完。auto-completeがあるから要らないかも
 (define-key global-map "\C-c\C-i" 'dabbrev-expand)
 ;; dirty fix for having AC everywhere

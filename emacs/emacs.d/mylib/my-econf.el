@@ -1,5 +1,5 @@
 ;;OS判別
-(require 'my-ostype)
+(load-file "~/.emacs.d/init/ostype.el")
 ;; 起動時のサイズ,表示位置,フォントを指定
 (setq initial-frame-alist
   (append (list

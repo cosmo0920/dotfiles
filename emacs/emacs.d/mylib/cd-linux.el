@@ -1,4 +1,6 @@
-(require 'my-ostype)
+;;OS判別
+(eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
+
 ;;change default directory for Ubuntu
 (when run-linux
   (cond

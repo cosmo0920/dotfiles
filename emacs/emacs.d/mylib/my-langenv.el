@@ -1,5 +1,7 @@
-;;OS判別
-(load-file "~/.emacs.d/mylib/my-ostype.el")
+(eval-when-compile
+  ;;OS判別
+  (load-file "~/.emacs.d/init/ostype.el")
+)
 (when run-linux
  (require 'lang-env-linux))
 ;;for windows

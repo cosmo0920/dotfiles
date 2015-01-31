@@ -1,5 +1,5 @@
-;;OSÈ½ÊÌ
-(eval-when-compile (load-file "~/.emacs.d/mylib/my-ostype.el"))
+;;OSåˆ¤åˆ¥
+(eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
 ;;for Ubuntu setting
 (when run-linux
   (setq load-path (append '("~/.emacs.d/site-lisp/"
@@ -13,7 +13,7 @@
                             "/usr/local/share/gtags/"
                             )
                             load-path))
-  ;;Ubuntu¤À¤Èapt-get¤·¤¿Elisp¤Ï¤³¤³¤ËÃÖ¤«¤ì¤ë
+  ;;Ubuntuã ã¨apt-getã—ãŸElispã¯ã“ã“ã«ç½®ã‹ã‚Œã‚‹
   (let ((default-directory "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path)))
 

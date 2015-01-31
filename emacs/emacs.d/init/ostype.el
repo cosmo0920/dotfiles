@@ -19,4 +19,4 @@
        (or (equal system-type 'windows-nt)
           (equal system-type 'ms-dos))))
 (defvar run-darwin (equal system-type 'darwin))
-(provide 'my-ostype)
+(provide 'ostype)

@@ -1,5 +1,6 @@
 ;;OS判別
-(load-file "~/.emacs.d/mylib/my-ostype.el")
+(eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
+
 (setq semantic-load-turn-everything-on t)
 (semantic-load-enable-code-helpers)
 ;; select which submodes we want to activate
