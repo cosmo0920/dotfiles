@@ -6,3 +6,4 @@
 session.*
 /shellenv.el
 /site-lisp
+/after
