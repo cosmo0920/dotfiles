@@ -15,7 +15,7 @@
 ;; Activate semantic
 (semantic-mode 1)
 ;; load contrib library
-(require 'eassist)
+(require 'eassist nil t)
 
 (defun my-semantic-hook ()
   (imenu-add-to-menubar "cedet-TAGS"))

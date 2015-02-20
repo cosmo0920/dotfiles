@@ -16,5 +16,7 @@
 (require 'load_mylib)
 ;;.emacs.d/rc.d以下を読み込む
 (require 'load_rc.d)
+;;; afterディレクトリをサブディレクトリごとload-pathに追加
+(add-to-load-path-with-subdir "after")
 ;;上の2つが読み終わった後に読み込む
 (require 'after-init)

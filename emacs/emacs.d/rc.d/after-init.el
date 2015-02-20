@@ -19,4 +19,6 @@
   (require 'cl))
 (when (require 'powerline nil t)
   (powerline-default-theme))
+;; 他挙動を変更したい場合
+(require 'after-customize nil t)
 (provide 'after-init)
