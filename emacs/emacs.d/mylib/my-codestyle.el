@@ -194,7 +194,9 @@
    (defun-block-intro . 2)
    ))
 ;; モードに入るときに呼び出す hook の設定
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+;; (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+(add-hook 'c-mode-hook 'my-c-mode-common-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-common-hook)
 
 ;; @ csharp-mode
 ;;(require 'csharp-mode)
