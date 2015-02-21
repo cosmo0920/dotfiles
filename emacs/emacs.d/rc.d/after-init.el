@@ -1,3 +1,4 @@
+;; -*- coding: euc-jp -*-
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode t)

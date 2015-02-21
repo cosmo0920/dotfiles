@@ -20,8 +20,6 @@
 ;;for OSX setting
 (when run-darwin
   (setq load-path (append '("~/.emacs.d/site-lisp/"
-                            "~/.emacs.d/site-elisp/"
-                            "~/.emacs.d/elisp/"
                             "~/.emacs.d/mylib/"
                             "~/.emacs.d/rc.d/"
                             "~/.emacs.d/init/"

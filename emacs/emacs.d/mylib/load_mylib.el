@@ -1,9 +1,10 @@
-;;semantic¤ÎÀßÄê¤ò¤Ş¤È¤á¤Æ¤ß¤¿¡£
+(eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
+;; semanticã®è¨­å®š
 ;; (require 'my-semantic)
 ;;verify file mode
 (require 'my-ftype)
-;; ÆüËÜ¸ìÆşÎÏ¤ÎÀßÄê
+;; æ—¥æœ¬èªå…¥åŠ›ã®è¨­å®š
 (require 'my-langenv)
-;;»¨Â¿¤ÊÀßÄê @my-econf
+;; é›‘å¤šãªè¨­å®š @my-econf
 (require 'my-econf)
 (provide 'load_mylib)
