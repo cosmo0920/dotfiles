@@ -5,6 +5,9 @@
 ;; twmode で無効にする
 (defadvice linum-on(around my-linum-twmode-on() activate)
   (unless (eq major-mode 'twittering-mode) ad-do-it))
+;; linum を ansi-term で無効にする
+(defadvice linum-on(around my-linum-term-on() activate)
+  (unless (eq major-mode 'term-mode) ad-do-it))
 ;;http://d.hatena.ne.jp/rubikitch/20100423/bytecomp
 ;;自動バイトコンパイルを行う
 (when (require 'auto-async-byte-compile nil t)
