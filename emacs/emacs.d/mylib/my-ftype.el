@@ -53,7 +53,9 @@
      )
    )
 (font-lock-add-keywords 'c++-mode
-                        '(("constexpr" . 'font-lock-keyword-face)))
+                        '(
+                          ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|nullptr\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)
+                          ("\\(\\<[uU8]*R\"[^\\s-\\\\()]\\{0,16\\}(\\)" 1 font-lock-keyword-face t)))
 (add-hook 'find-file-hook 'bh-choose-header-mode)
 ;;(setq auto-mode-alist (cons ("\\.m$" . objc-mode) auto-mode-alist))
 ;;my C and C++ code style
