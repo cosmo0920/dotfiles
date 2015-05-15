@@ -52,7 +52,8 @@
 	 )
      )
    )
-
+(font-lock-add-keywords 'c++-mode
+                        '(("constexpr" . 'font-lock-keyword-face)))
 (add-hook 'find-file-hook 'bh-choose-header-mode)
 ;;(setq auto-mode-alist (cons ("\\.m$" . objc-mode) auto-mode-alist))
 ;;my C and C++ code style
