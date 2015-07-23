@@ -1,4 +1,5 @@
 (require 'auto-complete)
+(require 'go-autocomplete nil t)
 (require 'auto-complete-config)
 ;;OS判別
 (eval-when-compile (load-file "~/.emacs.d/init/ostype.el"))
