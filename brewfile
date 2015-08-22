@@ -1,32 +1,31 @@
-tap phinze/homebrew-cask || true
-tap homebrew/versions|| true
-tap homebrew/binary || true
-update || true
+tap 'phinze/homebrew-cask'
+tap 'homebrew/versions'
+tap 'homebrew/binary'
 
-install brew-cask || true
-install git || true
-install hg || true
-install ag || true
-install tmux || true
-install tree || true
-install cmake || true
-install zsh || true
-install wget || true
-install curl || true
-install cmake || true
-install libtool || true
-install automake || true
+brew 'brew-cask'
+brew 'git'
+brew 'hg'
+brew 'ag'
+brew 'tmux'
+brew 'tree'
+brew 'cmake'
+brew 'zsh'
+brew 'wget'
+brew 'curl'
+brew 'cmake'
+brew 'libtool'
+brew 'automake'
 
-install go || true
-install erlang || true
-install opam || true
-install scala || true
-install sbt || true
-install dmd || true
-install lv || true
-install packer || true
+brew 'go'
+brew 'erlang'
+brew 'opam'
+brew 'scala'
+brew 'sbt'
+brew 'dmd'
+brew 'lv'
+brew 'packer'
 
-cask install yorufukurou || true
-cask install virtualbox || true
-cask install vagrant || true
-cask install xquartz || true
+cask 'yorufukurou'
+cask 'virtualbox'
+cask 'vagrant'
+cask 'xquartz'
