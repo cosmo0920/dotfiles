@@ -1,19 +1,19 @@
-install glib
-install atk
-install cairo
-install pango
-install poppler
-install gdk-pixbuf
-install gtk+
-install gtk+3
+brew 'glib'
+brew 'atk'
+brew 'cairo'
+brew 'pango'
+brew 'poppler'
+brew 'gdk-pixbuf'
+brew 'gtk+'
+brew 'gtk+3'
 #install goocanvas2 # parhaps goocanvas Formula itself upgrade? 1.0 -> 2.0
-install gnome-icon-theme
-install json-glib
-install cogl --without-x
-install gstreamer
-install gst-plugins-base
-install clutter
-install clutter-gtk
-install clutter-gst
-install vte
-install vte3
+brew 'gnome-icon-theme'
+brew 'json-glib'
+brew 'cogl', args: ['without-x']
+brew 'gstreamer'
+brew 'gst-plugins-base'
+brew 'clutter'
+brew 'clutter-gtk'
+brew 'clutter-gst'
+brew 'vte'
+brew 'vte3'
