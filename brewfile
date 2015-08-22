@@ -1,4 +1,4 @@
-tap 'phinze/homebrew-cask'
+tap 'homebrew/homebrew-cask'
 tap 'homebrew/versions'
 tap 'homebrew/binary'
 
