@@ -25,7 +25,6 @@ brew 'dmd'
 brew 'lv'
 brew 'packer'
 
-cask 'yorufukurou'
 cask 'virtualbox'
 cask 'vagrant'
 cask 'xquartz'
