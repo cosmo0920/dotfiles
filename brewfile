@@ -25,6 +25,7 @@ brew 'dmd'
 brew 'lv'
 brew 'packer'
 
+cask 'night-owl'
 cask 'virtualbox'
 cask 'vagrant'
 cask 'xquartz'
