@@ -18,6 +18,7 @@
 (setq inhibit-startup-message t)
 (flyspell-mode t)
 (setq ispell-dictionary "american")
+(global-set-key "\M-+" 'ispell-buffer)
 (eval-when-compile
   ;; Emacs 21 defines `values' as a (run-time) alias for list.
   ;; Don't maerge this with the pervious clause.
