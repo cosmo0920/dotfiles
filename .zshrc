@@ -249,6 +249,11 @@ if [ -d ~/.opam/4.01.0/bin ]; then
 	export PATH=~/.opam/4.01.0/bin:$PATH
 fi
 
+# for cargo install
+if [ -d ~/.cargo/bin ]; then
+	export PATH=~/.cargo/bin:$PATH
+fi
+
 #import export environment variables
 if [ -f ~/.zsh_profile ]; then
   . ~/.zsh_profile
