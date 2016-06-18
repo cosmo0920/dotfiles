@@ -1,4 +1,3 @@
-export PATH=/usr/local/cuda-5.5/bin:$PATH
 #for cuda-7.5
 export PATH=/usr/local/cuda-7.5/bin:$PATH
 #for cuda-7.5 lib
@@ -8,6 +7,17 @@ case $ARCH in
 		;;
 	i386)
 		export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib:$LD_LIBRARY_PATH
+		;;
+esac
+#for cuda-8.0
+export PATH=/usr/local/cuda-8.0/bin:$PATH
+#for cuda-8.0 lib
+case $ARCH in
+	x86_64)
+		export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
+		;;
+	i386)
+		export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib:$LD_LIBRARY_PATH
 		;;
 esac
 #for boost library
