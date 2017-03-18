@@ -22,5 +22,9 @@ export GHC_DOT_APP="/Applications/ghc-7.10.1.app"
 if [ -d "$GHC_DOT_APP" ]; then
   export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
 fi
+# Set up rustup
+if [ -d $HOME/.cargo/env ]; then
+	source $HOME/.cargo/env
+fi
 
 . /Users/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
