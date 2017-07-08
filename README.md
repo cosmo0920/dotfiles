@@ -19,7 +19,6 @@ $ ./setup.sh
 
 ### For Windows
 
-Edit `USERNAME` with your account name.
 Then, 
 
 ```batfile
