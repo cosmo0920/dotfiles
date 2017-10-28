@@ -16,7 +16,6 @@
     shell-pop
     dired+
     yasnippet
-    magit
     markdown-mode
     haskell-mode
     yaml-mode
