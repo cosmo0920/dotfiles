@@ -170,4 +170,7 @@
 ;;idris-mode
 (autoload 'idris-mode "idris-mode" "Major mode for editing Idris." nil t)
 (setq auto-mode-alist (cons '("\\.idr$" . idris-mode) auto-mode-alist))
+;;;RD-mode
+(autoload 'rd-mode "rd-mode" "major mode for ruby document formatter RD" nil t)
+(add-to-list 'auto-mode-alist '("\\.rd$" . rd-mode))
 (provide 'my-ftype)

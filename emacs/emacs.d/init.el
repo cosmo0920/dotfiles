@@ -4,6 +4,7 @@
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(fset 'package-desc-vers 'package--ac-desc-version)
 (package-initialize)
 ;;OS判別とload-pathの設定
 (load-file "~/.emacs.d/init/loadpath.el")
