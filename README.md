@@ -7,7 +7,7 @@ dotfiles
 * git related config
 * sbtconfig
 
-And so on.
+and so on.
 
 ## Setup
 
@@ -19,6 +19,7 @@ $ ./setup.sh
 
 ### For Windows
 
+Launch administrator cmd prompt.
 Then, 
 
 ```batfile
