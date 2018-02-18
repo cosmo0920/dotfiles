@@ -10,11 +10,9 @@
     anzu
     elscreen
     expand-region
-    col-highlight
     powerline
     recentf-ext
     shell-pop
-    dired+
     yasnippet
     markdown-mode
     haskell-mode
