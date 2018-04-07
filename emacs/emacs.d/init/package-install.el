@@ -6,7 +6,7 @@
     apel
     auto-async-byte-compile
     auto-complete
-    anything
+    helm
     anzu
     elscreen
     expand-region

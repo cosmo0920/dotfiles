@@ -3,9 +3,7 @@
 ;;twmode
 (require 'init_twmode)
 ;;anything
-(require 'init_anything)
-;;anything-project
-(require 'init_anything-project)
+(require 'init_helm)
 ;;elscreen
 (require 'init_elscreen)
 ;;speedbar¤ÎÀßÄê
