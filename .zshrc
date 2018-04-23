@@ -271,8 +271,12 @@ darwin*)
     export GTK_IM_MODULE=uim
     ;;
 linux*)
-    ;;
+	;;
 esac
+
+if [ -f $HOME/.cargo/env ]; then
+    . $HOME/.cargo/env
+fi
 ## create emacs env file
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
