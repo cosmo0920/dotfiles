@@ -20,7 +20,7 @@ $ ./setup.sh
 ### For Windows
 
 Launch administrator cmd prompt.
-Then, 
+Then,
 
 ```batfile
 > .¥setup_win.bat
