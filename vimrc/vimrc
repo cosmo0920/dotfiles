@@ -53,7 +53,6 @@ if has('autocmd')
     	\   exe "normal! g`\"" |
     	\ endif
 endif
-set nocompatible
 filetype off
 
 if has("win32")
