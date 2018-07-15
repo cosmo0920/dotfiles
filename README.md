@@ -5,7 +5,6 @@ dotfiles
 * Vim
 * .zshrc/.bashrc
 * git related config
-* sbtconfig
 
 and so on.
 
@@ -23,5 +22,5 @@ Launch administrator cmd prompt.
 Then,
 
 ```batfile
-> .¥setup_win.bat
+> .\setup_win.bat
 ```
