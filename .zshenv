@@ -1,6 +1,7 @@
 #user define aliases
 alias vim='vim -f'
 alias gvim='gvim -f'
+alias sshnh='ssh -o "StrictHostKeyChecking no"'
 case "${OSTYPE}" in
 darwin*)
 	export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:$PKG_CONFIG_PATH
