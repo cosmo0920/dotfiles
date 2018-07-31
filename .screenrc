@@ -1,4 +1,4 @@
 termcapinfo linux ti@:te@
 termcapinfo xterm ti@:te@
 termcapinfo xterm-color ti@:te@
-defscrollback 10024
+defscrollback 10000
