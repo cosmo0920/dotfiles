@@ -78,7 +78,9 @@
 (show-paren-mode t)
 ;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
 (setq show-paren-style 'mixed)
-(set-face-background 'show-paren-match-face "#a4d1ff")
+(set-face-attribute 'show-paren-match nil
+     :background "#a4d1ff"
+     :underline "turquoise")
 (defadvice show-paren-function
   (around show-paren-closing-before
           activate compile)
