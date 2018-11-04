@@ -244,11 +244,6 @@ fi
 # OPAM configuration
 . ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-# for opam binary
-if [ -d ~/.opam/4.01.0/bin ]; then
-	export PATH=~/.opam/4.01.0/bin:$PATH
-fi
-
 # for cargo install
 if [ -d ~/.cargo/bin ]; then
 	export PATH=~/.cargo/bin:$PATH
