@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>setenv.JAVA8_HOME</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/launchctl</string>
+    <string>setenv</string>
+    <string>JAVA8_HOME</string>
+    <string>/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>ServiceIPC</key>
+  <false/>
+</dict>
+</plist>
