@@ -29,3 +29,11 @@ if [ -d $HOME/.cargo/env ]; then
 fi
 
 . /Users/cosmo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+if [ -d $HOME/.goenv ]; then
+    export GOENV_ROOT="$HOME/.goenv"
+    export PATH="$GOENV_ROOT/bin:$PATH"
+    eval "$(goenv init -)"
+    export PATH="$GOROOT/bin:$PATH"
+    export PATH="$GOPATH/bin:$PATH"
+fi
