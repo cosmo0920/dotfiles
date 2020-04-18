@@ -4,8 +4,8 @@
 ceipv6addr = "<CE IPv6 Address>"
 eastbraddr = "2001:260:700:1::1:275" # for east-flets
 outeripv4 = "<Outer IPv4 address>"
-portranges = "<IPv4 port range>"
-ports = portranges.split(' ')
+portrange = "<IPv4 port range>"
+ports = portrange.split(' ')
 config = <<-EOC
 # ---- IPv6 configuration ----
 ipv6 routing on
