@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # ref: http://ipv4.web.fc2.com/map-e.html
 # v6plus ref: https://api.enabler.ne.jp/6a4a89a8639b7546793041643f5da608/get_rules?callback=v6plus
 
