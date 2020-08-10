@@ -55,6 +55,11 @@ if has('autocmd')
 endif
 filetype off
 
+" Don't use compatible mode
+if &compatible
+  set nocompatible
+endif
+
 if has("win32")
   "Windows options here
   if has('vim_starting')
