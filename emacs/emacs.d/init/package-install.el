@@ -3,15 +3,15 @@
 (defvar installing-package-list
   '(
     ;; ここに使っているパッケージを書く。
-    apel
-    auto-async-byte-compile
+    ;;apel
+    ;;auto-async-byte-compile
     auto-complete
     helm
     anzu
     elscreen
     expand-region
     powerline
-    recentf-ext
+    ;;recentf-ext
     shell-pop
     yasnippet
     markdown-mode
