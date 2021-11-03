@@ -7,7 +7,6 @@ darwin*)
 	export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:$PKG_CONFIG_PATH
 	export X11_PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig
 	export PATH=/usr/local/bin:$PATH
-	export PATSHOME=/usr/local/lib/ats2-postiats-`brew info ats2-postiats | egrep "ats2-postiats/.*\*" | awk 'match($0, /[0-9]\.[0-9]\.[0-9]/) {print substr($0, RSTART, RLENGTH)}'`
 	;;
 linux*)
 	alias ctags='ctags-exuberant'
