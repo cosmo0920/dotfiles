@@ -3,7 +3,7 @@
 ;;twmode
 (require 'init_twmode)
 ;;anything
-(require 'init_helm)
+(require 'init_ivy)
 ;;elscreen
 (require 'init_elscreen)
 ;;speedbar¤ÎÀßÄê

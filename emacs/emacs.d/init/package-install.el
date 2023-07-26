@@ -6,7 +6,9 @@
     ;;apel
     ;;auto-async-byte-compile
     auto-complete
-    helm
+    ivy
+    ivy-hydra
+    counsel
     anzu
     elscreen
     expand-region
