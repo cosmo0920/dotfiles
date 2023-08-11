@@ -6,7 +6,6 @@ case "${OSTYPE}" in
 darwin*)
 	export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:$PKG_CONFIG_PATH
 	export X11_PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig
-	export PATH=/usr/local/bin:$PATH
 	;;
 linux*)
 	alias ctags='ctags-exuberant'
