@@ -99,6 +99,14 @@ esac
 
 case "${OSTYPE}" in
 darwin*)
+	switch-arch() {
+        if  [[ "$(uname -m)" == arm64 ]]; then
+            arch=x86_64
+        elif [[ "$(uname -m)" == x86_64 ]]; then
+            arch=arm64e
+        fi
+        exec arch -arch $arch "$SHELL" -l
+	}
 	;;
 linux*)
 	# enable color support of ls and also add handy aliases
