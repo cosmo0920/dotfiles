@@ -4,6 +4,8 @@
 ;;change default directory for Ubuntu
 (when run-linux
   (cond
+   ((equal (file-exists-p "/media/Data3/Document") t)
+    (cd "/media/Data3/Document"))
    ((equal (file-exists-p "/media/Data/Document") t)
     (cd "/media/Data/Document"))
    ((equal (file-exists-p "/media/Data2/Document") t)
