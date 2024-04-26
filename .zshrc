@@ -272,6 +272,10 @@ darwin*)
     export LANG=ja_JP.UTF-8
     export XMODIFIERS=@im=uim
     export GTK_IM_MODULE=uim
+    # include homebrew-ed m4
+    if [ -d $(brew --prefix m4) ]; then
+	    export PATH="$(brew --prefix m4)/bin:$PATH"
+    fi
     ;;
 linux*)
 	;;
