@@ -53,10 +53,41 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# --- Git branch (and status) for prompt ---
+parse_git_branch() {
+  # Git 管理下でなければ何も出さない
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+
+  # ブランチ名（detached のときは短いハッシュ）
+  local branch
+  branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null \
+           || git rev-parse --short HEAD 2>/dev/null) || return
+
+  # 変更フラグ（ステージ/ワークツリーのどちらかに差分があれば *）
+  local dirty=""
+  if ! git diff --quiet --ignore-submodules -- 2>/dev/null \
+     || ! git diff --cached --quiet --ignore-submodules -- 2>/dev/null; then
+    dirty="*"
+  fi
+
+  # upstream との差分（ahead/behind）
+  local arrows="" ahead=0 behind=0
+  if git rev-parse --abbrev-ref '@{upstream}' >/dev/null 2>&1; then
+    read -r ahead behind < <(git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null || echo "0 0")
+    [ "${ahead:-0}"  -gt 0 ] && arrows="↑$ahead"
+    [ "${behind:-0}" -gt 0 ] && arrows="${arrows:+$arrows }↓$behind"
+  fi
+  [ -n "$arrows" ] && arrows=" $arrows"
+
+  # 先頭のスペース込みで返す（PS1側で余計なスペースを出さないため）
+  printf ' (%s%s%s)' "$branch" "$dirty" "$arrows"
+}
+
+# --- Prompt ---
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[0;32m\]$(parse_git_branch)\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 fi
 unset color_prompt force_color_prompt
 
